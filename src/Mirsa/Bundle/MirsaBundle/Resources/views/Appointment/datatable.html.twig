@@ -1,0 +1,33 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    <th data-source="id" data-template="appointmentLineItemAction" data-width="10px">#</th>
+    <th data-source="id" data-template="selectPdfAction" data-sortable="false" data-width="15px" data-searchable="false">Dn</th>
+    <th data-source="appointmentNumber" data-sortable="true" data-width="80px" data-searchable="true"">Appointment Number</th>
+    <th data-source="dateCreated" data-sortable="true" data-width="80px" data-searchable="true"">Date Created</th>
+    <th data-source="dateScheduled" data-sortable="true" data-width="80px" data-searchable="true"">Scheduled Date</th>
+    <th data-source="dateReceived" data-sortable="true" data-width="80px" data-searchable="true"">Received Date</th>
+    <th data-source="reference" data-sortable="true" data-searchable="true"">Reference</th>
+    <th data-source="tradingCompanyName" data-sortable="true" data-searchable="true"">Trading Company</th>
+    <th data-source="status" data-sortable="true" data-width="80px" data-searchable="true"">Status</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="appointmentLineItemAction">
+        {% verbatim %}
+            <a class="btn btn-xs btn-primary" href="{{=Routing.generate('mirsa_appointment_line_item_list', { appointment: it.id }) }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% endverbatim %}
+    </script>
+    
+    <script type="text/template" data-name="selectPdfAction">
+        {% verbatim %}
+            {{?it.pdf.name}}
+                <a target="_blank" href="{{=Routing.generate('mirsa_appointment_download', {appointment : it.id}) }}" class="btn btn-xs btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+            {{?}}
+        {% endverbatim %}
+    </script>    
+{% endblock %}

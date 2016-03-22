@@ -1,0 +1,24 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Suppliers</h1>
+    <table class="table table-hover table-bordered rowlink" data-datatable="true" data-url="{{ path('api_suppliers_list') }}">
+        <thead>
+            <tr>
+                <th data-source="id" data-template="suppliers_actions" data-width="10px"></th>
+                <th data-source="name" data-sortable="true" data-searchable="true">Name</th>
+                <th data-source="type" data-sortable="true" data-searchable="true" data-width="150px" data-search-options="Accounting Services,Another Type,Association,AV Products,Comms Products,Fax / Telephone Services,Fuel Suppliers,General Hardware,Government Agency,Internet Services,Leasing,Mail Services,Marine Parts,Marine Products,Marketing,Misc,PC Repair,Press Release,Publishers,Refrigeration & Air Conditioning,Screen & Digital Printing,Software,Web / Marketing Design">Type</th>
+                <th data-source="status" data-sortable="true" data-searchable="true" data-width="80px" data-search-options="Active,On Hold,Cancelled,Expired">Status</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script type="text/template" data-name="suppliers_actions">
+        {% verbatim %}
+            <a class="btn btn-primary btn-xs" href="{{=Routing.generate('suppliers_view', { supplier: it.id })}}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% endverbatim %}
+    </script>
+{% endblock %}

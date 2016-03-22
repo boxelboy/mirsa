@@ -1,0 +1,378 @@
+{% extends bridge ? '@BusinessManBusinessMan/Layout/bridge.html.twig' : '::app.html.twig' %}
+
+{% block body %}
+    <div id="dashboard-edit">
+        <label for="dashboard-options">Add an item</label>
+        <select class="chosen" id="dashboard-options" data-placeholder="Add an item...">
+            <option></option>
+            <optgroup label="Summary">
+                {% set count = 0 %}
+                {% for option in options %}
+                    {% if option.type == 'summary' %}
+                        <option value="{{ option.name }}"
+                                data-min-width="{{ option.minWidth }}" data-min-height="{{ option.minHeight }}"
+                                data-max-width="{{ option.maxWidth }}" data-max-height="{{ option.maxHeight }}"
+                        >
+                            {{ option.label }}
+                        </option>
+                        {% set count = count + 1 %}
+                    {% endif %}
+                {% endfor %}
+            </optgroup>
+            <optgroup label="Widget">
+                {% for option in options %}
+                    {% if option.type == 'widget' %}
+                        <option value="{{ option.name }}"
+                            data-min-width="{{ option.minWidth }}" data-min-height="{{ option.minHeight }}"
+                            data-max-width="{{ option.maxWidth }}" data-max-height="{{ option.maxHeight }}"
+                        >
+                            {{ option.label }}
+                        </option>
+                        {% set count = count + 1 %}
+                    {% endif %}
+                {% endfor %}
+                {% if count == 0 %}
+                    <option disabled="disabled">No widgets available</option>
+                {% endif %}
+            </optgroup>
+        </select>
+
+        <div class="arrow_box">You can add items to your dashboard using this menu</div>
+
+        <div class="gridster">
+            <ul></ul>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            var storage = new PersistentStorage('dashboard'),
+                    setContent = hinclude.set_content_async,
+                    extensions = {
+                        resize_widget_dimensions: function (options) {
+                            if (options.widget_margins) {
+                                this.options.widget_margins = options.widget_margins;
+                            }
+
+                            if (options.widget_base_dimensions) {
+                                this.options.widget_base_dimensions = options.widget_base_dimensions;
+                            }
+
+                            this.min_widget_width = (this.options.widget_margins[0] * 2)
+                                    + this.options.widget_base_dimensions[0];
+                            this.min_widget_height = (this.options.widget_margins[1] * 2)
+                                    + this.options.widget_base_dimensions[1];
+
+                            var serializedGrid = this.serialize();
+                            this.$widgets.each($.proxy(function (i, widget) {
+                                var $widget = $(widget);
+                                var data = serializedGrid[i];
+                                this.resize_widget($widget, data.sizex, data.sizey);
+                            }, this));
+
+                            this.generate_grid_and_stylesheet();
+                            this.get_widgets_from_DOM();
+                            this.set_dom_grid_height();
+
+                            this.drag_api.set_limits(this.$el.width());
+
+                            return false;
+                        }
+                    };
+
+            hinclude.set_content_async = function (element, request) {
+                if (request.getResponseHeader('X-Login')) {
+                    window.location.href = Routing.generate('businessman_login');
+                } else if (request.status == 200 && request.responseText) {
+                    storage.set('widget_' + element.id, request.responseText);
+                    setContent(element, request);
+                }
+            };
+
+            $.extend(Gridster.prototype, extensions);
+
+            var serializedDashboard = {{ app.user.dashboardJson|json_encode|raw }},
+                    $gridContainer = $('.gridster'),
+                    cachedDashboard = storage.get('default');
+
+            if (cachedDashboard) {
+                serializedDashboard = cachedDashboard;
+            }
+
+            function saveDashboard() {
+                serializedDashboard = JSON.stringify($('.gridster ul').data('gridster').serialize().sort(function (a, b) {
+                    return a.order - b.order;
+                }));
+
+                storage.set('default', serializedDashboard);
+
+                $.post(Routing.generate('businessman_dashboard'), {dashboard: serializedDashboard});
+            }
+
+            function addWidget(name, refresh, width, height, col, row) {
+                var grid = $('.gridster ul').data('gridster'),
+                        $options = $('#dashboard-options'),
+                        $option = $options.find('option[value="' + name + '"]').prop('disabled', true),
+                        minWidth = $option.data('min-width'),
+                        minHeight = $option.data('min-height'),
+                        maxWidth = $option.data('max-width'),
+                        maxHeight = $option.data('max-height'),
+                        id = ('dashboard_' + name).trim(),
+                        template = doT.template($('script[data-name="' + id + '"]').html()),
+                        cached = storage.get('widget_' + id),
+                        element,
+                        include;
+
+                $('.arrow_box').remove();
+
+                if (!col) {
+                    col = 1;
+                }
+
+                if (!row) {
+                    row = 1;
+                }
+
+                if (!width) {
+                    width = minWidth;
+                }
+
+                if (!height) {
+                    height = minHeight;
+                }
+
+                element = grid.add_widget(template(), width, height, col, row, [maxWidth, maxHeight], [minWidth, minHeight]);
+
+                include = $('hx\\:include', element).html(cached ? cached : '<i class="fa fa-spin fa-spinner"></i>').get(0);
+
+                if (refresh && include) {
+                    hinclude.include(include, include.getAttribute('src'), include.getAttribute('media'), hinclude.set_content_async);
+                }
+
+                $options.trigger('chosen:updated');
+
+                if ($('.widget[data-name="dynamic_window"]').length) {
+                    $('.summary[data-linked-option]').addClass('selectable');
+                }
+            }
+
+            $gridContainer.on('click', '.refresh', function (e) {
+                e.stopPropagation();
+
+                var $element = $(this).parent(),
+                        include = $('hx\\:include', $element).get(0);
+
+                if (include) {
+                    $(include).html('<i class="fa fa-spin fa-spinner"></i>');
+
+                    setTimeout(function () {
+                        hinclude.include(include, include.getAttribute('src'), include.getAttribute('media'), hinclude.set_content_async);
+                    }, 250);
+                }
+            });
+
+            $gridContainer.on('click', '.remove', function (e) {
+                e.stopPropagation();
+
+                var grid = $('.gridster ul').data('gridster'),
+                        $element = $(this).parent(),
+                        name = $element.data('name'),
+                        $options = $('#dashboard-options');
+
+                if (name == 'dynamic_window') {
+                    $('.summary', $gridContainer).removeClass('active').removeClass('selectable');
+                    storage.remove('dynamic_window');
+                }
+
+                grid.remove_widget($element);
+
+                $options.find('option[value="' + name + '"]').prop('disabled', false);
+                $options.trigger('chosen:updated');
+
+                saveDashboard();
+            });
+
+            $('#dashboard-options').on('change', function () {
+                if (!$(this).val()) {
+                    return;
+                }
+
+                addWidget($(this).val(), true);
+                saveDashboard();
+
+                $(this).val('').trigger('chosen:updated');
+            });
+
+            $gridContainer.on('click', '.summary', function () {
+                var dynamicWindowExists = false,
+                    hasLinkedOption = false,
+                    hasUrl = false;
+
+                if ($('.widget[data-name="dynamic_window"]', $gridContainer).length && $(window).width() > 768) {
+                    dynamicWindowExists = true;
+                }
+
+                if ($(this).data('linked-option')) {
+                    hasLinkedOption = true;
+                }
+
+                if ($(this).data('url')) {
+                    hasUrl = true;
+                }
+
+                if (dynamicWindowExists && hasLinkedOption) {
+                    if ($(this).hasClass('active')) {
+                        var $windowWidget = $('.widget[data-name="dynamic_window"]', $gridContainer);
+
+                        $(this).removeClass('active');
+
+                        $windowWidget.attr('class', 'widget gs-w');
+                        $('h2', $windowWidget).contents().last().replaceWith('Dynamic window');
+
+                        $('.default', $windowWidget).show();
+                        $('hx\\:include', $windowWidget).remove();
+
+                        storage.remove('dynamic_window');
+                    } else {
+                        var linkedOption = $(this).data('linked-option'),
+                                $windowWidget = $('.widget[data-name="dynamic_window"]', $gridContainer),
+                                id = ('dashboard_' + linkedOption).trim(),
+                                template = doT.template($('script[data-name="' + id + '"]').html()),
+                                cached = storage.get('widget_' + id),
+                                $newWidget = $(template());
+
+                        $('.summary', $gridContainer).removeClass('active');
+                        $(this).addClass('active');
+
+                        $windowWidget.attr('class', $newWidget.attr('class') + ' gs-w');
+                        $('h2', $windowWidget).contents().last().replaceWith($('h2', $newWidget).text());
+
+                        $('.default', $windowWidget).hide();
+                        $('hx\\:include', $windowWidget).remove();
+                        $windowWidget.append($('hx\\:include', $newWidget).clone());
+
+                        include = $('hx\\:include', $windowWidget).html(cached ? cached : '<i class="fa fa-spin fa-spinner"></i>').get(0);
+
+                        hinclude.include(include, include.getAttribute('src'), include.getAttribute('media'), hinclude.set_content_async);
+
+                        storage.set('dynamic_window', linkedOption);
+                    }
+
+                    return;
+                }
+
+                {% if not bridge %}
+                    if (hasUrl) {
+                        window.location.href = $(this).data('url');
+                    }
+                {% endif %}
+            });
+
+            {% if bridge %}
+                $gridContainer.on('click', 'a[data-script]', function () {
+                    $.post('{{ host }}/fm', { action: 'script', file: 'BusinessMan', script: $(this).data('script'), parameter: $(this).data('parameter') });
+                });
+            {% endif %}
+
+            var $container = $('.gridster ul'),
+                grid,
+                width = $('#container').width() / 16,
+                dashboard = JSON.parse(serializedDashboard);
+
+            grid = $container.gridster({
+                widget_margins: [0, 15],
+                widget_base_dimensions: [width, 62],
+                max_cols: 16,
+                min_cols: 16,
+                max_size_x: 16,
+                autogenerate_stylesheet: false,
+                draggable: {
+                    handle: 'h2',
+                    stop: function () {
+                        $('.preview-holder').remove();
+                        saveDashboard();
+                    }
+                },
+                resize: {
+                    enabled: true,
+                    stop: function () {
+                        saveDashboard();
+                    }
+                },
+                serialize_params: function ($element, item) {
+                    return {
+                        name: $element.data('name'),
+                        col: item.col,
+                        row: item.row,
+                        width: item.size_x,
+                        height: item.size_y,
+                        order: (item.row - 1) * grid.cols + (item.col - 1)
+                    };
+                }
+            }).data('gridster');
+
+            if ($.isArray(dashboard)) {
+                $.each(dashboard, function(index, item) {
+                    addWidget(item.name, false, item.width, item.height, item.col, item.row);
+                });
+
+                if (storage.get('dynamic_window')) {
+                    $('.summary[data-linked-option="' + storage.get('dynamic_window') + '"]').click();
+                }
+            }
+
+            var resizeTimeout;
+
+            $(window).resize(function () {
+                if ($(window).width() <= 768) {
+                    grid.disable();
+                    $('#dashboard-options optgroup[label="Widget"] option:not(:disabled)').attr('data-disabledOnMobile', true).attr('disabled', true);
+                    $('#dashboard-options').trigger('chosen:updated');
+
+                    clearTimeout(resizeTimeout);
+                } else {
+                    grid.enable();
+
+                    $('#dashboard-options optgroup[label="Widget"] option[data-disabledOnMobile=true]').attr('disabled', false);
+                    $('#dashboard-options').trigger('chosen:updated');
+
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(function () {
+                        var width = ($('#container').width() / 16);
+
+                        grid.resize_widget_dimensions({
+                            widget_base_dimensions: [width, 62],
+                            widget_margins: [0, 15]
+                        });
+                    }, 500);
+                }
+            });
+        });
+    </script>
+
+    {% for option in options %}
+        <script type="text/template" data-name="dashboard_{{ option.name }}">
+            <li data-name="{{ option.name }}" {% if option.linkedOption %}data-linked-option="{{ option.linkedOption.name }}"{% endif %}{% if option.route %} data-url="{{ path(option.route) }}"{% endif %} class="{{ option.type }}{% if option.color %} {{option.type}}-{{ option.color }}{% endif %}">
+                <a class="action refresh"><i class="fa fa-refresh"></i></a>
+                <a class="action remove"><i class="fa fa-trash-o"></i></a>
+
+                <h2>
+                    {% if option.icon %}
+                        <i class="fa {{ option.icon }}"></i>
+                    {% endif %}
+                    {{ option.label }}
+                </h2>
+
+                {% if option.controller %}
+                    {{ render_hinclude(controller(option.controller, { bridge: bridge }), { id: 'dashboard_' ~ option.name }) }}
+                {% endif %}
+
+                {% if option.dynamicWindow %}
+                    <div class="default">
+                        Click a summary to view more details
+                    </div>
+                {% endif %}
+            </li>
+        </script>
+    {% endfor %}
+{% endblock %}

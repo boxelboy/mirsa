@@ -1,0 +1,55 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set rowlink = false %}
+
+{% block columns %}
+    <th data-source="id" data-template="timesheets_resource" data-width="100px">Resource</th>
+    <th data-source="notes">Notes</th>
+    <th data-source="dateFrom" data-template="timesheets_date" data-width="100px">Date</th>
+    <th class="text-center" data-source="timeFrom" data-template="timesheets_start" data-width="50px">Start</th>
+    <th class="text-center" data-source="timeTo" data-template="timesheets_finish" data-width="50px">Finish</th>
+    <th class="text-center" data-source="timeValue" data-width="50px">Hours</th>
+    <th data-template="timesheets_actions" data-width="1px"></th>
+{% endblock %}
+
+{% block templates %}
+    <script type="dot/template" data-name="timesheets_actions">
+        <a class="btn btn-xs btn-danger" href="{{ "{{" }}=Routing.generate('jobs_timesheets_remove', { job: {{ job.id }}, timesheet: it.id }) {{ "}}" }}">
+            <i class="fa fa-fw fa-trash-o"></i>
+        </a>
+    </script>
+
+    <script type="dot/template" data-name="timesheets_date">
+        {% verbatim %}
+            {{=moment(it.dateFrom).format('Do MMM YYYY')}}
+        {% endverbatim %}
+    </script>
+
+    <script type="dot/template" data-name="timesheets_start">
+        {% verbatim %}
+            {{? it.timeFrom }}
+                {{=moment(it.timeFrom, 'HH:mm:ss').format('HH:mm')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="dot/template" data-name="timesheets_finish">
+        {% verbatim %}
+            {{? it.timeTo }}
+                {{=moment(it.timeTo, 'HH:mm:ss').format('HH:mm')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="dot/template" data-name="timesheets_resource">
+        {% verbatim %}
+            {{?it.staff}}
+                {{=it.staff.forename}} {{=it.staff.surname}}
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

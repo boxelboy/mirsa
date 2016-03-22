@@ -1,0 +1,184 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Client details
+        <small>{{ client.name ? client.name : client.id }}</small>
+    </h1>
+
+    <ul class="nav nav-pills" id="page_nav">
+        <li class="active">
+            <a href="#details" data-toggle="tab">Details</a>
+        </li>
+        <li>
+            <a href="#contacts" data-toggle="tab">Contacts</a>
+        </li>
+        <li class="actions">
+            <a data-toggle="dropdown">
+                Actions
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                {% if client.email %}
+                    <li>
+                        <a href="mailto:{{ client.email }}">
+                            Send email
+                        </a>
+                    </li>
+                {% endif %}
+                {% if client.website %}
+                    <li>
+                        <a target="_blank" href="{{ client.website }}">
+                            Visit website
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="page_content">
+        <div class="tab-pane active" id="details">
+            <div class="col-md-12">
+                <div class="widget">
+                    <h2>
+                        <i class="fa fa-th-list"></i>
+                        Details
+                    </h2>
+                    <div class="details">
+                        <div>
+                            <div>
+                                Account Number
+                            </div>
+                            <div>
+                                {{ client.id }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Status
+                            </div>
+                            <div>
+                                {{ client.status }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Classification
+                            </div>
+                            <div>
+                                {{ client.classification }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Type
+                            </div>
+                            <div>
+                                {{ client.type }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Phone
+                            </div>
+                            <div>
+                                {{ client.phone|default('-') }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Skype
+                            </div>
+                            <div>
+                                {{ client.skype|default('-') }}
+                            </div>
+                        </div>
+                        {% if client.email %}
+                            <div>
+                                <div>
+                                    Email
+                                </div>
+                                <div>
+                                    <a href="mailto:{{ client.email }}">{{ client.email }}</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if client.defaultContact %}
+                            <div>
+                                <div>
+                                    Default contact
+                                </div>
+                                <div>
+                                    {{ client.defaultContact.forename }} {{ client.defaultContact.surname }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if client.manager %}
+                            <div>
+                                <div>
+                                    Account manager
+                                </div>
+                                <div>
+                                    {{ client.manager.forename }} {{ client.manager.surname }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="contacts">
+            <ul class="thumbnails">
+                {% set lastLetter = '' %}
+
+                {% for contact in contacts %}
+                    {% if contact.displayName|first|lower != lastLetter %}
+                        {% set lastLetter = contact.displayName|first|lower %}
+                        <li class="separator">{{ lastLetter|upper }}</li>
+                    {% endif %}
+
+                    <li>
+                        <h4>
+                            <a href="{{ path('client_contacts_view', {'contact': contact.id }) }}">
+                                {{ contact.displayName }}
+                            </a>
+                        </h4>
+
+                        <ul class="fa-ul">
+                            <li title="Email">
+                                <i class="fa fa-fw fa-envelope"></i>
+                                <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                            </li>
+
+                            <li title="Telephone">
+                                <i class="fa fa-fw fa-phone"></i>
+                                {{ contact.telephone|default('-') }}
+                            </li>
+
+                            <li title="Mobile">
+                                <i class="fa fa-fw fa-mobile-phone"></i>
+                                {{ contact.mobile|default('-') }}
+                            </li>
+
+                            <li title="Fax">
+                                <i class="fa fa-fw fa-print"></i>
+                                {{ contact.fax|default('-') }}
+                            </li>
+
+                            <li title="Skype">
+                                <i class="fa fa-fw fa-skype"></i>
+                                {{ contact.skype|default('-') }}
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="empty">No contacts to show</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {{ extendable_block('client_view', { client: client.id }) }}
+    </div>
+{% endblock %}

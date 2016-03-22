@@ -1,0 +1,54 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set dashboard = dashboard is defined ? dashboard : false %}
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    <th data-source="id" data-template="purchase_orders_actions" data-width="10px"></th>
+    <th data-source="id" data-width="100px" data-sortable="true" data-searchable="true">Order #</th>
+    <th data-source="description" data-sortable="true" data-searchable="true">Description</th>
+    {% if not dashboard %}
+        <th data-source="netTotal" data-width="100px" data-template="purchase_orders_net_total" data-sortable="true" data-searchable="true">Net total</th>
+        <th data-source="grossTotal" data-width="100px" data-template="purchase_orders_gross_total" data-sortable="true" data-searchable="true">Gross total</th>
+    {% endif %}
+    <th data-source="type" data-width="100px" data-sortable="true" data-searchable="true" data-search-options="Direct Shipment,Overhead,Standard,Stock">Type</th>
+    {% if not dashboard %}
+        <th data-source="progress" data-width="100px" data-sortable="true" data-searchable="true" data-search-options="Awaiting Delivery,Awaiting Pmt Authorisation,Cancelled,Complete,Open">Progress</th>
+    {% endif %}
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="purchase_orders_actions">
+        {% if bridge %}
+            <a class="btn btn-xs btn-primary" href="#" data-script="Dashboard View Purchase Order" data-parameter="{{ "{{=it.id }}"|raw }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% else %}
+            {% verbatim %}
+                <a class="btn btn-primary btn-xs" href="{{=Routing.generate('purchase_orders_view', { order: it.id })}}"><i class="fa fa-chevron-right"></i></a>
+            {% endverbatim %}
+        {% endif %}
+    </script>
+
+    {% if not dashboard %}
+        <script type="text/template" data-name="purchase_orders_net_total">
+            {% verbatim %}
+                {{?it.netTotal}}
+                    {{=it.netTotal.toFixed(2)}}
+                {{??}}
+                    -
+                {{?}}
+            {% endverbatim %}
+        </script>
+
+        <script type="text/template" data-name="purchase_orders_gross_total">
+            {% verbatim %}
+                {{?it.grossTotal}}
+                    {{=it.grossTotal.toFixed(2)}}
+                {{??}}
+                    -
+                {{?}}
+            {% endverbatim %}
+        </script>
+    {% endif %}
+{% endblock %}

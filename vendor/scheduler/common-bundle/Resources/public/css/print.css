@@ -1,0 +1,113 @@
+@media print {
+    .no-print, .no-print {
+        display: none !important;
+    }
+}
+div.nav {
+    width: 100%;
+    padding: 15px 50px;
+    font-family: "Segoe UI",Arial;
+    font-size: 10pt;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #cecece;
+}
+body {
+    margin: 0px;
+}
+h1 {
+    margin-left: 50px;
+    font-family: "Segoe UI",Arial;
+    margin-bottom: 25px;
+}
+h2 {
+    margin-left: 50px;
+    font-family: "Segoe UI",Arial;
+    margin-top: 10px;
+    font-size: 14pt;
+    font-weight: normal;
+}
+table.container {
+    font-size: 8pt;
+    font-family: "Segoe UI",Arial;
+    border-collapse: collapse;
+    page-break-after: always;
+}
+table.container thead th.corner {
+    border: none;
+    background: none;
+    width: 50px;
+}
+table.container thead th {
+    border: 1px solid #cecece;
+    background-color: #f4f4f4;
+    font-weight: normal;
+    word-break: break-word;
+    color: #767676;
+    min-height: 40px;
+    height: 40px;
+}
+table.container tbody th {
+    border: 1px solid #cecece;
+    background-color: #f4f4f4;
+    font-weight: normal;
+    color: #767676;
+    height: 80px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+table.container tbody th span.hour {
+    font-size: 22px;
+}
+table.container tbody th span.minute {
+    font-size: 11px;
+    vertical-align: top;
+    line-height: 21px;
+}
+table.container tbody th span.ampm {
+    display: block;
+    margin-top: 10px;
+    font-size: 11px;
+}
+table.container tbody tr.all_day {
+    border: 1px solid #cecece;
+}
+table.container tbody tr.all_day th.icon {
+    height: 25px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+table.container tbody tr.scale td {
+    border: 1px solid #cecece;
+    vertical-align: top;
+    margin: 0;
+    padding: 0;
+}
+table.container tbody tr.scale td span.date {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 3px;
+    text-align: center;
+    font-size: 6pt;
+    overflow: hidden;
+    white-space: nowrap;
+}
+table.container tbody tr.scale td div.event {
+    position: absolute;
+}
+table.container tbody tr.all_day td {
+    padding: 0px 3px;
+}
+table.container div.event {
+    background-color: rgb(91, 155, 224);
+    color: #fff;
+    left: 3px;
+    padding: 5px;
+    z-index: 100;
+    overflow: hidden;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+table.container tbody td div.data {
+    display: block;
+    position: relative;
+}

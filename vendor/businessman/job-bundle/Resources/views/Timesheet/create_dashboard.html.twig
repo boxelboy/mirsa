@@ -1,0 +1,45 @@
+{{ form_start(form, { action: path('jobs_timesheets_create_quick') }) }}
+
+<div id="quick_timesheet">
+    {% for message in app.session.flashbag.get('quick_timesheet_error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('quick_timesheet_success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ form_row(form.job) }}
+    {{ form_row(form.supportCall) }}
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.dateFrom) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.timeValue) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.timeFrom) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.timeTo) }}
+        </div>
+    </div>
+
+    <div class="notes">
+        {{ form_row(form.notes) }}
+    </div>
+
+    {{ form_row(form._token) }}
+    {{ form_row(form.save) }}
+</div>
+
+{{ form_end(form, { render_rest: false }) }}

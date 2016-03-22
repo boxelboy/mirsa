@@ -1,0 +1,145 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Contact details
+        <small>{{ contact.forename }} {{ contact.surname }}</small>
+    </h1>
+    <div class="profile">
+        <div class="col-md-3">
+            {% if contact.photo %}
+                <img src="{{ path('SynergizeBundle_container', { encodedUrl: contact.photo.encodedUrl }) }}" />
+            {% else %}
+                <img src="{{ asset('bundles/businessmanbusinessman/img/default-avatar.png') }}" />
+            {% endif %}
+            <ul class="fa-ul actions">
+                <li class="header">
+                    Actions
+                </li>
+                {% if contact.email %}
+                    <li>
+                        <i class="fa fa-envelope fa-li"></i>
+                        <a class="btn btn-link" href="mailto:{{ contact.email }}">
+                            Send email
+                        </a>
+                    </li>
+                {% endif %}
+                {% if contact.users|length %}
+                    <li>
+                        <i class="fa fa-refresh fa-li"></i>
+                        <a class="btn btn-link" href="#">
+                            Reset password
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fa fa-ban fa-li"></i>
+                        <a class="btn btn-link" href="#">
+                            Disable web access
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <i class="fa fa-plus-circle fa-li"></i>
+                        <a class="btn btn-link" href="#">
+                            Enable web access
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="widget">
+                <h2>
+                    <i class="fa fa-th-list"></i>
+                    Details
+                </h2>
+                <div class="details">
+                    {% if contact.client %}
+                        <div>
+                            <div>
+                                Client
+                            </div>
+                            <div>
+                                <a href="{{ path('clients_view', { client: contact.client.id }) }}">
+                                    {{ contact.client.name ? contact.client.name : contact.client.id }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <div>
+                            Web access
+                        </div>
+                        <div>
+                            {% if contact.users|length %}
+                                Enabled
+                            {% else %}
+                                Not enabled
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if contact.users|length %}
+                        <div>
+                            <div>
+                                Username
+                            </div>
+                            <div>
+                                {{ contact.users[0].username }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <div>
+                            Email
+                        </div>
+                        <div>
+                            {{ contact.email|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Telephone
+                        </div>
+                        <div>
+                            {{ contact.telephone|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Mobile
+                        </div>
+                        <div>
+                            {{ contact.mobile|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Fax
+                        </div>
+                        <div>
+                            {{ contact.fax|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Other
+                        </div>
+                        <div>
+                            {{ contact.other|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Skype
+                        </div>
+                        <div>
+                            {{ contact.skype|default('-') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ extendable_block('client_contact_view', { contact: contact.id }) }}
+{% endblock %}

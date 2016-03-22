@@ -1,0 +1,17 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Job details
+        <small>
+            <a href="{{ path('jobs_view', { job: job.id }) }}">
+                {{ job.description ? job.description : job.id }}
+            </a>
+        </small>
+        <small>
+            Create child job
+        </small>
+    </h1>
+
+    {{ form(form) }}
+{% endblock %}

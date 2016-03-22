@@ -1,0 +1,13 @@
+quotes_list:
+    path: /quotes
+    defaults: { _controller: BusinessManQuoteBundle:Quote:list }
+
+quotes_view:
+    path: /quotes/{quote}
+    defaults: { _controller: BusinessManQuoteBundle:Quote:view }
+    options: { expose: true }
+
+api_quotes_list:
+    path: /api/quotes.{_format}
+    defaults: { _controller: BusinessManQuoteBundle:Api/Quote:list, _format: json }
+    requirements: { _format: json }

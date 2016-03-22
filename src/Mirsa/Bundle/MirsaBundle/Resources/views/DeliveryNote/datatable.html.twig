@@ -1,0 +1,19 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% block columns %}
+    <th data-source="id" data-template="selectPdfDeliveryNote" data-sortable="false" data-width="15px" data-searchable="false">Dn</th>
+    <th data-source="id" data-sortable="false" data-width="50px" data-searchable="true">Delivery Number</th>
+    <th data-source="deliveryMethod" data-sortable="true" data-width="100px" data-searchable="true">Delivery Method</th>
+    <th data-source="printedBy" data-sortable="true" data-width="100px" data-searchable="true" >Printed By</th>
+    <th data-source="printedOn" data-sortable="true" data-width="150px" data-searchable="true">Printed On</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="selectPdfDeliveryNote">
+        {% verbatim %}
+            {{?it.pdf.name}}
+                <a target="_blank" href="{{=Routing.generate('mirsa_delivery_note_download', {deliveryNote : it.id}) }}" class="btn btn-xs btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

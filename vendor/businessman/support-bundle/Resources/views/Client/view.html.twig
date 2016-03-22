@@ -1,0 +1,18 @@
+<div class="tab-pane" id="support">
+    <div class="col-md-12">
+        <div class="widget widget-blue">
+            <h2>
+                <i class="fa fa-comments"></i>
+                Support
+            </h2>
+            {% include '@BusinessManSupport/List/datatable.html.twig' with { client: false, header: false, url: path('api_support_call_list', { filter: { client: client.id }}) } %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#page_nav').append('<li><a href="#support" data-toggle="tab">Support</a></li>');
+        $('#page_nav ul').append('<li><a href="{{ path('support_calls_create', { client: client.id }) }}">Create a support ticket</a></li>');
+    });
+</script>

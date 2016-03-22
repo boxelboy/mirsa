@@ -1,0 +1,30 @@
+services:
+    common.subscriber.json_collapse:
+        class: Computech\Bundle\CommonBundle\EventListener\JsonCollapseSubscriber
+        arguments: [%kernel.environment%]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    menu.builder:
+        class: Computech\Bundle\CommonBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+
+    security.authentication.bridge_token_provider:
+        class:  Computech\Bundle\CommonBundle\Security\Authentication\Provider\BridgeTokenProvider
+        arguments: ["", @doctrine]
+
+    security.authentication.bridge_token_listener:
+        class: Computech\Bundle\CommonBundle\Security\Firewall\BridgeTokenListener
+        arguments: [@security.context, @security.authentication.manager, @security.authentication.session_strategy]
+
+    twig.extendable_block:
+        class: Computech\Bundle\CommonBundle\Twig\ExtendableBlockExtension
+        arguments: [@event_dispatcher]
+        tags:
+            - { name: twig.extension }
+
+    twig.serialize_json:
+        class: Computech\Bundle\CommonBundle\Twig\SerializeJsonExtension
+        arguments: [@jms_serializer]
+        tags:
+            - { name: twig.extension }

@@ -1,0 +1,12 @@
+services:
+    quote.subscriber.dashboard:
+        class: BusinessMan\Bundle\QuoteBundle\EventListener\DashboardSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    quote.subscriber.menu:
+        class: BusinessMan\Bundle\QuoteBundle\EventListener\MenuSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }

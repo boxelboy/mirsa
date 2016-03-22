@@ -1,0 +1,17 @@
+<div class="tab-pane" id="calls">
+    <div class="col-md-12">
+        <div class="widget widget-black">
+            <h2>
+                <i class="fa fa-phone"></i>
+                Calls
+            </h2>
+            {% include '@BusinessManCall/List/datatable.html.twig' with { header: false, url: path('api_calls_list', { filter: { client: client.id }}) } %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#page_nav').append('<li><a href="#calls" data-toggle="tab">Calls</a></li>');
+    });
+</script>

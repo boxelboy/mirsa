@@ -1,0 +1,12 @@
+scheduler_scheduler:
+    pattern: /scheduler
+    defaults: { _controller: BusinessManSchedulerBundle:Schedule:scheduler }
+    methods: GET
+
+scheduler_print_resource:
+    pattern: /scheduler/print/resource/{date}/{filterType}-{filterId}
+    defaults: { _controller: SchedulerCommonBundle:Print:resource }
+    methods: GET
+    options: { expose: true }
+    requirements:
+        filterType: group|category|resource

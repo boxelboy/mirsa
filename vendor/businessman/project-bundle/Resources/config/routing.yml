@@ -1,0 +1,18 @@
+projects_list:
+    path: /projects
+    defaults: { _controller: BusinessManProjectBundle:Project:list }
+
+projects_view:
+    path: /projects/{project}
+    defaults: { _controller: BusinessManProjectBundle:Project:view }
+    options: { expose: true }
+
+api_projects_list:
+    path: /api/projects.{_format}
+    defaults: { _controller: BusinessManProjectBundle:Api/Project:list, _format: json }
+    requirements: { _format: json }
+
+api_projects_view:
+    path: /api/projects/{project}.{_format}
+    defaults: { _controller: BusinessManProjectBundle:Api/Project:view, _format: json }
+    requirements: { _format: json }

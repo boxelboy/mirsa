@@ -1,0 +1,6 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Appointments</h1>
+    {% include '@MirsaMirsa/Appointment/datatable.html.twig' with { url: path('api_mirsa_appointments_list') } %}
+{% endblock %}

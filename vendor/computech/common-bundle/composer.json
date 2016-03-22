@@ -1,0 +1,42 @@
+{
+    "name": "computech/common-bundle",
+    "type": "symfony-bundle",
+    "description": "Common functionality for all Computech Symfony code",
+    "homepage": "http://git.computech-it.co.uk/Computech/CommonBundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jack Murdoch",
+            "email": "jack@computech-it.co.uk"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "mnot/hinclude",
+                "version": "0.9.5",
+                "source": {
+                    "url": "git://github.com/mnot/hinclude.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.5.*",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
+        "twig/extensions": "~1.0",
+        "knplabs/knp-menu-bundle": "1.1.*",
+        "friendsofsymfony/rest-bundle": "1.3.*",
+        "jms/serializer-bundle": "0.13.*",
+        "willdurand/hateoas-bundle": "0.3.",
+        "mnot/hinclude": "0.9.*"
+    },
+    "autoload": {
+        "psr-4": { "Computech\\Bundle\\CommonBundle\\": "" }
+    }
+}

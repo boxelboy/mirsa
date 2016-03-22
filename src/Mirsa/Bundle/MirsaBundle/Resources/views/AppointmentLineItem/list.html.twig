@@ -1,0 +1,9 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    
+    {% include '@MirsaMirsa/Appointment/view.html.twig' with { appointment: appointment} %}
+    
+    <h1>Appointment Line Items</h1>
+    {% include '@MirsaMirsa/AppointmentLineItem/datatable.html.twig' with { url: path('api_mirsa_appointment_line_item_list', {appointment : appointment.id } )} %}
+{% endblock %}

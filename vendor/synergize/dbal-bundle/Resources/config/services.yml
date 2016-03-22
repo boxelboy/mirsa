@@ -1,0 +1,5 @@
+services:
+    synergize.subscriber.metadata:
+        class: Synergize\Bundle\DbalBundle\EventListener\ClassMetadataSubscriber
+        tags:
+            - { name: doctrine.event_subscriber }

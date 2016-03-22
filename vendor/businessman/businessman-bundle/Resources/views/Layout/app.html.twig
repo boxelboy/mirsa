@@ -1,0 +1,113 @@
+{% extends '@BusinessManBusinessMan/Layout/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+        'bundles/businessmanbusinessman/css/app.css'
+        'bundles/businessmanbusinessman/css/gridster-fluid.css'
+        'assets/chosen/css/chosen.min.css'
+        '../vendor/ducksboard/gridster/dist/jquery.gridster.css'
+        filter='cssrewrite' output='assets/compiled/app.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        'bundles/fosjsrouting/js/router.js'
+        'assets/chosen/js/chosen.jquery.min.js'
+        '../vendor/ducksboard/gridster/dist/jquery.gridster.js'
+        'bundles/businessmanbusinessman/js/app.js'
+        output='assets/compiled/app.js'
+    %}
+        <script type="application/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+{% endblock %}
+
+{% block layout_body %}
+    <header id="app_header">
+        <h1>BusinessMan</h1>
+
+        <ul>
+            <li class="profile">
+                <a data-toggle="dropdown">
+                    <img src="{{ asset('bundles/businessmanbusinessman/img/default-avatar.png') }}" />
+
+                    Welcome,
+                    <span class="name">
+                        {% if app.user.staff %}
+                            {{ app.user.staff.forename }}
+                        {# elseif app.user.contact #}
+                            {# app.user.contact.forename #}
+                        {% else %}
+                            {{ app.user.username }}
+                        {% endif %}
+                    </span>
+                    <i class="fa fa-caret-down"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href="{{ path('businessman_logout') }}">
+                            <i class="fa fa-sign-out fa-fw"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+
+    <nav id="app_menu">
+        <div id="app_menu_toggle"></div>
+        {{ knp_menu_render('app', { 'currentClass': 'active', 'template': '@BusinessManBusinessMan/Menu/app.html.twig' }) }}
+    </nav>
+
+    <div class="container" id="container">
+        {% if block('breadcrumb') %}
+            <ul id="breadcrumb">
+            </ul>
+        {% endif %}
+
+        {% for message in app.session.flashbag.get('error') %}
+            <div class="row">
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
+                    <strong>
+                        <i class="icon-remove-sign"></i>
+                        {{ "pages.layout.error"|trans }}
+                    </strong>
+
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+
+        {% for message in app.session.flashbag.get('info') %}
+            <div class="row">
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
+                    <strong>
+                        <i class="icon-info-sign"></i>
+                    </strong>
+
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

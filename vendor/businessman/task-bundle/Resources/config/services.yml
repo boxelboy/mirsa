@@ -1,0 +1,17 @@
+services:
+    task.subscriber.dashboard:
+        class: BusinessMan\Bundle\TaskBundle\EventListener\DashboardSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    task.subscriber.menu:
+        class: BusinessMan\Bundle\TaskBundle\EventListener\MenuSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    task.subscriber.extendable_block:
+        class: BusinessMan\Bundle\TaskBundle\EventListener\ExtendableBlockSubscriber
+        tags:
+            - { name: kernel.event_subscriber }

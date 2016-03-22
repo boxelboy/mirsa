@@ -1,0 +1,13 @@
+tasks_list:
+    path: /tasks
+    defaults: { _controller: BusinessManTaskBundle:Task:list }
+
+tasks_view:
+    path: /tasks/{task}
+    defaults: { _controller: BusinessManTaskBundle:Task:view }
+    options: { expose: true }
+
+api_tasks_list:
+    path: /api/tasks.{_format}
+    defaults: { _controller: BusinessManTaskBundle:Api/Task:list, _format: json }
+    requirements: { _format: json }

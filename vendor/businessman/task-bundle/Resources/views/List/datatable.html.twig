@@ -1,0 +1,38 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    {% if bridge %}
+        <th data-source="id" data-template="tasks_actions" data-width="10px"></th>
+    {% endif %}
+    <th data-source="subject" data-sortable="true" data-searchable="true">Name</th>
+    <th data-source="dueDate" data-template="tasks_due" data-sortable="true" data-width="100px">Due</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="dot/template" data-name="tasks_actions">
+        {% if bridge %}
+            <a class="btn btn-xs btn-primary" href="#" data-script="Dashboard View Task" data-parameter="{{ "{{=it.id }}"|raw }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% else %}
+            {% verbatim %}
+                <a href="{{=Routing.generate('tasks_view', { task: it.id })}}" class="btn btn-xs btn-primary">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            {% endverbatim %}
+        {% endif %}
+    </script>
+
+    <script type="dot/template" data-name="tasks_due">
+        {% verbatim %}
+            {{?it.dueDate}}
+                {{=moment(it.dueDate).format('Do MMM YYYY')}}<br />
+                <small>{{=moment(it.dueDate).format('HH:mm')}}</small>
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

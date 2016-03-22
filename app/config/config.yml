@@ -1,0 +1,111 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+framework:
+    esi: true
+    translator:
+        fallback: %locale%
+    secret: %secret%
+    router:
+        resource: %kernel.root_dir%/config/routing.yml
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation:
+        enable_annotations: true
+    templating:
+        engines: [twig]
+        assets_version: 843ol
+    default_locale: %locale%
+    session:
+        handler_id:  ~
+        cookie_lifetime: 604800
+    fragments:
+        path: /_fragment
+    http_method_override: true
+
+twig:
+    debug: %kernel.debug%
+    strict_variables: %kernel.debug%
+
+assetic:
+    debug: %kernel.debug%
+    use_controller: false
+    bundles:
+        - BusinessManBusinessManBundle
+        - BusinessManSchedulerBundle
+        - SchedulerCommonBundle
+    assets:
+        common_css:
+            inputs:
+                - @BusinessManBusinessManBundle/Resources/less/bootstrap.less
+                - %kernel.root_dir%/../vendor/datatables/plugins/integration/bootstrap/3/dataTables.bootstrap.css
+                - %kernel.root_dir%/../vendor/datatables/plugins/integration/font-awesome/dataTables.fontAwesome.css
+            filters: [lessphp]
+            output: assets/compiled/common.css
+        custom_css:
+            inputs: ~
+            output: assets/compiled/custom.css
+        common_js:
+            inputs:
+                - %kernel.root_dir%/../vendor/components/jquery/jquery.js
+                - %kernel.root_dir%/../vendor/moment/moment/moment.js
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/dropdown.js
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/tab.js
+                - %kernel.root_dir%/../vendor/mnot/hinclude/hinclude.js
+                - %kernel.root_dir%/../vendor/olado/dot/doT.js
+                - %kernel.root_dir%/../vendor/datatables/datatables/media/js/jquery.dataTables.js
+                - %kernel.root_dir%/../vendor/datatables/plugins/integration/bootstrap/3/dataTables.bootstrap.js
+                - %kernel.root_dir%/../vendor/jeremydurham/persist-js/persist-min.js
+            output: assets/compiled/common.js
+    filters:
+        cssrewrite: ~
+        lessphp:
+            file: %kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php
+            apply_to: \.less$
+            formatter: compressed
+            preserve_comments: false
+
+doctrine:
+    dbal:
+        connections:
+            businessman:
+                driver_class: Synergize\Bundle\DbalBundle\Driver\Driver
+                host: %businessman.host%
+                port: %businessman.port%
+                dbname: %businessman.name%
+                user: %businessman.user%
+                password: %businessman.password%
+                protocol: %businessman.protocol%
+        types:
+            notes: Computech\Bundle\CommonBundle\Type\Notes
+            onoff: Computech\Bundle\CommonBundle\Type\OnOff
+            yesno: Computech\Bundle\CommonBundle\Type\YesNo
+            booleanstring: Computech\Bundle\CommonBundle\Type\BooleanString
+            value_list: Computech\Bundle\CommonBundle\Type\ValueList
+            number_list: Computech\Bundle\CommonBundle\Type\NumberList
+            date_list: Computech\Bundle\CommonBundle\Type\DateList
+
+    orm:
+        default_entity_manager: businessman
+        auto_generate_proxy_classes: %kernel.debug%
+        entity_managers:
+            businessman:
+                connection: businessman
+                metadata_cache_driver: array
+                result_cache_driver: array
+                query_cache_driver: array
+                auto_mapping: true
+
+swiftmailer:
+    transport: mail
+    spool:
+        type: memory
+
+fos_js_routing:
+    routes_to_expose: [ ^api_* ]
+    cache_control:
+        public: true
+        maxage: 86400
+        smaxage: 86400

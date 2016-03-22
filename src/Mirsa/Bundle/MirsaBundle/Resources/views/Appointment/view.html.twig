@@ -1,0 +1,108 @@
+{% block body %}
+    <h1>
+        Appointment View
+    </h1>
+
+    <div class="col-md-12">
+        <div class="widget">
+            <h2>
+                <i class="fa fa-th-list"></i>
+                Details
+            </h2>
+            <div class="details">
+                <div>
+                    <div>
+                        Appointment Number
+                    </div>
+                    <div>
+                        {{ appointment.id }}
+                    </div>
+                    <div>
+                        Status
+                    </div>
+                    <div>
+                        {{ appointment.status }}
+                    </div>
+                </div>
+                    
+                <div>
+                    <div>
+                        Date Created
+                    </div>
+                    <div>
+                        {{ appointment.dateCreated }}
+                    </div>
+                    <div>
+                        Date Scheduled
+                    </div>
+                    <div>
+                        {{ appointment.dateScheduled }}
+                    </div>
+                </div>
+                    
+                <div>
+                    <div>
+                        Date Received
+                    </div>
+                    <div>
+                        {{ appointment.dateReceived }}
+                    </div>
+                    <div>
+                        Reference
+                    </div>
+                    <div>
+                        {{ appointment.reference }}
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        Process Number
+                    </div>
+                    <div>
+                        {{ appointment.processNumber }}
+                    </div>
+                    <div>
+                        Total Boxes
+                    </div>
+                    <div>
+                        {{ appointment.totalBoxes }}
+                    </div>
+                </div>
+                    
+                <div>
+                    <div>
+                        Total Pallets
+                    </div>
+                    <div>
+                        {{ appointment.totalPallets }}
+                    </div>
+                    <div>
+                        Total Weight
+                    </div>
+                    <div>
+                        {{ appointment.totalWeight }}
+                    </div>
+                </div>
+                    
+                <div>
+                    <div>
+                        Instructions
+                    </div>
+                    <div>
+                        {{ appointment.instructions }}
+                    </div>
+                </div>
+                    
+                <div>
+                    <div>
+                        Appointment from Address
+                    </div>
+                    <div>
+                        {{ appointment.client.id }}, {{ appointment.client.name }}, {{ appointment.client.mainAddressStreet }}, {{ appointment.client.mainAddressTown }}, {{ appointment.client.mainAddressState }}, {{ appointment.client.mainAddressPostcode }}, {{ appointment.client.mainAddressCountry }}
+                    </div>
+                </div>                                        
+            </div>
+        </div>
+    </div>
+{% endblock %}

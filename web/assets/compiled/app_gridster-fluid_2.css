@@ -1,0 +1,61 @@
+.gridster ul { width: 100%!important; }
+
+.gridster [data-col="16"] { left:93.75%; }
+.gridster [data-col="15"] { left:87.5%; }
+.gridster [data-col="14"] { left:81.25%; }
+.gridster [data-col="13"] { left:75%; }
+.gridster [data-col="12"] { left:68.75%; }
+.gridster [data-col="11"] { left:62.5%; }
+.gridster [data-col="10"] { left:56.25%; }
+.gridster [data-col="9"] { left:50%; }
+.gridster [data-col="8"] { left:43.75%; }
+.gridster [data-col="7"] { left:37.5%; }
+.gridster [data-col="6"] { left:31.25%; }
+.gridster [data-col="5"] { left:25%; }
+.gridster [data-col="4"] { left:18.75%; }
+.gridster [data-col="3"] { left:12.5%; }
+.gridster [data-col="2"] { left:6.25%; }
+.gridster [data-col="1"] { left:0; }
+
+.gridster [data-sizex="1"] { width:5.25%; }
+.gridster [data-sizex="2"] { width:11.5%; }
+.gridster [data-sizex="3"] { width:17.75%; }
+.gridster [data-sizex="4"] { width:24%; }
+.gridster [data-sizex="5"] { width:30.25%; }
+.gridster [data-sizex="6"] { width:36.5%; }
+.gridster [data-sizex="7"] { width:42.75%; }
+.gridster [data-sizex="8"] { width:49%; }
+.gridster [data-sizex="9"] { width:55.25%; }
+.gridster [data-sizex="10"] { width:61.5%; }
+.gridster [data-sizex="11"] { width:67.75%; }
+.gridster [data-sizex="12"] { width:74%; }
+.gridster [data-sizex="13"] { width:80.25%; }
+.gridster [data-sizex="14"] { width:86.5%; }
+.gridster [data-sizex="15"] { width:92.75%; }
+.gridster [data-sizex="16"] { width:99%; }
+
+.gridster [data-row="12"] { top:1027px; }
+.gridster [data-row="11"] { top:935px; }
+.gridster [data-row="10"] { top:843px; }
+.gridster [data-row="9"] { top:751px; }
+.gridster [data-row="8"] { top:659px; }
+.gridster [data-row="7"] { top:567px; }
+.gridster [data-row="6"] { top:475px; }
+.gridster [data-row="5"] { top:383px; }
+.gridster [data-row="4"] { top:291px; }
+.gridster [data-row="3"] { top:199px; }
+.gridster [data-row="2"] { top:107px; }
+.gridster [data-row="1"] { top:15px; }
+
+.gridster [data-sizey="1"] { height:62px; }
+.gridster [data-sizey="2"] { height:154px; }
+.gridster [data-sizey="3"] { height:246px; }
+.gridster [data-sizey="4"] { height:338px; }
+.gridster [data-sizey="5"] { height:430px; }
+.gridster [data-sizey="6"] { height:522px; }
+.gridster [data-sizey="7"] { height:614px; }
+.gridster [data-sizey="8"] { height:706px; }
+.gridster [data-sizey="9"] { height:798px; }
+.gridster [data-sizey="10"] { height:890px; }
+.gridster [data-sizey="11"] { height:982px; }
+.gridster [data-sizey="12"] { height:1074px; }

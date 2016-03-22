@@ -1,0 +1,17 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% block columns %}
+    <th data-source="id" data-template="selectPdfPickNote" data-sortable="false" data-width="15px" data-searchable="false">PDF</th>
+    <th data-source="id" data-sortable="false" data-width="50px" data-searchable="true">Pick Note Number</th>
+    <th data-source="description" data-sortable="true" data-width="100px" data-searchable="true">Description</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="selectPdfPickNote">
+        {% verbatim %}
+            {{?it.pdf.name}}
+                <a target="_blank" href="{{=Routing.generate('mirsa_pick_note_download', {pickNote : it.id}) }}" class="btn btn-xs btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

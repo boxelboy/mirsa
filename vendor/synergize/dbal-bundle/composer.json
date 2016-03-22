@@ -1,0 +1,21 @@
+{
+    "name": "synergize/dbal-bundle",
+    "type": "symfony-bundle",
+    "description": "Doctrine DBAL for Synergize",
+    "homepage": "http://git.computech-it.co.uk/Synergize/SynergizeDbalBundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jack Murdoch",
+            "email": "jack@computech-it.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2"
+    },
+    "autoload": {
+        "psr-4": { "Synergize\\Bundle\\DbalBundle\\": "" }
+    }
+}

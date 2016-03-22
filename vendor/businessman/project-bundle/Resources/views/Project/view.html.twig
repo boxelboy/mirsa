@@ -1,0 +1,90 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Project details
+        <small>{{ project.description }}</small>
+    </h1>
+
+    <ul class="nav nav-pills" id="page_nav">
+        <li class="active">
+            <a href="#details" data-toggle="tab">Details</a>
+        </li>
+        <li class="actions">
+            <a data-toggle="dropdown">
+                Actions
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right"></ul>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="page_content">
+        <div class="tab-pane active profile" id="details">
+            <div class="col-md-12">
+                <div class="widget">
+                    <h2>
+                        <i class="fa fa-th-list"></i>
+                        Details
+                    </h2>
+                    <div class="details">
+                        {% if project.client %}
+                            <div>
+                                <div>
+                                    Client
+                                </div>
+                                <div class="client_name">
+                                    {{ project.client.name ? project.client.name : project.client.id }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <div>
+                                Project
+                            </div>
+                            <div>
+                                {{ project.id }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Type
+                            </div>
+                            <div>
+                                {{ project.type }}
+                            </div>
+                        </div>
+                        {% if project.subType %}
+                            <div>
+                                <div>
+                                    Subtype
+                                </div>
+                                <div>
+                                    {{ project.subtype }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <div>
+                                Estimated Start
+                            </div>
+                            <div>
+                                {{ project.estimatedStartDate|date('jS F Y') }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Estimated Finish
+                            </div>
+                            <div>
+                                {{ project.estimatedFinishDate|date('jS F Y') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ extendable_block('project_view', { project: project.id }) }}
+    </div>
+{% endblock %}

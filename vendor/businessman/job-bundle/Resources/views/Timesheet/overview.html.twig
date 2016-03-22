@@ -1,0 +1,30 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Timesheets
+    </h1>
+
+    <ul>
+        {% for staff in app.user.staff.managedStaff %}
+            <li>
+                {{ staff.displayName }}
+
+                <ul>
+                    <li>
+                        Absences
+                        <ul>
+                            {% for absence in staff.absences %}
+                                {% for workingDay in absence.workingDays %}
+                                    <li>
+                                        {{ workingDay|date('Y-m-d') }}
+                                    </li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

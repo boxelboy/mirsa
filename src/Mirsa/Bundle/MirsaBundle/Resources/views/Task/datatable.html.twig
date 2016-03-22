@@ -1,0 +1,37 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set startDate = startDate is defined ? startDate : false %}
+{% set dueDate = dueDate is defined ? dueDate : false %}
+
+
+{% block columns %}
+    <th data-source="id" data-searchable="true" data-width="2%" ></th>
+    <th data-source="subject" data-sortable="true" data-width="50%" data-searchable="true">Subject</th>
+    <th data-source="status" data-sortable="false" data-width="5px" data-searchable="false">Status</th>
+    <th data-source="resource" data-sortable="false" data-width="5px" data-searchable="true">Resource</th>
+    <th data-source="startDate" data-template="taskCreated" data-sortable="true" data-width="60px" data-searchable="false">Created</th>
+    <th data-source="dueDate" data-template="taskDue" data-sortable="true" data-width="60px" data-searchable="false" >Due</th>
+{% endblock %}
+
+{% block templates %}
+
+    <script type="text/template" data-name="taskCreated">
+        {% verbatim %}
+            {{?it.startDate}}
+                {{=moment((it.startDate).substr(0,10)).format('L')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="taskDue">
+        {% verbatim %}
+            {{?it.dueDate}}
+                {{=moment((it.startDate).substr(0,10)).format('L')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

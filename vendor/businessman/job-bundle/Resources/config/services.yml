@@ -1,0 +1,17 @@
+services:
+    job.subscriber.menu:
+        class: BusinessMan\Bundle\JobBundle\EventListener\MenuSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    job.subscriber.dashboard:
+        class: BusinessMan\Bundle\JobBundle\EventListener\DashboardSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    job.subscriber.extendable_block:
+        class: BusinessMan\Bundle\JobBundle\EventListener\ExtendableBlockSubscriber
+        tags:
+            - { name: kernel.event_subscriber }

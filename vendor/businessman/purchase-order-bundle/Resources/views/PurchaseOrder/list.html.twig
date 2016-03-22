@@ -1,0 +1,6 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Purchase orders</h1>
+    {% include '@BusinessManPurchaseOrder/PurchaseOrder/datatable.html.twig' with { url: path('api_purchase_orders_list') } %}
+{% endblock %}

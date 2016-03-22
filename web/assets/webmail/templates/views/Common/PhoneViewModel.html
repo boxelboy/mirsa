@@ -1,0 +1,23 @@
+<span class="phone" data-bind="css: {
+		'active': action() === 'active' || action() === 'outgoing' || action() === 'connected_out' || action() === 'connected_in' || action() === 'dial',
+		'standby': action() !== 'offline',
+		'outgoing': action() === 'outgoing',
+		'incoming': action() === 'incoming',
+		'ready': action() === 'ready' && input().length > 0
+
+	}">
+	<span class="text call_report empty" data-bind="text: phoneReport, css:{'empty': phoneReport() === ''}"></span>
+	<span class="text direction" data-bind="">To:</span>
+	<input class="input" data-bind="value: input, hasfocus: inputFocus, valueUpdate: 'afterkeydown', onEnter: call" />
+	<!--<input class="input" type="text" autocomplete="on" data-bind="value: input, hasfocus: inputFocus, valueUpdate: ['blur', 'afterkeydown'], autocompleteSimple: {callback: autocompleteCallback.bind($data), dataAccessor: phoneAutocompleteItem}" />-->
+
+	<span class="buttons">
+		<span class="button" data-bind="css: {
+				'hangup': action() === 'connected_out' || action() === 'connected_in'
+			  },
+			  click: multiAction">
+			<span class="icon"></span>
+		</span>
+	</span>
+	<span class="indicator" data-bind="css: {}"></span>
+</span>

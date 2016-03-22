@@ -1,0 +1,17 @@
+<div class="tab-pane" id="tasks">
+    <div class="col-md-12">
+        <div class="widget widget-purple">
+            <h2>
+                <i class="fa fa-tasks"></i>
+                Tasks
+            </h2>
+            {% include '@BusinessManTask/List/datatable.html.twig' with { header: false, url: path('api_tasks_list', { filter: { client: client.id }}) } %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#page_nav').append('<li><a href="#tasks" data-toggle="tab">Tasks</a></li>');
+    });
+</script>

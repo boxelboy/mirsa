@@ -1,0 +1,37 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% block columns %}
+    <th data-source="dateInspected" data-sortable="false" data-width="15px" data-searchable="false">Date Inspected</th>
+    <th data-source="batchNo" data-sortable="false" data-width="8%" data-searchable="true">Batch No</th>
+    <th data-source="serialNo" data-sortable="true" data-width="8%" data-searchable="true">Serial No</th>
+    <th data-source="manufacturedDate" data-sortable="true" data-width="8%" data-searchable="true" >Mfg Date</th>
+    <th data-source="qtyInspected" data-sortable="true" data-width="5%" data-searchable="true">Qty Inspected</th>
+    <th data-source="qtyRejected" data-template="wo_qtyRejected" data-sortable="true" data-width="5%" data-searchable="true">Qty Rejected</th>
+    <th data-source="qtyReworked" data-template="wo_qtyReworked" data-sortable="true" data-width="5%" data-searchable="true">Qty Reworked</th>
+    <th data-source="qtyAccepted" data-sortable="true" data-width="5%" data-searchable="true">Qty Accepted</th>
+    <th data-source="description" data-sortable="true" data-searchable="true">Description</th>
+
+{% endblock %}
+
+{% block templates %}
+
+    <script type="text/template" data-name="wo_qtyRejected">
+        {% verbatim %}
+            {{?it.qtyRejected}}
+                {{=it.qtyRejected}}
+            {{??}}
+                 0
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+     <script type="text/template" data-name="wo_qtyReworked">
+        {% verbatim %}
+            {{?it.qtyReworked}}
+                {{=it.qtyReworked}}
+            {{??}}
+                 0
+            {{?}}
+        {% endverbatim %}
+    </script>   
+{% endblock %}

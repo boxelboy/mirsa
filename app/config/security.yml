@@ -1,0 +1,45 @@
+security:
+    access_denied_url: /login
+    encoders:
+        BusinessMan\Bundle\BusinessManBundle\Entity\User:
+            algorithm: md5
+            iterations: 1
+            encode_as_base64: false
+
+    role_hierarchy:
+        ROLE_DEVELOPER: ROLE_STAFF
+
+    providers:
+        user:
+            entity:
+                class: BusinessManBusinessManBundle:User
+                property: username
+        bridge_token:
+            id: security.user.bridge_token_provider
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern:  ^/((api/)*login)$
+            security: false
+
+        bridge:
+            pattern: ^/bridge/.*
+            context: app
+            provider: bridge_token
+            filemaker_bridge: true
+
+        secured:
+            pattern: ^/.*
+            context: app
+            provider: user
+            anonymous: true
+            form_login:
+                check_path: businessman_login_check
+                login_path: businessman_login
+            logout:
+                path: businessman_logout
+                target: /

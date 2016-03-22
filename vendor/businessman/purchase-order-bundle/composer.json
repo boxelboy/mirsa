@@ -1,0 +1,28 @@
+{
+    "name": "businessman/purchase-order-bundle",
+    "type": "symfony-bundle",
+    "description": "Purchase order management",
+    "homepage": "http://git.computech-it.co.uk/BusinessMan/PurchaseOrderBundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jack Murdoch",
+            "email": "jack@computech-it.co.uk"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:BusinessMan/BusinessManBundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.5.*",
+        "businessman/businessman-bundle": "dev-master",
+        "businessman/supplier-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": { "BusinessMan\\Bundle\\PurchaseOrderBundle\\": "" }
+    }
+}

@@ -1,0 +1,9 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    
+    {% include '@MirsaMirsa/SalesOrder/view.html.twig' with { salesOrder: salesOrder} %}
+    
+    <h1>Pick Notes</h1>
+    {% include '@MirsaMirsa/PickNote/datatable.html.twig' with { url: path('api_mirsa_pick_notes_list', {'salesOrder': salesOrder.id} )} %}
+{% endblock %}

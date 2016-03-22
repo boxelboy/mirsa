@@ -1,0 +1,56 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% block columns %}
+    <th data-source="staffFullname" data-sortable="false" data-width="20%" data-searchable="false">Resource Name</th>
+    <th data-source="dateFrom" data-sortable="false" data-width="8%" data-searchable="true">Start Date </th>
+    <th data-source="timeFrom" data-sortable="true" data-width="8%" data-searchable="true">Strt Tme</th>
+    <th data-source="dateTo" data-sortable="true" data-width="8%" data-searchable="true" >Finish Date</th>
+    <th data-source="timeTo" data-sortable="true" data-width="6%" data-searchable="true">Fin Tme </th>
+    <th data-source="totalHours" data-template="ts_total" data-sortable="true" data-width="6%" data-searchable="true">Tt Hrs</th>
+    <th data-source="normalHours" data-template="ts_normal" data-sortable="true" data-width="5%" data-searchable="true"> Normal</th>
+    <th data-source="overtimeHours" data-template="ts_overtime" data-sortable="true" data-width="5%" data-searchable="true">Overtime</th>
+    <th data-source="notes" data-sortable="false" data-searchable="true">Notes</th>
+{% endblock %}
+
+{% block templates %}
+
+     <script type="text/template" data-name="ts_total">
+        {% verbatim %}
+            {{?it.totalHours}}
+                {{=it.totalHours.toFixed(2)}}
+            {{??}}
+                 0.00
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+     <script type="text/template" data-name="ts_normal">
+        {% verbatim %}
+            {{?it.normalHours}}
+                {{=it.normalHours.toFixed(2)}}
+            {{??}}
+                 0.00
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+     <script type="text/template" data-name="ts_overtime">
+        {% verbatim %}
+            {{?it.overtimeHours}}
+                {{=it.overtimeHours.toFixed(2)}}
+            {{??}}
+                 0.00
+            {{?}}
+        {% endverbatim %}
+    </script> 
+
+     <script type="text/template" data-name="ts_notes">
+        {% verbatim %}
+            {{?it.notes}}
+                {{=it.notes}}
+            {{??}}
+                 
+            {{?}}
+        {% endverbatim %}
+    </script>   
+{% endblock %}

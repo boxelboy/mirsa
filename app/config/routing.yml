@@ -1,0 +1,62 @@
+mirsa_mirsa:
+    resource: "@MirsaMirsaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+business_man_quote:
+    resource: "@BusinessManQuoteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+business_man_task:
+    resource: "@BusinessManTaskBundle/Resources/config/routing.yml"
+    prefix:   /
+
+business_man_call:
+    resource: "@BusinessManCallBundle/Resources/config/routing.yml"
+    prefix:   /
+
+business_man_webmail:
+    resource: "@BusinessManWebmailBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman_scheduler:
+    resource: "@BusinessManSchedulerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman_support:
+    resource: "@BusinessManSupportBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman_purchase_order:
+    resource: "@BusinessManPurchaseOrderBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman_supplier:
+    resource: "@BusinessManSupplierBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman_staff:
+    resource: "@BusinessManStaffBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman_project:
+    resource: "@BusinessManProjectBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman_job:
+    resource: "@BusinessManJobBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman_client:
+    resource: "@BusinessManClientBundle/Resources/config/routing.yml"
+    prefix:   /
+
+scheduler:
+    resource: "@SchedulerCommonBundle/Resources/config/routing.yml"
+    prefix:   /
+
+businessman:
+    resource: "@BusinessManBusinessManBundle/Resources/config/routing.yml"
+    prefix:   /
+
+js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

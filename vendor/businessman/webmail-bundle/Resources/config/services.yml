@@ -1,0 +1,16 @@
+services:
+    webmail.bridge:
+        class: BusinessMan\Bundle\WebmailBundle\Webmail\WebmailBridge
+        arguments: [@doctrine, %webmail.dir%]
+
+    webmail.subscriber.menu:
+        class: BusinessMan\Bundle\WebmailBundle\EventListener\MenuSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    webmail.subscriber.dashboard:
+        class: BusinessMan\Bundle\WebmailBundle\EventListener\DashboardSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }

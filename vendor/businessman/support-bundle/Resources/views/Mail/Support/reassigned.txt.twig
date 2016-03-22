@@ -1,0 +1,7 @@
+A support ticket ({{ item.supportCall.id }}) has been assigned to {{ item.supportCall.assignedTo.displayName }} by {{ user.staff.fullName }}. To view the full ticket, go to {{ url('support_calls_view', { supportCall: item.supportCall.id }) }}
+{% if item.description %}
+
+--
+
+{{ item.description }}
+{% endif %}

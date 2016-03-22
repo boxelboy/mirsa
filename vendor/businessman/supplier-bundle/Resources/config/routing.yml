@@ -1,0 +1,27 @@
+supplier_contacts_list:
+    path: /suppliers/contacts
+    defaults: { _controller: BusinessManSupplierBundle:SupplierContact:list }
+
+supplier_contacts_view:
+    path: /suppliers/contacts/{contact}
+    defaults: { _controller: BusinessManSupplierBundle:SupplierContact:view }
+    options: { expose: true }
+
+suppliers_list:
+    path: /suppliers
+    defaults: { _controller: BusinessManSupplierBundle:Supplier:list }
+
+suppliers_view:
+    path: /suppliers/{supplier}
+    defaults: { _controller: BusinessManSupplierBundle:Supplier:view }
+    options: { expose: true }
+
+api_suppliers_list:
+    path: /api/suppliers.{_format}
+    defaults: { _controller: BusinessManSupplierBundle:Api/Supplier:list, _format: json }
+    requirements: { _format: json }
+
+api_supplier_contacts_list:
+    path: /api/suppliers/contacts.{_format}
+    defaults: { _controller: BusinessManSupplierBundle:Api/SupplierContact:list, _format: json }
+    requirements: { _format: json }

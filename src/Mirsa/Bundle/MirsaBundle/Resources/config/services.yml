@@ -1,0 +1,6 @@
+services:
+    mirsa.subscriber.menu:
+        class: Mirsa\Bundle\MirsaBundle\EventListener\MenuSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }

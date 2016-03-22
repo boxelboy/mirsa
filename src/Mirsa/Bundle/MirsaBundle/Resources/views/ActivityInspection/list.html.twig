@@ -1,0 +1,23 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Work Order : Inspection Activity Report </h1>
+    {% include '@MirsaMirsa/ActivityInspection/datatable.html.twig' with { url: path('api_mirsa_activity_inspection_list') } %}
+{#    {% include '@MirsaMirsa/InspectionActivity/total.html.twig' with { url: path('mirsa_inspection_activity_total') } %} #}
+    <button class="btn clearFilter btn-info">Clear Filter</button>
+    
+<script>
+    $(document).ready(function () {
+
+        $('.clearFilter').click(function() {
+        	$.each($('input'), function(){
+        		console.log(this,$(this).val());
+        		$(this).val('').keyup();
+        		//var e = $.Event('keyup', { keyCode: 13 });
+				//$(this).trigger(e);
+        		console.log(this,$(this).val());
+        	})
+        });    
+    });        
+</script>  
+{% endblock %}

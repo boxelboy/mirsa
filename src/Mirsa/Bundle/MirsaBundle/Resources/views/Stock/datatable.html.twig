@@ -1,0 +1,35 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    <th data-source="id" data-template="stock_action" data-width="10px"></th>
+    <th data-source="categoryDescription" data-sortable="true" data-searchable="true"">Category</th>
+    <th data-source="sku" data-sortable="true" data-width="80px" data-searchable="true"">Sku</th>
+    <th data-source="description" data-sortable="true" data-searchable="true"">Description</th>
+    <th data-source="actualStock" data-sortable="true" data-width="80px" data-searchable="true"">Act.</th>
+    <th data-source="reservedStock" data-sortable="true" data-width="80px" data-searchable="true"">Res.</th>
+    <th data-source="bayUnavailableQty" data-sortable="true" data-width="80px" data-searchable="true"">Unavail.</th>
+    <th data-source="availableStock" data-sortable="true" data-width="80px" data-searchable="true"">Avail.</th>
+    <th data-source="allocatedStock" data-sortable="true" data-width="80px" data-searchable="true"">Alloc.</th>
+    <th data-source="totalGoodsIn" data-sortable="true" data-width="80px" data-searchable="true"">G.I..</th>
+    <th data-source="totalWIP" data-sortable="true" data-width="80px" data-searchable="true"">WIP</th>
+    <th data-source="totalFinishedGoods" data-sortable="true" data-width="80px" data-searchable="true"">Finished Goods</th>
+    <th data-source="minStock" data-sortable="true" data-width="80px" data-searchable="true"">Min</th>
+    <th data-source="totalInTransit" data-sortable="true" data-width="80px" data-searchable="true"">In Transit</th>
+    <th data-source="onOrderStock" data-sortable="true" data-width="80px" data-searchable="true"">On Order</th>
+    <th data-source="minOrderQuantityStock" data-sortable="true" data-width="80px" data-searchable="true"">Min Order Qty</th>
+    <th data-source="minOrderRequiredStock" data-sortable="true" data-width="80px" data-searchable="true"">Min Order Reqy</th>
+    
+{% endblock %}
+
+
+{% block templates %}
+    <script type="text/template" data-name="stock_action">
+        {% verbatim %}
+            <a class="btn btn-xs btn-primary" href="{{=Routing.generate('mirsa_stock_audit_list', { stock: it.id }) }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% endverbatim %}
+    </script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Assign to client
+        <small>{{ supportCall.description ? supportCall.description[:100] : supportCall.id }}</small>
+    </h1>
+
+    {{ form(form) }}
+{% endblock %}

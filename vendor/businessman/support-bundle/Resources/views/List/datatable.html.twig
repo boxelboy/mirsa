@@ -1,0 +1,118 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set dashboard = dashboard is defined ? dashboard : false %}
+{% set client = client is defined ? client : true %}
+{% set assignedTo = assignedTo is defined ? assignedTo : false %}
+{% set created = created is defined ? created : true %}
+{% set updated = updated is defined ? updated : true %}
+{% set status = status is defined ? status : true %}
+{% set owner = owner is defined ? owner : true %}
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    <th data-source="id" data-template="support_calls_actions" data-width="10px"></th>
+    <th data-source="id" data-width="10px" data-sortable="true" data-searchable="true">ID</th>
+    {% if client %}
+        <th data-source="clientName" data-width="120px" data-template="support_calls_client" data-searchable="true">Client</th>
+    {% endif %}
+    {% if assignedTo %}
+        <th data-source="assignedToName" data-width="120px" data-template="support_calls_assigned" data-searchable="true">Assigned</th>
+    {% endif %}
+    {% if status %}
+        <th data-source="status" data-width="80px" data-searchable="true" data-sortable="true" data-search-options="New,Open,Cancelled,Closed,Completed">Status</th>
+    {% endif %}
+    {% if owner %}
+        <th data-source="toAction" data-width="80px" data-searchable="true" data-sortable="true" data-template="support_calls_to_action" data-search-options="Helpdesk,Customer">Owner</th>
+    {% endif %}
+    <th data-source="description" data-template="support_calls_description" data-sortable="true" data-searchable="true">Description</th>
+    {% if created %}
+        <th data-source="created" data-width="100px" data-sortable="true" data-template="support_calls_created">Created</th>
+    {% endif %}
+    {% if updated %}
+        <th data-source="items" data-width="100px" data-template="support_calls_updated">Last updated</th>
+    {% endif %}
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="support_calls_actions">
+        {% if bridge %}
+            <a class="btn btn-xs btn-primary" href="#" data-script="Dashboard View Ticket" data-parameter="{{ "{{=it.id }}"|raw }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% else %}
+            {% verbatim %}
+                <a class="btn btn-primary btn-xs" href="{{=Routing.generate('support_calls_view', { supportCall: it.id })}}"><i class="fa fa-chevron-right"></i></a>
+            {% endverbatim %}
+        {% endif %}
+    </script>
+
+    {% if client %}
+        <script type="text/template" data-name="support_calls_client">
+            {% verbatim %}
+                {{?it.client}}
+                    {{=it.client.name ? it.client.name : it.client.id}}
+                {{??}}
+                    Unassigned
+                {{?}}
+            {% endverbatim %}
+        </script>
+    {% endif %}
+
+    {% if created %}
+        <script type="text/template" data-name="support_calls_created">
+            {% verbatim %}
+                {{=moment(it.created).fromNow()}}
+            {% endverbatim %}
+        </script>
+    {% endif %}
+
+    {% if assignedTo %}
+        <script type="text/template" data-name="support_calls_assigned">
+            {% verbatim %}
+                {{?it.assignedTo}}
+                    {{=it.assignedTo.forename}} {{=it.assignedTo.surname}}
+                {{??}}
+                    Unassigned
+                {{?}}
+            {% endverbatim %}
+        </script>
+    {% endif %}
+
+    {% if owner %}
+        <script type="text/template" data-name="support_calls_to_action">
+            {% verbatim %}
+                {{?it.toAction == 'Helpdesk To Action'}}
+                    Helpdesk
+                {{??}}
+                    Customer
+                {{?}}
+            {% endverbatim %}
+        </script>
+    {% endif %}
+
+    <script type="text/template" data-name="support_calls_description">
+        {% verbatim %}
+            {{? it.description}}
+                {{? it.description.length > 100}}
+                    {{=it.description.substr(0, 100)}}...
+                {{??}}
+                    {{=it.description}}
+                {{?}}
+            {{??}}
+                No subject
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    {% if updated %}
+        <script type="text/template" data-name="support_calls_updated">
+            {% verbatim %}
+                {{?it.messages.length}}
+                    {{=moment(it.messages[it.messages.length - 1].created).fromNow()}}
+                {{??}}
+                    -
+                {{?}}
+            {% endverbatim %}
+        </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,6 @@
+services:
+    staff.subscriber.menu:
+        class: BusinessMan\Bundle\StaffBundle\EventListener\MenuSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }

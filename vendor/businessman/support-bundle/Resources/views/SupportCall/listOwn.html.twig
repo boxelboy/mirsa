@@ -1,0 +1,6 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Your tickets</h1>
+    {% include '@BusinessManSupport/List/datatable.html.twig' with { status: false, owner: true, url: path('api_support_call_list', { filter: { assignedTo: app.user.staff.id, open: true }}) } %}
+{% endblock %}

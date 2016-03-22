@@ -1,0 +1,192 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Job details
+        <small>{{ job.description ? job.description : job.id }}</small>
+    </h1>
+
+    <ul class="nav nav-pills" id="page_nav">
+        <li class="active">
+            <a href="#details" data-toggle="tab">Details</a>
+        </li>
+        <li>
+            <a href="#related" data-toggle="tab">Related jobs</a>
+        </li>
+        <li>
+            <a href="#resources" data-toggle="tab">Resources</a>
+        </li>
+        <li>
+            <a href="#timesheets" data-toggle="tab">Timesheets</a>
+        </li>
+
+        <li class="actions">
+            <a data-toggle="dropdown">
+                Actions
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                {% if not isResource and is_granted('ROLE_STAFF') %}
+                    <li>
+                        <a href="{{ path('jobs_resources_add_self', { job: job.id }) }}">Add yourself as a resource</a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_STAFF') %}
+                    <li>
+                        <a href="{{ path('jobs_resources_add', { job: job.id }) }}">Add a resource</a>
+                    </li>
+                {% endif %}
+
+                {% if isResource and is_granted('ROLE_STAFF') %}
+                    <li>
+                        <a href="{{ path('jobs_timesheets_create', { job: job.id }) }}">Create a timesheet</a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_STAFF') %}
+                    <li>
+                        <a href="{{ path('jobs_child_create', { job: job.id }) }}">Create a child job</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="page_content">
+        <div class="tab-pane active" id="details">
+            {% if job.detail %}
+                <div class="col-md-4">
+                    <div class="widget">
+                        <h2>
+                            <i class="fa fa-info-circle"></i>
+                            Details
+                        </h2>
+                        <div class="details-text">
+                            {{ job.detail|nl2br }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="{% if job.detail %}col-md-8{% else %}col-md-12{% endif %}">
+                <div class="widget widget-green">
+                    <h2>
+                        <i class="fa fa-th-list"></i>
+                        Job {{ job.id }}
+                    </h2>
+                    <div class="details">
+                        {% if job.parent != job %}
+                            <div>
+                                <div>
+                                    Parent
+                                </div>
+                                <div>
+                                    <a href="{{ path('jobs_view', { job: job.parent.id }) }}">{{ job.parent.description }}</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if job.master != job and job.master != job.parent %}
+                            <div>
+                                <div>
+                                    Master
+                                </div>
+                                <div>
+                                    <a href="{{ path('jobs_view', { job: job.master.id }) }}">{{ job.master.description }}</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <div>
+                                Created
+                            </div>
+                            <div>
+                                {{ job.created|date('Y-m-d') }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Status
+                            </div>
+                            <div>
+                                {{ job.status }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Priority
+                            </div>
+                            <div>
+                                {{ job.priority }}
+                            </div>
+                        </div>
+                        {% if job.client %}
+                            <div>
+                                <div>
+                                    Client
+                                </div>
+                                <div class="client_name">
+                                    {{ job.client.name ? job.client.name : job.client.id }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if job.manager %}
+                            <div>
+                                <div>
+                                    Manager
+                                </div>
+                                <div>
+                                    {{ job.manager.displayName }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="widget widget-purple">
+                    <h2>
+                        <i class="fa fa-history"></i>
+                        History
+                    </h2>
+                    {% include '@BusinessManBusinessMan/Notes/dialog.html.twig' with { notes: job.notes } %}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="related">
+            <div class="col-md-12">
+                <div class="widget widget-orange">
+                    <h2>
+                        <i class="fa fa-level-down"></i>
+                        Children
+                    </h2>
+                    {% include '@BusinessManJob/Job/datatable.html.twig' with { header: false, url: path('api_jobs_list', { filter: { parent: job.id }})} %}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="resources">
+            <div class="col-md-12">
+                <div class="widget widget-red">
+                    <h2>
+                        <i class="fa fa-user"></i>
+                        Resources
+                    </h2>
+                    {% include '@BusinessManJob/Resource/datatable.html.twig' with { header: false, footer: false, url: path('api_resources_list', { filter: { job: job.id }}) } %}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="timesheets">
+            <div class="col-md-12">
+                <div class="widget widget-black">
+                    <h2>
+                        <i class="fa fa-calendar"></i>
+                        Timesheets
+                    </h2>
+                    {% include '@BusinessManJob/Timesheet/datatable.html.twig' with { header: false, footer: false, url: path('api_timesheets_list', { filter: { job: job.id }}) } %}
+                </div>
+            </div>
+        </div>
+
+        {{ extendable_block('job_view', { job: job.id }) }}
+    </div>
+{% endblock %}

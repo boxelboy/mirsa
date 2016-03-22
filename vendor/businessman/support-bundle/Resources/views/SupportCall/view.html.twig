@@ -1,0 +1,209 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Ticket details
+        <small>{{ supportCall.description ? supportCall.description[:50] : supportCall.id }}{{ supportCall.description|length > 50 ? '...' : '' }}</small>
+    </h1>
+
+    <ul class="nav nav-pills" id="page_nav">
+        <li class="active">
+            <a href="#details" data-toggle="tab">Details</a>
+        </li>
+        <li>
+            <a href="#messages" data-toggle="tab">Messages</a>
+        </li>
+        <li class="actions">
+            <a data-toggle="dropdown">
+                Actions
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                {% if supportCall.status != 'Closed' %}
+                    <li>
+                        <a href="{{ path('support_calls_reply', { supportCall: supportCall.id }) }}">Reply</a>
+                    </li>
+
+                    {% if supportCall.assignedTo %}
+                        <li>
+                            <a href="{{ path('support_calls_assign', { supportCall: supportCall.id }) }}">Reassign</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('support_calls_assign', { supportCall: supportCall.id }) }}">Assign</a>
+                        </li>
+                    {% endif %}
+
+                    <li>
+                        <a href="{{ path('support_calls_close', { supportCall: supportCall.id }) }}">Close</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ path('support_calls_reopen', { supportCall: supportCall.id }) }}">Reopen</a>
+                    </li>
+                {% endif %}
+
+                {% if not supportCall.client %}
+                    <li>
+                        <a href="{{ path('support_calls_client', { supportCall: supportCall.id }) }}">Assign to a client</a>
+                    </li>
+                {% endif %}
+
+                <li class="divider"></li>
+
+                <li>
+                    <a id="toggle-internal" href="#">Show/hide internal updates</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="page_content">
+        <div class="tab-pane active" id="details">
+            <div class="col-md-12">
+                <div class="widget">
+                    <h2>
+                        <i class="fa fa-th-list"></i>
+                        Details
+                    </h2>
+                    <div class="details">
+                        <div>
+                            <div>
+                                Ticket
+                            </div>
+                            <div>
+                                {{ supportCall.id }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Subject
+                            </div>
+                            <div>
+                                {{ supportCall.description }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Client
+                            </div>
+                            <div class="client_name">
+                                {% if supportCall.client %}
+                                    {{ supportCall.client.name ? supportCall.client.name : supportCall.client.id }}
+                                {% else %}
+                                    Unassigned
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Status
+                            </div>
+                            <div>
+                                {% if supportCall.status in ['New', 'Open'] %}
+                                    {{ supportCall.toAction }}
+                                {% else %}
+                                    {{ supportCall.status }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Created
+                            </div>
+                            <div>
+                                {{ supportCall.created|date('Y-m-d') }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Assigned to
+                            </div>
+                            <div>
+                                {% if supportCall.assignedTo %}
+                                    {{ supportCall.assignedTo.displayName }}
+                                {% else %}
+                                    Unassigned
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="messages">
+            <div class="col-md-12">
+                <div class="widget widget-transparent">
+                    <ul class="dialog">
+                        {% for message in supportCall.messages|reverse %}
+                            <li class="{% if message.staff %}staff{% elseif message.contact %}contact{% endif %} {% if message.internal %}internal{% endif %}">
+                                <span class="author">
+                                    {% if message.staff %}
+                                        {% if message.staff.photo %}
+                                            <img class="staff" src="{{ path('businessman_container', { encodedUrl: message.staff.photo.encodedUrl }) }}" />
+                                        {% else %}
+                                            <img class="staff" src="{{ asset('bundles/businessmanbusinessman/img/default-avatar.png') }}" />
+                                        {% endif %}
+
+                                        {{ message.staff.forename }} {{ message.staff.surname }}
+                                        <span class="label label-primary hidden-xs">Staff</span>
+
+                                        {% if supportCall.client and message.staff == supportCall.client.manager %}
+                                            <span class="label label-success hidden-xs">Account manager</span>
+                                        {% endif %}
+                                    {% elseif message.contact %}
+                                        {% if message.contact.photo %}
+                                            <img class="client" src="{{ path('businessman_container', { encodedUrl: message.contact.photo.encodedUrl }) }}" />
+                                        {% else %}
+                                            <img class="client" src="{{ asset('bundles/businessmanbusinessman/img/default-avatar.png') }}" />
+                                        {% endif %}
+
+                                        {{ message.contact.forename }} {{ message.contact.surname }}
+
+                                        {% if message.contact.email %}
+                                            &lt;{{ message.contact.email }}&gt;
+                                        {% endif %}
+                                    {% else %}
+                                        {% if not message.internal %}
+                                            <img src="{{ asset('bundles/businessmanbusinessman/img/default-avatar.png') }}" />
+                                        {% else %}
+                                            <img class="bot" src="{{ asset('bundles/businessmanbusinessman/img/bot.png') }}" />
+                                        {% endif %}
+
+                                        {{ message.createdBy|default('Unknown author') }}
+                                    {% endif %}
+
+                                    {% if message.staff %}
+                                        <span title="{% if message.emailClient %}Email sent to the client{% else %}No email update sent to the client{% endif %}" class="label {% if message.emailClient %}label-success{% else %}label-default{% endif %} pull-right"><i class="fa fa-envelope"></i></span>
+                                        <span title="{% if message.emailSupport %}Email sent to the support team{% else %}No email update sent to the support team{% endif %}" class="label {% if message.emailSupport %}label-primary{% else %}label-default{% endif %} pull-right"><i class="fa fa-envelope"></i></span>
+                                    {% endif %}
+                                </span>
+                                <span class="date">
+                                    {{ message.created|date('Y-m-d') }}
+                                    <small>at</small>
+                                    {{ message.created|date('H:i') }}
+                                </span>
+                                {{ message.description|nl2br }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {{ extendable_block('support_call_view', { supportCall: supportCall.id }) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(function () {
+            $('#toggle-internal').on('click', function (e) {
+                e.preventDefault();
+                $('li.internal').toggle();
+            });
+        });
+    </script>
+{% endblock %}

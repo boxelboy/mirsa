@@ -1,0 +1,55 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    {% if bridge %}
+        <th data-source="id" data-template="quotes_actions" data-width="10px"></th>
+    {% endif %}
+    <th data-source="id" data-sortable="true" data-searchable="true" data-width="60px">#</th>
+    <th data-source="followUp" data-template="quotes_follow_up" data-sortable="true" data-width="100px">Follow up</th>
+    <th data-source="client" data-template="quotes_client" data-sortable="true">Client</th>
+    <th data-source="netTotal" data-template="quotes_total" class="text-right" data-sortable="true" data-width="60px">Net total</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="dot/template" data-name="quotes_actions">
+        {% if bridge %}
+            <a class="btn btn-xs btn-primary" href="#" data-script="Dashboard View Quote" data-parameter="{{ "{{=it.id }}"|raw }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% else %}
+            {% verbatim %}
+                <a href="{{=Routing.generate('quotes_view', { quote: it.id })}}" class="btn btn-xs btn-primary">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            {% endverbatim %}
+        {% endif %}
+    </script>
+
+    <script type="dot/template" data-name="quotes_follow_up">
+        {% verbatim %}
+            {{?it.followUp}}
+                {{=moment(it.followUp).format('Do MMM YYYY')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="dot/template" data-name="quotes_total">
+        {% verbatim %}
+            £{{=it.netTotal.toFixed(2)}}
+        {% endverbatim %}
+    </script>
+
+    <script type="dot/template" data-name="quotes_client">
+        {% verbatim %}
+            {{?it.client}}
+                {{=it.client.name}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

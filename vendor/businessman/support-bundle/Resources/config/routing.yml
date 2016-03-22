@@ -1,0 +1,46 @@
+support_calls_list_own:
+    path: /support
+    defaults: { _controller: BusinessManSupportBundle:SupportCall:listOwn }
+
+support_calls_list_open:
+    path: /support/open
+    defaults: { _controller: BusinessManSupportBundle:SupportCall:listOpen }
+
+support_calls_list_closed:
+    path: /support/closed
+    defaults: { _controller: BusinessManSupportBundle:SupportCall:listClosed }
+
+support_calls_create:
+    path: /clients/{client}/support
+    methods: GET|POST
+    defaults: { _controller: BusinessManSupportBundle:Client:create }
+
+support_calls_reply:
+    path: /support/ticket/{supportCall}/reply
+    defaults: { _controller: BusinessManSupportBundle:SupportCall:reply }
+
+support_calls_client:
+    path: /support/ticket/{supportCall}/client
+    defaults: { _controller: BusinessManSupportBundle:Client:assign }
+
+support_calls_assign:
+    path: /support/ticket/{supportCall}/assign
+    defaults: { _controller: BusinessManSupportBundle:SupportCall:assign }
+
+support_calls_reopen:
+    path: /support/ticket/{supportCall}/reopen
+    defaults: { _controller: BusinessManSupportBundle:SupportCall:reopen }
+
+support_calls_close:
+    path: /support/ticket/{supportCall}/close
+    defaults: { _controller: BusinessManSupportBundle:SupportCall:close }
+
+support_calls_view:
+    path: /support/ticket/{supportCall}
+    defaults: { _controller: BusinessManSupportBundle:SupportCall:view }
+    options: { expose: true }
+
+api_support_call_list:
+    path: /api/tickets.{_format}
+    defaults: { _controller: BusinessManSupportBundle:Api/SupportCall:list, _format: json }
+    requirements: { _format: json }

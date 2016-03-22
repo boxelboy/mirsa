@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        {% block stylesheets %}
+            {% stylesheets
+                'bundles/schedulercommon/css/print.css'
+                filter='cssrewrite' output='assets/compiled/print.css'
+            %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+    </head>
+    <body onload="window.print();">
+        <div class="nav no-print">
+            Print mode.
+            <a href="javascript:history.back();">Go back</a>
+        </div>
+
+        {% block body %}{% endblock %}
+    </body>
+</html>

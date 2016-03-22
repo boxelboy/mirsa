@@ -1,0 +1,74 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    <th data-template="calls_actions" data-width="10px"></th>
+    {% if bridge %}
+        <th data-template="calls_respond" data-width="10px"></th>
+    {% endif %}
+    <th data-source="contactDate" data-template="calls_date" data-sortable="true" data-width="80px">Date</th>
+    <th data-source="contactTime" data-template="calls_time" data-sortable="true" data-width="50px">Time</th>
+    <th data-source="contact" data-template="calls_contact" data-sortable="true" data-searchable="true" data-width="100px">Contact</th>
+    <th data-source="client" data-template="calls_client" data-sortable="true" data-searchable="true">Client</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="dot/template" data-name="calls_actions">
+        {% if bridge %}
+            <a class="btn btn-xs btn-primary" href="#" data-script="Dashboard View Call" data-parameter="{{ "{{=it.id }}"|raw }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% else %}
+            {% verbatim %}
+                <a href="{{=Routing.generate('calls_view', { call: it.id })}}" class="btn btn-xs btn-primary">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            {% endverbatim %}
+        {% endif %}
+    </script>
+
+    {% if bridge %}
+    <script type="dot/template" data-name="calls_respond">
+        <a class="btn btn-xs btn-primary" href="#" data-script="Dashboard Respond To Call" data-parameter="{{ "{{=it.id }}"|raw }}">
+            <i class="fa fa-phone"></i>
+        </a>
+    </script>
+    {% endif %}
+
+    <script type="dot/template" data-name="calls_date">
+        {% verbatim %}
+            {{?it.contactDate}}
+                {{=moment(it.contactDate).format('Do MMM YYYY')}}
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="dot/template" data-name="calls_time">
+        {% verbatim %}
+            {{?it.contactTime}}
+                {{=moment(it.contactTime, 'HH:mm:ss').format('HH:mm')}}
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="dot/template" data-name="calls_client">
+        {% verbatim %}
+            {{?it.client}}
+                {{=it.client.name}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="dot/template" data-name="calls_contact">
+        {% verbatim %}
+            {{?it.contact}}
+                {{=it.contact.forename ? it.contact.forename : ''}} {{=it.contact.surname ? it.contact.surname : ''}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

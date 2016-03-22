@@ -1,0 +1,13 @@
+calls_list:
+    path: /calls
+    defaults: { _controller: BusinessManCallBundle:Call:list }
+
+calls_view:
+    path: /calls/{call}
+    defaults: { _controller: BusinessManCallBundle:Call:view }
+    options: { expose: true }
+
+api_calls_list:
+    path: /api/calls.{_format}
+    defaults: { _controller: BusinessManCallBundle:Api/Call:list, _format: json }
+    requirements: { _format: json }

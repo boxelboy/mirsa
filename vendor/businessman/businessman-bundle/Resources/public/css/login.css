@@ -1,0 +1,60 @@
+body {
+    background-color: #438eb9;
+    background-image: url(../img/bg_square.png);
+}
+h1 {
+    margin: 0 0 10px;
+    padding: 0;
+    color: #333;
+    font-weight: 900;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+#wrapper {
+    min-width: 400px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 50px;
+    margin-top: 80px;
+}
+form div {
+    margin: 5px 0;
+}
+label {
+    margin-top: 15px;
+    font-weight: normal;
+    color: #333;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #fff;
+    border-radius: 3px;
+    font-size: 12px;
+}
+input[type=checkbox] {
+    width: auto;
+}
+button:active, button:focus {
+    outline: none;
+}
+button {
+    width: 75%;
+    background: #438eb9;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    padding: 15px;
+    margin-top: 5px;
+}
+div:nth-child(4) {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 45px;
+}

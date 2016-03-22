@@ -1,0 +1,44 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% block columns %}
+    <th data-source="id" data-template="workOrderAction" data-sortable="false" data-width="2%" data-searchable="false"> </th>
+    <th data-source="id" data-template="workOrderTimesheet" data-sortable="false" data-width="2%" data-searchable="false"> </th>
+    <th data-source="id" data-template="workOrderPDFAction" data-sortable="false" data-width="2%" data-searchable="false">BOM</th>
+    <th data-source="id" data-sortable="true" data-width="5%" data-searchable="true" data-sort="desc">#</th>
+    <th data-source="description" data-sortable="true" data-searchable="true">Description</th>
+    <th data-source="type" data-sortable="true" data-width="10%" data-searchable="true">Type</th>
+    <th data-source="status" data-sortable="true" data-width="5%" data-searchable="true" data-search-options="Open,Cancelled,Complete,In Progress,Open">Status</th>
+    <th data-source="plannedStartDate" data-sortable="true" data-width="10%" data-searchable="true">Planned Date</th>
+    <th data-source="customerName" data-sortable="true" data-width="15%" data-searchable="true">Customer Name</th>
+    <th data-source="tradingCompany" data-sortable="true" data-width="10%" data-searchable="true">Trading Company</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="workOrderAction">
+        {% verbatim %}
+                {{?it.type == "External Inspection" || it.type == "Internal Inspection"}}
+                    <a href="{{=Routing.generate('mirsa_work_order_inspection_line_items', { workOrder: it.id }) }}" class="btn btn-xs btn-primary"><i class="fa fa-chevron-right"></i></a>
+                {{?}}
+
+                 {{?it.type == "Inspection" || it.type == "Assembly"}}
+                    <a href="{{=Routing.generate('mirsa_assembly_view', { workOrder: it.id }) }}" class="btn btn-xs btn-primary"><i class="fa fa-chevron-right"></i></a>
+                {{?}}
+       {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="workOrderTimesheet">
+        {% verbatim %}
+                {{?it.type == "External Inspection" || it.type == "Internal Inspection"}}
+                    <a href="{{=Routing.generate('mirsa_work_order_timesheet_list', { workOrder: it.id }) }}" class="btn btn-xs btn-success"><i class="fa fa-chevron-right"></i></a>
+                {{?}}
+       {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="workOrderPDFAction">
+        {% verbatim %}
+            {{?it.pdf.name}}
+                <a href="{{=Routing.generate('mirsa_work_order_download', { workOrder: it.id }) }}" class="btn btn-xs btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+            {{?}}
+        {% endverbatim %}
+    </script>    
+{% endblock %}

@@ -1,0 +1,6 @@
+services:
+    supplier.subscriber.menu:
+        class: BusinessMan\Bundle\SupplierBundle\EventListener\MenuSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }

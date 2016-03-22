@@ -1,0 +1,13 @@
+webmail_inbox:
+    path: /webmail
+    defaults: { _controller: BusinessManWebmailBundle:Webmail:inbox, bridge: false }
+
+webmail_bridge_inbox:
+    pattern: /bridge/webmail/inbox
+    defaults: { _controller: BusinessManWebmailBundle:Webmail:inbox, bridge: true }
+    methods: GET
+
+webmail_bridge_compose:
+    pattern: /bridge/webmail/compose
+    defaults: { _controller: BusinessManWebmailBundle:Webmail:compose, bridge: true }
+    methods: GET

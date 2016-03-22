@@ -1,0 +1,16 @@
+{% extends '@BusinessManBusinessMan/Layout/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+        'bundles/businessmanbusinessman/css/login.css'
+        filter='cssrewrite' output='assets/compiled/login.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block layout_body %}
+    {% block body %}{% endblock %}
+{% endblock %}

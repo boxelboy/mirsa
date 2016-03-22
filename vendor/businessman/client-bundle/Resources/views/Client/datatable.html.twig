@@ -1,0 +1,42 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    <th data-source="id" data-template="clients_actions" data-width="10px"></th>
+    <th data-source="name" data-template="clients_name" data-sortable="true" data-searchable="true">Name</th>
+    <th data-source="classification" data-sortable="true" data-width="80px" data-searchable="true" data-search-options="Individual,Company">Classification</th>
+    <th data-source="status" data-template="clients_status" data-sortable="true" data-width="80px" data-searchable="true" data-search-options="Active,New,On Hold,Closed">Status</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="dot/template" data-name="clients_actions">
+        {% if bridge %}
+            <a class="btn btn-xs btn-primary" href="#" data-script="Dashboard View Client" data-parameter="{{ "{{=it.id }}"|raw }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% else %}
+            {% verbatim %}
+                <a href="{{=Routing.generate('clients_view', { client: it.id })}}" class="btn btn-xs btn-primary">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            {% endverbatim %}
+        {% endif %}
+    </script>
+
+    <script type="text/template" data-name="clients_name">
+        {% verbatim %}
+            {{? it.name }}
+                {{=it.name}}
+            {{??}}
+                {{=it.id}}
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="clients_status">
+        {% verbatim %}
+            {{=it.status.charAt(0).toUpperCase() + it.status.toLowerCase().slice(1)}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

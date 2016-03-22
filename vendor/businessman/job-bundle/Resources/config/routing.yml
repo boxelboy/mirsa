@@ -1,0 +1,72 @@
+jobs_list:
+    path: /jobs
+    defaults: { _controller: BusinessManJobBundle:Job:list }
+
+jobs_list_own:
+    path: /jobs/own
+    defaults: { _controller: BusinessManJobBundle:Job:listOwn }
+
+jobs_view:
+    path: /jobs/{job}
+    defaults: { _controller: BusinessManJobBundle:Job:view }
+    options: { expose: true }
+
+jobs_resources_add_self:
+    path: /jobs/{job}/resources/add/self
+    defaults: { _controller: BusinessManJobBundle:Resource:addSelf }
+    methods: GET
+    options: { expose: true }
+
+jobs_resources_add:
+    path: /jobs/{job}/resources/add
+    defaults: { _controller: BusinessManJobBundle:Resource:add }
+    methods: GET|POST
+    options: { expose: true }
+
+jobs_resources_remove:
+    path: /jobs/{job}/resources/{resource}/remove
+    defaults: { _controller: BusinessManJobBundle:Resource:remove }
+    methods: GET
+    options: { expose: true }
+
+jobs_child_create:
+    path: /jobs/{job}/children/create
+    defaults: { _controller: BusinessManJobBundle:Job:createChild }
+    methods: GET|POST
+
+jobs_timesheets_create_quick:
+    path: /dashboard/timesheets
+    defaults: { _controller: BusinessManJobBundle:Dashboard:createTimesheet }
+    methods: GET|POST
+
+jobs_timesheets_create:
+    path: /jobs/{job}/timesheets
+    defaults: { _controller: BusinessManJobBundle:Timesheet:create }
+    methods: GET|POST
+
+jobs_timesheets_remove:
+    path: /jobs/{job}/timesheets/{timesheet}/remove
+    defaults: { _controller: BusinessManJobBundle:Timesheet:remove }
+    methods: GET
+    options: { expose: true }
+
+jobs_management_timesheets:
+    path:     /management/timesheets
+    defaults: { _controller: BusinessManJobBundle:Timesheet:overview }
+
+api_jobs_list:
+    path: /api/jobs.{_format}
+    defaults: { _controller: BusinessManJobBundle:Api/Job:list, _format: json }
+    requirements: { _format: json }
+
+api_resources_list:
+    path: /api/resources.{_format}
+    defaults: { _controller: BusinessManJobBundle:Api/Resource:list, _format: json }
+    requirements: { _format: json }
+    options: { expose: true }
+
+api_timesheets_list:
+    path: /api/timesheets.{_format}
+    defaults: { _controller: BusinessManJobBundle:Api/Timesheet:list, _format: json }
+    requirements: { _format: json }
+

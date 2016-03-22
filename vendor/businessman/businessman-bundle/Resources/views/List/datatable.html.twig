@@ -1,0 +1,16 @@
+<table
+    class="table table-hover table-bordered{% if rowlink is defined %}{{ rowlink ? ' rowlink' : '' }}{% else %} rowlink{% endif %}"
+    data-datatable="true"
+    data-show-header="{% if header is defined %}{{ header ? 'true' : 'false' }}{% else %}true{% endif %}"
+    data-show-footer="{% if footer is defined %}{{ footer ? 'true' : 'false' }}{% else %}true{% endif %}"
+    data-url="{{ url }}"
+>
+    <thead>
+        <tr>
+            {% block columns %}{% endblock %}
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+{% block templates %}{% endblock %}

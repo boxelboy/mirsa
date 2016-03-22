@@ -1,0 +1,72 @@
+{% extends '@SchedulerCommon/Print/layout.html.twig' %}
+
+{% block body %}
+    {% for resources in resourceGroups %}
+        <h1>
+            {{ date|date('l, d F Y') }}
+        </h1>
+        <table class="container" style="width: {{ ((987 / 8) * resources|length) + 50 }}px">
+            <thead>
+                <tr>
+                    <th class="corner"></th>
+                    {% for resource in resources %}
+                        <th style="width: {{ 987 / 8 }}px;">
+                            {{ resource.name }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="all_day">
+                    <th class="icon"></th>
+                    {% for resource in resources %}
+                        <td>
+                            {% for schedule in schedules %}
+                                {% if schedule.scheduleDetails.allDay and schedule.resource == resource %}
+                                    <div class="event"{% if schedule.event %} style="background-color: rgb({{ schedule.event.backgroundRgb }}); color: rgb({{ schedule.event.textRgb }});"{% endif %}>
+                                        {% if schedule.event %}{{ schedule.event.type }}:{% endif %}
+                                        {{ schedule.scheduleDetails.bookedFor }}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% for hour in 8 .. 22 - 1  %}
+                    <tr class="scale">
+                        <th>
+                            <span class="hour">{{ hour > 12 ? hour - 12 : hour }}</span>
+                            <span class="minute">00</span>
+                            <span class="ampm">{{ hour > 12 ? "pm" : "am" }}</span>
+                        </th>
+                        {% for resource in resources %}
+                            <td>
+                                {% if loop.parent.loop.first %}
+                                    <div class="data">
+                                        {% for schedule in schedules %}
+                                            {% if not schedule.scheduleDetails.allDay and schedule.resource == resource and schedule.scheduleDetails.start|date('G') >= 8 and schedule.scheduleDetails.end > schedule.scheduleDetails.start %}
+                                                {% set clashes = attribute(scheduleOffsets, schedule.id).clashes + 1 %}
+                                                {% set offset = attribute(scheduleOffsets, schedule.id).offset %}
+                                                {% set width = ((987 / 8) / clashes) - 8 %}
+
+                                                <div class="event" style="width: {{ width }}px; left: {{ (width * offset) + (8 * offset) + 3 }}px; top: {{ ((schedule.scheduleDetails.start|date('G') - 8) * 80) + ((schedule.scheduleDetails.start|date('i') / 60) * 80) }}px; height: {{ (schedule.scheduleDetails.duration.h * 80) + ((schedule.scheduleDetails.duration.i / 60) * 80) - 1 }}px;{% if schedule.event %} background-color: rgb({{ schedule.event.backgroundRgb }}); color: rgb({{ schedule.event.textRgb }});{% endif %}">
+                                                    <span class="date">
+                                                        {{ schedule.scheduleDetails.start|date('g:i A') }} -
+                                                        {{ schedule.scheduleDetails.end|date('g:i A') }}
+                                                    </span>
+
+                                                    {% if schedule.event %}{{ schedule.event.type }}:{% endif %}
+                                                    {{ schedule.scheduleDetails.bookedFor }}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}

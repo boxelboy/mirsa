@@ -1,0 +1,17 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set rowlink = false %}
+
+{% block columns %}
+    <th data-source="name" data-sortable="true" data-searchable="true">Name</th>
+    <th data-source="category.name" data-sortable="true" data-searchable="true" data-width="200px">Category</th>
+    <th data-template="jobs_resources_actions" data-sortable="false" data-searchable="false" data-width="1px"></th>
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="jobs_resources_actions">
+        <a class="btn btn-xs btn-danger" href="{{ "{{" }}=Routing.generate('jobs_resources_remove', { job: {{ job.id }}, resource: it.id }) {{ "}}" }}">
+            <i class="fa fa-fw fa-trash-o"></i>
+        </a>
+    </script>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% block body %}
+
+    <div class="col-md-12">
+        <div class="widget">
+            <h2>
+                <i class="fa fa-th-list"></i>
+                Details
+            </h2>
+            <div class="details">
+                <div class="row">
+                    <div>
+                        Work Order
+                    </div>
+                    <div>
+                        {{ workOrder.id }}
+                    </div>
+                    <div>
+                        Inspection Type (Template)  
+                    </div>
+                    <div>
+                        {{ workOrder.inspectionType }}
+                    </div>                            
+                </div>
+                <div class="row">
+                    <div>
+                        Inventory Code
+                    </div>
+                    <div>
+                        {{ workOrder.sku }}
+                    </div>
+                    <div>
+                        Qty to Inspect  
+                    </div>
+                    <div>
+                        {{ workOrder.qtyToInspect }}
+                    </div> 
+                </div>
+                <div class="row">
+                    <div>
+                        Work Location 
+                    </div>
+                    <div>
+                        {{ workOrder.workLocation }}
+                    </div>  
+                    <div>
+                        Total Inspected  
+                    </div>
+                    <div>
+                        {{ workOrder.totalQuantityInspected }}
+                    </div>                            
+                </div>
+
+                <div class="row">
+                    <div>
+                        Inspection Authorization  
+                    </div>
+                    <div>
+                        {{ workOrder.inspectionAuthorization }}
+                    </div>                           
+                    <div>
+                        Total Rejected  
+                    </div>
+                    <div>
+                        {{ workOrder.totalQuantityRejected }}
+                    </div>                           
+                </div>
+
+                <div class="row">
+                    <div>
+                        Problem Description  
+                    </div>
+                    <div>
+                        {{ workOrder.problemDescription }}
+                    </div> 
+                    <div>
+                        Total Accepted  
+                    </div>
+                    <div>
+                        {{ workOrder.qtyAccepted }}
+                    </div>                            
+                </div>
+
+                <div class="row">
+                    <div>
+                        Normal Hours  
+                    </div>
+                    <div>
+                        {{ workOrder.totalTimesheetNormalHours }}
+                    </div>                            
+                    <div>
+                        Overtime Hours  
+                    </div>
+                    <div>
+                        {{ workOrder.totalTimesheetOvertimeHours }}
+                    </div>                            
+                </div>
+
+                <div class="row">
+                    <div>
+                        Other Requirements  
+                    </div>
+                    <div>
+                        {{ workOrder.otherRequirements }}
+                    </div>                            
+                    <div>&nbsp;</div> 
+                    <div>&nbsp;</div> 
+                </div>
+
+                </div>                            
+            </div>
+        </div>
+    </div>
+{% endblock %}

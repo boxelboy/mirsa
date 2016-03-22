@@ -1,0 +1,29 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Create a ticket
+        <small>{{ client.name ? client.name : client.id }}</small>
+    </h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form._token) }}
+
+    <div>
+        {{ form_row(form.supportCall.description) }}
+        {{ form_row(form.supportCall.assignedTo) }}
+        {{ form_row(form.supportCall.status) }}
+        {{ form_row(form.supportCall.toAction) }}
+    </div>
+    <div>
+        {{ form_row(form.description) }}
+        {{ form_row(form.internal) }}
+        {{ form_row(form.emailSupport) }}
+        {{ form_row(form.emailClient) }}
+    </div>
+    <div>
+        {{ form_row(form.send) }}
+    </div>
+
+    {{ form_end(form, { render_rest: false }) }}
+{% endblock %}

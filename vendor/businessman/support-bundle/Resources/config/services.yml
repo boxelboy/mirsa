@@ -1,0 +1,23 @@
+services:
+    support.subscriber.menu:
+        class: BusinessMan\Bundle\SupportBundle\EventListener\MenuSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    support.subscriber.dashboard:
+        class: BusinessMan\Bundle\SupportBundle\EventListener\DashboardSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    support.subscriber.extendable_block:
+        class: BusinessMan\Bundle\SupportBundle\EventListener\ExtendableBlockSubscriber
+        tags:
+            - { name: kernel.event_subscriber }
+
+    support.subscriber.mail:
+            class: BusinessMan\Bundle\SupportBundle\EventListener\MailSubscriber
+            arguments: [@mailer, @twig, %email.support%]
+            tags:
+                - { name: kernel.event_subscriber }

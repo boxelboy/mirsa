@@ -1,0 +1,61 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+{% set status = status is defined ? status : true %}
+{% set client = client is defined ? client : true %}
+{% set created = created is defined ? created : false %}
+
+{% block columns %}
+    <th data-source="id" data-template="jobs_actions" data-width="10px"></th>
+    <th data-source="id" data-width="40px" data-sortable="true" data-searchable="true">Job</th>
+    {% if status %}
+        <th data-source="status" data-width="60px" data-sortable="true" data-searchable="true" data-search-options="Active,Complete,Open,Sign-off">Status</th>
+    {% endif %}
+    {% if client %}
+        <th data-source="client.name" data-template="jobs_client" data-sortable="false" data-width="150px">Client</th>
+    {% endif %}
+    <th data-source="description" data-template="jobs_description" data-sortable="true" data-searchable="true">Description</th>
+    {% if created %}
+        <th data-source="created" data-template="jobs_created" data-sortable="true" data-width="100px">Created</th>
+    {% endif %}
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="jobs_actions">
+        {% if bridge %}
+            <a class="btn btn-xs btn-primary" href="#" data-script="Dashboard View Job" data-parameter="{{ "{{=it.id }}"|raw }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% else %}
+            {% verbatim %}
+                <a class="btn btn-xs btn-primary" href="{{=Routing.generate('jobs_view', { job: it.id }) }}">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            {% endverbatim %}
+        {% endif %}
+    </script>
+
+    <script type="text/template" data-name="jobs_description">
+        {% verbatim %}
+            {{=it.description ? it.description : '-'}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="jobs_client">
+        {% verbatim %}
+            {{? it.client }}
+                {{= it.client.name }}
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="jobs_created">
+        {% verbatim %}
+            {{?it.created}}
+                {{=moment(it.created).format('Do MMM YYYY')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

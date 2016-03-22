@@ -1,0 +1,31 @@
+{
+    "name": "businessman/job-bundle",
+    "type": "symfony-bundle",
+    "description": "Job bundle",
+    "homepage": "http://git.computech-it.co.uk/BusinessMan/JobBundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jack Murdoch",
+            "email": "jack@computech-it.co.uk"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:BusinessMan/BusinessManBundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.5.*",
+        "scheduler/common-bundle": "dev-master",
+        "businessman/businessman-bundle": "dev-master",
+        "businessman/client-bundle": "dev-master",
+        "businessman/staff-bundle": "dev-master",
+        "businessman/support-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": { "BusinessMan\\Bundle\\JobBundle\\": "" }
+    }
+}

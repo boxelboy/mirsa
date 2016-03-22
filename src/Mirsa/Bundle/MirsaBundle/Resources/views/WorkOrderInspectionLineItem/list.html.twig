@@ -1,0 +1,11 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+
+    <h1>Work Order Inspection Product View</h1>
+
+    {% include '@MirsaMirsa/WorkOrder/view.html.twig' with { workOrder: workOrder} %}
+    
+    <h1>Work Order Line Items</h1>
+    {% include '@MirsaMirsa/WorkOrderInspectionLineItem/datatable.html.twig' with { url: path('api_mirsa_work_order_inspection_line_items', {'workOrder': workOrder.id} )} %}
+{% endblock %}

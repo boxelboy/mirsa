@@ -1,0 +1,13 @@
+parameters:
+    businessman.host: 192.168.100.9
+    businessman.port: 9191
+    businessman.name: BusinessMan
+    businessman.user: WebAccess
+    businessman.password: 25247N8q34Te63r26838S008lW9WB40B
+    businessman.protocol: http
+    webmail.dir: %kernel.root_dir%/../web/assets/webmail
+    email.support: support@computech-it.co.uk
+
+    jms_serializer.serialized_name_annotation_strategy.class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
+    locale: en
+    secret: 277hBu1SBBUbS167d7nGz9l7265H1742C9722SC9P8H8ayh04Xg34vD5qoSV5Y9APal7GJo38eO9U0r38SmZK43g6p3dPf1S

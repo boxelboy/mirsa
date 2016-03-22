@@ -1,0 +1,6 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Stock Audit</h1>
+    {% include '@MirsaMirsa/StockAudit/datatable.html.twig' with { url: path('api_mirsa_stock_audit_list', {'stock': stock.id} )} %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% block body %}
+
+    <div class="col-md-12">
+        <div class="widget">
+            <h2>
+                <i class="fa fa-th-list"></i>
+                Details
+            </h2>
+            <div class="details">
+                <div class="row">
+                    <div>
+                        Work Order
+                    </div>
+                    <div>
+                        {{ workOrder.id }}
+                    </div>
+                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>                            
+                </div>
+                <div class="row">
+                    <div>
+                        Inventory Code
+                    </div>
+                    <div>
+                        {{ workOrder.sku }}
+                    </div>
+                    <div>
+                        Build Status  
+                    </div>
+                    <div>
+                        {{ workOrder.assemblyStatus }}
+                    </div> 
+                </div>
+                <div class="row">
+                    <div>
+                        Qty Required 
+                    </div>
+                    <div>
+                        {{ workOrder.assemblyQty }}
+                    </div>  
+                    <div>
+                        Qty Built  
+                    </div>
+                    <div>
+                        {{ workOrder.assemblyQtyCompleted }} of {{ workOrder.assemblyQty }}
+                    </div>                            
+                </div>
+
+                </div>                            
+            </div>
+        </div>
+    </div>
+{% endblock %}

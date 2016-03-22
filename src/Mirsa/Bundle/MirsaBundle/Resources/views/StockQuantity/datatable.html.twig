@@ -1,0 +1,24 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    <th data-source="id" data-template="stock_action" data-width="10px"></th>
+    <th data-source="sku" data-sortable="true" data-width="80px" data-searchable="true"">Sku</th>
+    <th data-source="description" data-sortable="true" data-searchable="true"">Description</th>
+    <th data-source="batchNumber" data-sortable="true" data-width="80px" data-searchable="true"">Batch Number</th>
+    <th data-source="warehouseName" data-sortable="true" data-width="80px" data-searchable="true"">Warehouse Name</th>
+    <th data-source="aisleName" data-sortable="true" data-width="80px" data-searchable="true"">Aisle Name</th>
+    <th data-source="bayName" data-sortable="true" data-width="80px" data-searchable="true"">Bay Name</th>
+    <th data-source="quantity" data-sortable="true" data-width="80px" data-searchable="true"">Quantity</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="stock_action">
+        {% verbatim %}
+            <a class="btn btn-xs btn-primary" href="{{=Routing.generate('mirsa_stock_audit_list', { stock: it.stockRecordId }) }}">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% endverbatim %}
+    </script>
+{% endblock %}

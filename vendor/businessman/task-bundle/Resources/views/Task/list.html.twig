@@ -1,0 +1,6 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Tasks</h1>
+    {% include '@BusinessManTask/List/datatable.html.twig' with { url: path('api_tasks_list') } %}
+{% endblock %}

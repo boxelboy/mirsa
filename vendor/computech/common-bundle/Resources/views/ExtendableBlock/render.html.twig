@@ -1,0 +1,7 @@
+{% for controller in controllers %}
+    {% if controller.method == 'esi' %}
+        {{ render_esi(controller(controller.controller, parameters)) }}
+    {% elseif controller.method == 'hinclude' %}
+        {{ render_hinclude(controller(controller.controller, parameters)) }}
+    {% endif %}
+{% endfor %}

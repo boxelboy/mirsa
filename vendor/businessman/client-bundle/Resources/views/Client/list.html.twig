@@ -1,0 +1,6 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Clients</h1>
+    {% include '@BusinessManClient/Client/datatable.html.twig' with { url: path('api_clients_list') } %}
+{% endblock %}

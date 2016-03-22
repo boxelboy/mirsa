@@ -1,0 +1,84 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Call details
+    </h1>
+
+    <ul class="nav nav-pills" id="page_nav">
+        <li class="active">
+            <a href="#details" data-toggle="tab">Details</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="page_content">
+        <div class="tab-pane active" id="details">
+            <div class="col-md-12">
+                <div class="widget">
+                    <h2>
+                        <i class="fa fa-th-list"></i>
+                        Details
+                    </h2>
+                    <div class="details">
+                        <div>
+                            <div>
+                                Subject
+                            </div>
+                            <div>
+                                {{ call.subject }}
+                            </div>
+                        </div>
+                        {% if call.contact %}
+                            <div>
+                                <div>
+                                    Contact
+                                </div>
+                                <div>
+                                    {{ call.contact.displayName }}
+                                </div>
+                            </div>
+                            {% if call.contact.client %}
+                                <div>
+                                    <div>
+                                        Client
+                                    </div>
+                                    <div>
+                                        {{ call.contact.client.name ? call.contact.client.name : call.contact.client.id }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        <div>
+                            <div>
+                                Date
+                            </div>
+                            <div>
+                                {{ call.contactDate|date('Y-m-d') }} <small>at</small> {{ call.contactTime|date('H:i') }}
+                            </div>
+                        </div>
+                        {% if call.allocatedTo %}
+                            <div>
+                                <div>
+                                    Allocated to
+                                </div>
+                                <div>
+                                    {{ call.allocatedTo.displayName }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <div>
+                                Notes
+                            </div>
+                            <div>
+                                {{ call.notes }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ extendable_block('call_view', { call: call.id }) }}
+    </div>
+{% endblock %}

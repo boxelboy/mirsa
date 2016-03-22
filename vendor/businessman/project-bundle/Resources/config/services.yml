@@ -1,0 +1,11 @@
+services:
+    project.subscriber.menu:
+        class: BusinessMan\Bundle\ProjectBundle\EventListener\MenuSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    project.subscriber.extendable_block:
+        class: BusinessMan\Bundle\ProjectBundle\EventListener\ExtendableBlockSubscriber
+        tags:
+            - { name: kernel.event_subscriber }

@@ -1,0 +1,8 @@
+{% spaceless %}
+<?xml version='1.0' ?>
+<data>
+    {%- for action in actions -%}
+        <action {% for attr,value in action %}{{ attr }}="{{ value }}"{% if not loop.last %} {% endif %}{% endfor %}></action>
+    {%- endfor -%}
+</data>
+{% endspaceless %}

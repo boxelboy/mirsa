@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+<html lang="en">
+    <head>
+        <title>{% block title %}BusinessMan{% endblock %}</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="BusinessMan">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="include_mode" content="async" />
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/font-awesome/css/font-awesome.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/compiled/common.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/compiled/custom.css') }}" />
+        {% block stylesheets %}{% endblock %}
+
+        <script type="application/javascript" src="{{ asset('assets/compiled/common.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </head>
+    <body{% if app.environment == 'dev' %} data-dev="true"{% endif %}{% if bridge %} data-bridge="true" oncontextmenu="return false"{% endif %}>
+        {% block layout_body %}{% endblock %}
+    </body>
+</html>

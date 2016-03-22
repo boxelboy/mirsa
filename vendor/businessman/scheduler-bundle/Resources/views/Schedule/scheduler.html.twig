@@ -1,0 +1,150 @@
+{% extends '::app.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+        '../vendor/dhtmlx/scheduler/codebase/dhtmlxscheduler_flat.css'
+        'bundles/businessmanscheduler/css/scheduler.css'
+        filter='cssrewrite' output='assets/compiled/scheduler.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="//maps.google.com/maps/api/js?sensor=false"></script>
+
+    {% javascripts
+        '../vendor/dhtmlx/scheduler/codebase/dhtmlxscheduler.js'
+        '../vendor/dhtmlx/scheduler/codebase/ext/dhtmlxscheduler_active_links.js'
+        '../vendor/dhtmlx/scheduler/codebase/ext/dhtmlxscheduler_map_view.js'
+        '../vendor/dhtmlx/scheduler/codebase/ext/dhtmlxscheduler_minical.js'
+        '../vendor/dhtmlx/scheduler/codebase/ext/dhtmlxscheduler_serialize.js'
+        '../vendor/dhtmlx/scheduler/codebase/ext/dhtmlxscheduler_timeline.js'
+        '../vendor/dhtmlx/scheduler/codebase/ext/dhtmlxscheduler_tooltip.js'
+        '../vendor/dhtmlx/scheduler/codebase/ext/dhtmlxscheduler_units.js'
+        '../vendor/dhtmlx/scheduler/codebase/ext/dhtmlxscheduler_year_view.js'
+        '@BusinessManSchedulerBundle/Resources/public/js/scheduler.js'
+        output='assets/compiled/scheduler.js'
+    %}
+        <script type="application/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        $(function () {
+            var resourceData = {
+                group: [
+                    {% for group in groups %}
+                        {
+                            "key": {{ group.id|json_encode|raw }},
+                            "label": {{ group.name|json_encode|raw }}
+                        }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ],
+                category: [
+                    {% for category in categories %}
+                        {
+                            "key": {{ category.id|json_encode|raw }},
+                            "label": {{ category.name|json_encode|raw }}
+                        }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ],
+                resource: [
+                    {%- for resource in resources -%}
+                        {
+                            "key": {{ resource.id }},
+                            "label": {{ resource.name|json_encode|raw }},
+                            "category_id": {% if resource.category %}{{ resource.category.id }}{% else %}null{% endif %},
+                            "group_ids": [{% for membership in resource.memberships %}{{ membership.group.id }}{% if not loop.last %},{% endif %}{% endfor %}]
+                        }{% if not loop.last %},{% endif %}
+                    {%- endfor -%}
+                ]
+            };
+
+            var eventData = [
+                {% for event in events %}
+                    {
+                        "key": {{ event.id|json_encode|raw }},
+                        "label": {{ event.type|json_encode|raw }},
+                        "category": {{ (event.category ? event.category.id : "")|json_encode|raw }},
+                        "color": "rgb({{ event.textRgb }})",
+                        "backgroundColor": "rgb({{ event.backgroundRgb }})"
+                    }{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ];
+
+            $('#scheduler_container').scheduler(resourceData, eventData, {}, {
+                resourceNavigationSelector: '#resourceSearch',
+                schedulerNavigationSelector: '#scheduler_nav'
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="scheduler_nav">
+        <ul class="nav nav-pills">
+            <li>
+                <a data-mode="day">Day</a>
+            </li>
+            <li>
+                <a data-mode="week">Week</a>
+            </li>
+            <li>
+                <a data-mode="month">Month</a>
+            </li>
+            <li>
+                <a data-mode="year">Year</a>
+            </li>
+            <li>
+                <a data-mode="unit">Resource</a>
+            </li>
+            <li>
+                <a data-mode="map">Map</a>
+            </li>
+            <li>
+                <a class="calendar hidden-sm hidden-xs">
+                    <i class="fa fa-calendar"></i>
+                    <i class="caret"></i>
+                </a>
+
+                <div id="scheduler_calendar"></div>
+            </li>
+            <li>
+                <a class="today hidden-sm hidden-xs">Today</a>
+            </li>
+            <li>
+                <a class="step" data-step="-1">
+                    <i class="fa fa-caret-left"></i>
+                </a>
+            </li>
+            <li>
+                <a class="step" data-step="1">
+                    <i class="fa fa-caret-right"></i>
+                </a>
+            </li>
+            <li>
+                <a class="hidden-sm hidden-xs print">
+                    <i class="fa fa-print"></i>
+                </a>
+            </li>
+        </ul>
+        <select id="resourceSearch">
+            <optgroup label="Group" class="group"></optgroup>
+            <optgroup label="Category" class="category"></optgroup>
+            <optgroup label="Resource" class="resource">
+                <option value="resource-all">All resources</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div id="scheduler_container" style="width: calc(100% - 190px); height: calc(100% - 104px);" class="dhx_cal_container" data-filemaker-environment="{{ app.session.get('_filemaker_environment') }}">
+        <div class="dhx_cal_navline"></div>
+        <div class="dhx_cal_date"></div>
+        <div class="dhx_cal_header"></div>
+        <div class="dhx_cal_data"></div>
+    </div>
+{% endblock %}

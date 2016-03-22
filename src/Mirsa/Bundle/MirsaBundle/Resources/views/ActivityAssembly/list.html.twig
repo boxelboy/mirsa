@@ -1,0 +1,22 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Work Order : Assembly Activity Report </h1>
+    {% include '@MirsaMirsa/ActivityAssembly/datatable.html.twig' with { url: path('api_mirsa_activity_assembly_list') } %}
+    <button class="btn clearFilter btn-info">Clear Filter</button>
+    
+<script>
+    $(document).ready(function () {
+
+        $('.clearFilter').click(function() {
+        	$.each($('input'), function(){
+        		console.log(this,$(this).val());
+        		$(this).val('').keyup();
+        		//var e = $.Event('keyup', { keyCode: 13 });
+				//$(this).trigger(e);
+        		console.log(this,$(this).val());
+        	})
+        });    
+    });        
+</script>  
+{% endblock %}

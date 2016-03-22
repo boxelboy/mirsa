@@ -1,0 +1,10 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Add resource
+        <small>{{ job.description ? job.description : job.id }}</small>
+    </h1>
+
+    {{ form(form) }}
+{% endblock %}

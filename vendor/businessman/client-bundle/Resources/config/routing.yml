@@ -1,0 +1,27 @@
+client_contacts_list:
+    path: /clients/contacts
+    defaults: { _controller: BusinessManClientBundle:ClientContact:list }
+
+client_contacts_view:
+    path: /clients/contacts/{contact}
+    defaults: { _controller: BusinessManClientBundle:ClientContact:view }
+    options: { expose: true }
+
+clients_list:
+    path: /clients
+    defaults: { _controller: BusinessManClientBundle:Client:list }
+
+clients_view:
+    path: /clients/{client}
+    defaults: { _controller: BusinessManClientBundle:Client:view }
+    options: { expose: true }
+
+api_clients_list:
+    path: /api/clients.{_format}
+    defaults: { _controller: BusinessManClientBundle:Api/Client:list, _format: json }
+    requirements: { _format: json }
+
+api_client_contacts_list:
+    path: /api/clients/contacts.{_format}
+    defaults: { _controller: BusinessManClientBundle:Api/ClientContact:list, _format: json }
+    requirements: { _format: json }

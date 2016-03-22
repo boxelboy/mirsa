@@ -1,0 +1,29 @@
+{
+    "name": "businessman/task-bundle",
+    "type": "symfony-bundle",
+    "description": "Task management",
+    "homepage": "http://git.computech-it.co.uk/BusinessMan/TaskBundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jack Murdoch",
+            "email": "jack@computech-it.co.uk"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:BusinessMan/BusinessManBundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.5.*",
+        "businessman/businessman-bundle": "dev-master",
+        "businessman/client-bundle": "dev-master",
+        "businessman/job-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": { "BusinessMan\\Bundle\\TaskBundle\\": "" }
+    }
+}

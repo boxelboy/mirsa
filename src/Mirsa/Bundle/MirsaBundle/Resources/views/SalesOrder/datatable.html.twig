@@ -1,0 +1,57 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set created = created is defined ? created : false %}
+{% set total = total is defined ? total : false %}
+
+{% block columns %}
+    <th data-source="id" data-template="salesOrderDeliveryNoteAction" data-sortable="false" data-width="15px" data-searchable="false">Dn</th>
+    <th data-source="pickNotes" data-template="salesOrderPickNoteAction" data-sortable="false" data-width="15px" data-searchable="false">Pn</th>
+    <th data-source="id" data-sortable="false" data-width="50px" data-searchable="true" data-sort="desc">#</th>
+    <th data-source="created" data-template="so_created" data-sortable="true" data-width="60px" data-searchable="true">Date</th>
+    <th data-source="status" data-sortable="true" data-width="60px" data-searchable="true" data-search-options="Cancelled,Complete,In Progress,Open">Status</th>
+    <th data-source="orderType" data-sortable="true" data-width="150px" data-searchable="true">Order Type</th>
+    <th data-source="deliveryCompany" data-sortable="true" data-width="180px" data-searchable="true">Ship To</th>
+    <th data-source="description" data-sortable="true" data-searchable="true">Description</th>
+    <th data-source="total" data-template="so_value" data-sortable="true" data-width="60px" data-searchable="true">Net Value</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="salesOrderDeliveryNoteAction">
+        {% verbatim %}
+            {{?it.deliveryNotes.length}}
+                <a href="{{=Routing.generate('mirsa_delivery_notes_list', { salesOrder: it.id }) }}" class="btn btn-xs btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+            {{??}}
+                <a href="{{=Routing.generate('mirsa_delivery_notes_list', { salesOrder: it.id }) }}" class="btn btn-xs btn-primary"><i class="fa fa-chevron-right"></i></a>
+            {{?}}
+        {% endverbatim %}
+    </script>
+    
+    <script type="text/template" data-name="salesOrderPickNoteAction">
+        {% verbatim %}
+            {{?it.pickNotes.length}}
+                <a href="{{=Routing.generate('mirsa_pick_notes_list', { salesOrder: it.id }) }}" class="btn btn-xs btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+            {{?}}
+        {% endverbatim %}
+    </script>
+    
+
+    <script type="text/template" data-name="so_created">
+        {% verbatim %}
+            {{?it.created}}
+                {{=moment(it.created).format('L')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="so_value">
+        {% verbatim %}
+            {{?it.total}}
+                {{=it.total.toFixed(2)}}
+            {{??}}
+                 0.00
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

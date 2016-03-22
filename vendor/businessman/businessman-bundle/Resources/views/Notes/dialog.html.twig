@@ -1,0 +1,18 @@
+<ul class="dialog">
+    {% for note in notes|reverse %}
+        <li>
+            <span class="author">
+                {{ note.author }}
+            </span>
+            <span class="date">
+                {{ note.created|date('Y-m-d') }}
+                <small>at</small>
+                {{ note.created|date('H:i') }}
+            </span>
+
+            {{ note.notes }}
+        </li>
+    {% else %}
+        <li class="empty">No notes to display</li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,56 @@
+{% spaceless %}
+    [
+        {% for scheduleDetail in scheduleDetails %}
+            {
+                "id": {{ scheduleDetail.id|json_encode|raw }},
+                "text": {{ (scheduleDetail.bookedFor ? scheduleDetail.bookedFor : "Scheduled event")|json_encode|raw }},
+                {% set eventFound = false %}
+                {% for schedule in scheduleDetail.schedules %}
+                    {% if schedule.event and not eventFound %}
+                        "event": {{ schedule.event.id|json_encode|raw }},
+                        "event_text": {{ schedule.event.type|json_encode|raw }},
+                        "color": "rgb({{ schedule.event.backgroundRgb }})",
+                        "textColor": "rgb({{ schedule.event.textRgb }})",
+
+                        {% set eventFound = true %}
+                    {% endif %}
+                {% endfor %}
+                {% if not eventFound %}
+                    "event": null,
+                    "event_text": null,
+                    "color": "rgb(91, 155, 224)",
+                    "textColor": "rgb(255, 255, 255)",
+                {% endif %}
+                "start_date": {{ scheduleDetail.start|date("Y-m-d H:i")|json_encode|raw }},
+                "end_date": {{ scheduleDetail.end|date("Y-m-d H:i")|json_encode|raw }},
+                "location": {{ scheduleDetail.location|json_encode|raw }},
+                "lat": {{ scheduleDetail.locationLatitude|json_encode|raw }},
+                "lng": {{ scheduleDetail.locationLongitude|json_encode|raw }},
+                "resources": "{% for schedule in scheduleDetail.schedules %}{{ schedule.resource.id }}{% if not loop.last %},{% endif %}{% endfor %}",
+                "schedules": [
+                    {% for schedule in scheduleDetail.schedules %}
+                        {
+                            "id": {{ schedule.id|json_encode|raw }},
+                            {% if schedule.event %}
+                                "event": {
+                                    "id": {{ schedule.event.id|json_encode|raw }},
+                                    "type": {{ schedule.event.type|json_encode|raw }}
+                                },
+                            {% else %}
+                                "event": null,
+                            {% endif %}
+                            "resource": {
+                                "id": {{ schedule.resource.id|json_encode|raw }},
+                                "category": {
+                                    "id": {{ schedule.resource.category.id|json_encode|raw }},
+                                    "name": {{ schedule.resource.category.name|json_encode|raw }}
+                                },
+                                "name": {{ schedule.resource.name|json_encode|raw }}
+                            }
+                        }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ]
+            }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+{% endspaceless %}

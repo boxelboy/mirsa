@@ -1,0 +1,15 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set bridge = bridge is defined ? bridge : false %}
+
+{% block columns %}
+    <th data-source="sku" data-sortable="true" data-width="160px" data-searchable="true"">Inventory Code</th>
+    <th data-source="qtyScheduled" data-sortable="true" data-width="80px" data-searchable="true"">Scheduled</th>
+    <th data-source="qtyProcessed" data-sortable="true" data-width="80px" data-searchable="true"">Processed</th>
+    <th data-source="qtyRemaining" data-sortable="true" data-width="80px" data-searchable="true"">O/S</th>
+    <th data-source="qtyReceived" data-sortable="true" data-width="80px" data-searchable="true"">Delivered</th>
+    <th data-source="description" data-sortable="true" data-searchable="true"">Description</th>
+    <th data-source="batchNumber" data-sortable="true" data-width="120px" data-searchable="true"">Batch/Lot No</th>
+    <th data-source="tradingCompanyName" data-sortable="true" data-width="160px" data-searchable="true"">Trading Company</th>
+{% endblock %}
+

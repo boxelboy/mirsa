@@ -1,0 +1,12 @@
+services:
+    scheduler.subscriber.menu:
+        class: BusinessMan\Bundle\SchedulerBundle\EventListener\MenuSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    scheduler.subscriber.dashboard:
+        class: BusinessMan\Bundle\SchedulerBundle\EventListener\DashboardSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }

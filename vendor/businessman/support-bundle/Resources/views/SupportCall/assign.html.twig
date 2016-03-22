@@ -1,0 +1,26 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Assign ticket
+        <small>{{ supportCall.description ? supportCall.description[:100] : supportCall.id }}</small>
+    </h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form._token) }}
+
+    <div>
+        {{ form_row(form.supportCall.assignedTo) }}
+    </div>
+    <div>
+        {{ form_row(form.description) }}
+        {{ form_row(form.internal) }}
+        {{ form_row(form.emailSupport) }}
+        {{ form_row(form.emailClient) }}
+    </div>
+    <div>
+        {{ form_row(form.send) }}
+    </div>
+
+    {{ form_end(form, { render_rest: false }) }}
+{% endblock %}

@@ -1,0 +1,59 @@
+<div class="widget-contents">
+    {% for schedule in schedules %}
+        {% if lastDate is not defined or lastDate != schedule.startDate|date("Y-m-d") %}
+            {% if lastDate is defined %}
+                </ul>
+            {% endif %}
+
+            {% set lastDate = schedule.startDate|date("Y-m-d") %}
+
+            <h1>
+                {{ schedule.startDate|date("l, jS F") }}
+            </h1>
+
+            <ul>
+        {% endif %}
+
+        <li style="display: table;">
+            <div style="display: table-cell; width: 100px; text-align: right;">
+                <strong>
+                    {% if schedule.allDay == 'Yes' %}
+                        All day
+                    {% else %}
+                        {{ schedule.startTime|date("H:i") }} -
+                        {{ schedule.endTime|date("H:i") }}
+                    {% endif %}
+
+                    <i class="icon-caret-right"></i>
+                </strong>
+            </div>
+            <div style="display: table-cell; padding-left: 3px;">
+                {{ schedule.bookedFor|default('Scheduled event') }}
+
+                {% if schedule.resources|length > 1 %}
+                    <br />
+                    <span class="small">
+                        with
+
+                        {% for resource in schedule.resources %}
+                            {% if resource.id != app.user.staff.resource.id %}
+                                {% if loop.last %}and {% endif %}{{ resource.name }}{% if not loop.last %},{% endif %}
+                            {% else %}
+                                {% if loop.last %}and {% endif %}you{% if not loop.last %},{% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                {% endif %}
+            </div>
+        </li>
+    {% else %}
+        <div class="alert alert-success">
+            <h6>
+                <strong>
+                    <i class="icon-ok"></i>
+                    No schedules
+                </strong>
+            </h6>
+        </div>
+    {% endfor %}
+</div>

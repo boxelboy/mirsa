@@ -1,0 +1,4 @@
+services:
+    scheduler.clash:
+        class: Scheduler\Bundle\CommonBundle\Service\ScheduleClashService
+        arguments: [@doctrine]

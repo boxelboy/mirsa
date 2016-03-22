@@ -1,0 +1,17 @@
+<div class="tab-pane" id="jobs">
+    <div class="col-md-12">
+        <div class="widget widget-orange">
+            <h2>
+                <i class="fa fa-cogs"></i>
+                Jobs
+            </h2>
+            {% include '@BusinessManJob/Job/datatable.html.twig' with { client: false, created: true, header: false, url: path('api_jobs_list', { filter: { client: client.id, master: "true" }}) } %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#page_nav').append('<li><a href="#jobs" data-toggle="tab">Jobs</a></li>');
+    });
+</script>

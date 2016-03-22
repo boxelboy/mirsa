@@ -1,0 +1,22 @@
+services:
+    synergize:
+        class: Synergize\Bundle\DbalBundle\Synergize
+        arguments: [ %businessman.host%, %businessman.port%, %businessman.protocol%, %businessman.user%, %businessman.password% ]
+
+    security.user.bridge_token_provider:
+        class: BusinessMan\Bundle\BusinessManBundle\Security\BridgeTokenProvider
+        arguments: [@doctrine]
+
+    menu.app:
+        class: Knp\Menu\MenuItem
+        factory_service: menu.builder
+        factory_method: build
+        arguments: ["app", "@request", "@event_dispatcher"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: app }
+
+    businessman.subscriber.menu:
+        class: BusinessMan\Bundle\BusinessManBundle\EventListener\MenuSubscriber
+        tags:
+            - { name: kernel.event_subscriber }

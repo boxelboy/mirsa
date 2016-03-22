@@ -1,0 +1,17 @@
+services:
+    purchase_order.subscriber.menu:
+        class: BusinessMan\Bundle\PurchaseOrderBundle\EventListener\MenuSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    purchase_order.subscriber.dashboard:
+        class: BusinessMan\Bundle\PurchaseOrderBundle\EventListener\DashboardSubscriber
+        arguments: ["@security.context"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    purchase_order.subscriber.extendable_block:
+        class: BusinessMan\Bundle\PurchaseOrderBundle\EventListener\ExtendableBlockSubscriber
+        tags:
+            - { name: kernel.event_subscriber }

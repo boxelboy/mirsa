@@ -1,0 +1,30 @@
+scheduler_print_resource:
+    pattern: /scheduler/print/resource/{date}/{filterType}-{filterId}
+    defaults: { _controller: SchedulerCommonBundle:Print:resource }
+    methods: GET
+    options: { expose: true }
+    requirements:
+        filterType: group|category|resource
+
+api_scheduler_clashes:
+    pattern: /api/scheduler/clashes/{resource}
+    defaults: { _controller: SchedulerCommonBundle:Schedule:clashCheck }
+    methods: GET
+    options: { expose: true }
+
+api_scheduler_process:
+    pattern: /api/scheduler/process
+    defaults: { _controller: SchedulerCommonBundle:Schedule:process }
+    methods: POST
+    options: { expose: true }
+
+api_scheduler_schedules:
+    pattern: /api/scheduler/{filterType}/{filterId}
+    defaults:
+        _controller: SchedulerCommonBundle:Schedule:fetch
+        filterType: null
+        filterId: null
+    methods: GET
+    options: { expose: true }
+    requirements:
+        filterType: category|group|resource

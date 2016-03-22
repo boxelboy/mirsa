@@ -1,0 +1,38 @@
+{
+    "name": "businessman/businessman-bundle",
+    "type": "symfony-bundle",
+    "description": "BusinessMan app bundle",
+    "homepage": "http://git.computech-it.co.uk/BusinessMan/BusinessManBundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jack Murdoch",
+            "email": "jack@computech-it.co.uk"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:Computech/CommonBundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:BusinessMan/CommonBundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:Synergize/SynergizeDbalBundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.5.*",
+        "computech/common-bundle": "dev-master",
+        "businessman/client-bundle": "dev-master",
+        "businessman/staff-bundle": "dev-master",
+        "businessman/supplier-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": { "BusinessMan\\Bundle\\BusinessManBundle\\": "" }
+    }
+}

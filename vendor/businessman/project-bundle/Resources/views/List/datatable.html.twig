@@ -1,0 +1,30 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% block columns %}
+    <th data-source="id" data-template="projects_actions" data-width="10px"></th>
+    <th data-source="id" data-width="100px" data-sortable="true" data-searchable="true">Project</th>
+    <th data-source="created" data-template="projects_created" data-sortable="true" data-width="100px">Date</th>
+    <th data-source="status" data-sortable="true" data-width="100px" data-searchable="true" data-search-options="Active,Closed,New,Open">Status</th>
+    <th data-source="description" data-sortable="true" data-searchable="true">Description</th>
+    <th data-source="type" data-sortable="true" data-width="100px" data-searchable="true">Type</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="dot/template" data-name="projects_actions">
+        {% verbatim %}
+            <a href="{{=Routing.generate('projects_view', { project: it.id })}}" class="btn btn-xs btn-primary">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="projects_created">
+        {% verbatim %}
+            {{?it.created}}
+                {{=moment(it.created).format('Do MMM YYYY')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}

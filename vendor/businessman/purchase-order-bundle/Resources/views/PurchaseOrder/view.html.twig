@@ -1,0 +1,136 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Purchase order
+        <small>{{ order.description ? order.description : order.id }}</small>
+    </h1>
+
+    <ul class="nav nav-pills" id="page_nav">
+        <li class="active">
+            <a href="#details" data-toggle="tab">Details</a>
+        </li>
+        <li>
+            <a href="#line-items" data-toggle="tab">Line items</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="page_content">
+        <div class="tab-pane active" id="details">
+            <div class="col-md-12">
+                <div class="widget">
+                    <h2>
+                        <i class="fa fa-th-list"></i>
+                        Details
+                    </h2>
+                    <div class="details">
+                        <div>
+                            <div>
+                                Order #
+                            </div>
+                            <div>
+                                {{ order.id }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Supplier
+                            </div>
+                            <div class="supplier_name">
+                                {{ order.supplier.name ? order.supplier.name : order.supplier.id }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Type
+                            </div>
+                            <div>
+                                {{ order.type }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Status
+                            </div>
+                            <div>
+                                {{ order.status }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Progress
+                            </div>
+                            <div>
+                                {{ order.progress }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Net total
+                            </div>
+                            <div>
+                                {{ order.netTotal }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Tax total
+                            </div>
+                            <div>
+                                {{ order.taxTotal }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                Grand total
+                            </div>
+                            <div>
+                                {{ order.grossTotal }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="line-items">
+            <div class="col-md-12">
+                <div class="widget widget-blue">
+                    <h2>
+                        <i class="fa fa-list-alt"></i>
+                        Line items
+                    </h2>
+                    <table class="table table-bordered" data-show-header="false" data-show-footer="false">
+                        <thead>
+                            <tr>
+                                <th data-sortable="true" data-searchable="true" data-width="100px">SKU</th>
+                                <th data-sortable="true" data-searchable="true" data-width="100px">Quantity</th>
+                                <th data-sortable="true" data-searchable="true">Description</th>
+                                <th data-sortable="true" data-width="100px">Net price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lineItem in order.lineItems %}
+                                <tr>
+                                    <td>
+                                        {{ lineItem.sku }}
+                                    </td>
+                                    <td>
+                                        {{ lineItem.quantity }}
+                                    </td>
+                                    <td>
+                                        {{ lineItem.description }}
+                                    </td>
+                                    <td>
+                                        {{ lineItem.total|number_format(2) }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {{ extendable_block('purchase_order_view', { order: order.id }) }}
+    </div>
+{% endblock %}

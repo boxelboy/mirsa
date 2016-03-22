@@ -1,0 +1,113 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% set created = created is defined ? created : false %}
+{% set totalJobCosts = totalJobCosts is defined ? totalJobCosts : false %}
+{% set totalTimesheetNormalHours = totalTimesheetNormalHours is defined ? totalTimesheetNormalHours : false %}
+{% set totalTimesheetOvertimeHours = totalTimesheetOvertimeHours is defined ? totalTimesheetOvertimeHours : false %}
+{% set qtyInspected = qtyInspected is defined ? qtyInspected : false %}
+{% set qtyRejected = qtyRejected is defined ? qtyRejected : false %}
+{% set plannedStartDate = plannedStartDate is defined ? plannedStartDate : false %}
+{% set plannedEndDate = plannedEndDate is defined ? plannedEndDate : false %}
+
+{% block columns %}
+    <th data-source="id" data-sortable="true" data-width="2%" data-searchable="true">#</th>
+    <th data-source="created" data-template="workorderDate" data-sortable="false" data-width="3%" data-searchable="true">Created</th>
+    <th data-source="sku" data-sortable="true" data-width="4%" data-searchable="true">Part No.</th>
+    <!--<th data-source="description" data-sortable="true" class="hidden" data-searchable="true">Description</th>-->
+    <th data-source="totalJobCosts" data-template="JobCosts" data-sortable="true" data-width="5%" data-searchable="true">Total Cost</th>
+    <th data-source="totalTimesheetNormalHours" data-template="TimesheetHours" data-sortable="true" data-width="4%" data-searchable="true">Normal Hours</th>
+    <th data-source="totalTimesheetOvertimeHours" data-template="TimesheetOTHours" data-sortable="true" data-width="2%" data-searchable="true">OT Hours</th>
+    <th data-source="qtyInspected" data-template="QtyInspected" data-sortable="true" data-width="3%" data-searchable="true">QTY INSP</th>
+    <th data-source="qtyRejected" data-template="QtyRejected" data-sortable="true" data-width="2%" data-searchable="true">QTY REJ</th>
+    <th data-source="type" data-sortable="true" data-searchable="true" data-width="7%" >WO Type</th>
+    <th data-source="plannedStartDate" data-template="workorderSDate" data-sortable="true" data-searchable="true" data-width="3%" >Planned Start</th>
+    <th data-source="plannedEndDate" data-template="workorderEDate" data-sortable="true" data-searchable="true" data-width="3%">Planned End</th>
+    <th data-source="scheduleRequired" data-sortable="true" data-searchable="true" data-width="3%">Sched Req'd</th>
+    <th data-source="assemblyStatus" data-sortable="true" data-searchable="true" data-width="3%">Status</th>
+    <th data-source="salesOrderNumber" data-sortable="true" data-searchable="true" data-width="4%">SO No</th>
+    <th data-source="customerName" data-sortable="true" data-searchable="true">Customer Name</th>
+    <th data-source="tradingCompany" data-sortable="true" data-searchable="true">Trading Company</th>
+{% endblock %}
+
+{% block templates %}
+    <script type="text/template" data-name="workorderDate">
+        {% verbatim %}
+            {{?it.created}}
+                {{=moment(it.created).format('L')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="workorderSDate">
+        {% verbatim %}
+            {{?it.plannedStartDate}}
+                {{=moment((it.plannedStartDate).substr(0,10)).format('L')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="workorderEDate">
+        {% verbatim %}
+            {{?it.plannedEndDate}}
+                {{=moment((it.plannedEndDate).substr(0,10)).format('L')}}
+            {{??}}
+                -
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="JobCosts">
+        {% verbatim %}
+            {{?it.totalJobCosts}}
+                {{=it.totalJobCosts}}
+            {{??}}
+                 0
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="TimesheetHours">
+        {% verbatim %}
+            {{?it.totalTimesheetNormalHours}}
+                {{=it.totalTimesheetNormalHours}}
+            {{??}}
+                 
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="TimesheetOTHours">
+        {% verbatim %}
+            {{?it.totalTimesheetOvertimeHours}}
+                {{=it.totalTimesheetOvertimeHours}}
+            {{??}}
+                 
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="QtyInspected">
+        {% verbatim %}
+            {{?it.qtyInspected}}
+                {{=it.qtyInspected}}
+            {{??}}
+                 0
+            {{?}}
+        {% endverbatim %}
+    </script>
+
+    <script type="text/template" data-name="QtyRejected">
+        {% verbatim %}
+            {{?it.qtyRejected}}
+                {{=it.qtyRejected}}
+            {{??}}
+                 0
+            {{?}}
+        {% endverbatim %}
+    </script>
+{% endblock %}
+

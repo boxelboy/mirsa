@@ -1,0 +1,4 @@
+api_staff_list:
+    path: /api/staff.{_format}
+    defaults: { _controller: BusinessManStaffBundle:Api/Staff:list, _format: json }
+    requirements: { _format: json }

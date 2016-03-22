@@ -1,0 +1,13 @@
+purchase_orders_list:
+    path: /suppliers/orders
+    defaults: { _controller: BusinessManPurchaseOrderBundle:PurchaseOrder:list }
+
+purchase_orders_view:
+    path: /suppliers/orders/{order}
+    defaults: { _controller: BusinessManPurchaseOrderBundle:PurchaseOrder:view }
+    options: { expose: true }
+
+api_purchase_orders_list:
+    path: /api/suppliers/orders.{_format}
+    defaults: { _controller: BusinessManPurchaseOrderBundle:Api/PurchaseOrder:list, _format: json }
+    requirements: { _format: json }

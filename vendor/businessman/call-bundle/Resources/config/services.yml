@@ -1,0 +1,17 @@
+services:
+    call.subscriber.dashboard:
+        class: BusinessMan\Bundle\CallBundle\EventListener\DashboardSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    call.subscriber.menu:
+        class: BusinessMan\Bundle\CallBundle\EventListener\MenuSubscriber
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    call.subscriber.extendable_block:
+            class: BusinessMan\Bundle\CallBundle\EventListener\ExtendableBlockSubscriber
+            tags:
+                - { name: kernel.event_subscriber }

@@ -1,0 +1,44 @@
+{% extends bridge ? '@BusinessManBusinessMan/Layout/bridge.html.twig' : '::app.html.twig' %}
+
+{% block body %}
+    <iframe id="webmail" src="{{ url }}"></iframe>
+
+    {% if bridge %}
+        <script>
+            $(function () {
+                $('#webmail').load(function () {
+                    webmailWindow = $('#webmail').get(0).contentWindow.window;
+
+                    {% if attachments is defined %}
+                        // Load attachments
+                        var attachments = [
+                            {% for attachment in attachments %}
+                                '{{ attachment|raw }}'{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        ];
+
+                        $.each(attachments, function (index, attachment) {
+                            var url = document.createElement('a');
+                            url.href = attachment;
+
+                            webmailWindow.App.Screens.oScreens[webmailWindow.App.currentScreen()].Model.addUrlAsAttachment(url.href, url.pathname.split('/').pop());
+                        });
+                    {% endif %}
+
+                    // Close window if message sent via single-compose
+                    webmailWindow.AfterLogicApi.addPluginHook('ajax-default-response', function (action, data) {
+                        if (webmailWindow.App.currentScreen() == 'single-compose' && data.Action == 'MessageSend' && data.Result == true) {
+                            window.location.href = 'fmp://$/BusinessMan?script=Close Webmail Window'
+                        }
+                    });
+
+                    if (webmailWindow.App.currentScreen() == 'single-compose') {
+                        webmailWindow.$('<span class="item businessman_close" style="float: right;"><span class="icon"></span><span class="text">Close</span></span>').appendTo('.compose .toolbar .content').on('click', function () {
+                            window.location.href = 'fmp://$/BusinessMan?script=Close Webmail Window'
+                        });
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+{% endblock %}

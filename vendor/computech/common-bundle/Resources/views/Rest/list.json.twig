@@ -1,0 +1,21 @@
+{
+    "results":
+        {% block data %}
+            [
+                {% for object in objects %}
+                    {{ object|serialize_json }}
+                    {% if not loop.last %},{% endif %}
+                {% endfor %}
+            ]
+        {% endblock %}
+    ,
+    {% block metadata %}
+        "total": {{ total }}{% if summaries|length %},
+        "summaries": {
+            {% for column, value in summaries %}
+                "{{ column }}": {{ value }}{% if not loop.last %},{% endif %}
+            {% endfor %}
+        }
+        {% endif %}
+    {% endblock %}
+}

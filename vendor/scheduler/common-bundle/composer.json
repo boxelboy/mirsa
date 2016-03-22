@@ -1,0 +1,45 @@
+{
+    "name": "scheduler/common-bundle",
+    "type": "symfony-bundle",
+    "description": "Common functionality for Scheduler applications",
+    "homepage": "http://git.computech-it.co.uk/Scheduler/CommonBundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jack Murdoch",
+            "email": "jack@computech-it.co.uk"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:Computech/CommonBundle.git"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "dhtmlx/scheduler",
+                "version": "4.1.0",
+                "source": {
+                    "url": "git://github.com/DHTMLX/scheduler.git",
+                    "type": "git",
+                    "reference": "v4.1.0"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.5.*",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
+        "jms/serializer-bundle": "0.13.*",
+        "willdurand/hateoas-bundle": "0.3.*",
+        "dhtmlx/scheduler": "4.1.*",
+        "synergize/dbal-bundle": "dev-master",
+        "computech/common-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": { "Scheduler\\Bundle\\CommonBundle\\": "" }
+    }
+}

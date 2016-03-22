@@ -1,0 +1,68 @@
+{% block body %}
+    <h1>
+        Order View
+    </h1>
+
+    <div class="col-md-12">
+        <div class="widget">
+            <h2>
+                <i class="fa fa-th-list"></i>
+                Details
+            </h2>
+            <div class="details">
+                <div>
+                    <div>
+                        Order Number
+                    </div>
+                    <div>
+                        {{ salesOrder.id }}
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Date
+                    </div>
+                    <div>
+                        {{ salesOrder.created|date('m-d-Y') }}
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Status
+                    </div>
+                    <div>
+                        {{ salesOrder.status }}
+                    </div>                            
+                </div>
+                <div>
+                    <div>
+                        Contact
+                    </div>
+                    <div>
+                        {% if salesOrder.contact %}
+                            {{ salesOrder.fullContactName }}
+                        {% else %}
+                            Unknown contact
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        Created By
+                    </div>
+                    <div>
+                        {{ salesOrder.takenBy }}
+                    </div>                            
+                </div>                       
+                <div>
+                    <div>
+                        Description
+                    </div>
+                    <div>
+                        {{ salesOrder.description }}
+                    </div>
+                </div>                            
+            </div>
+        </div>
+    </div>
+{% endblock %}

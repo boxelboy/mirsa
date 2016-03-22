@@ -1,0 +1,17 @@
+<div class="tab-pane" id="purchase-orders">
+    <div class="col-md-12">
+        <div class="widget widget-red">
+            <h2>
+                <i class="fa fa-cogs"></i>
+                Purchase orders
+            </h2>
+            {% include '@BusinessManPurchaseOrder/PurchaseOrder/datatable.html.twig' with { header: false, url: path('api_purchase_orders_list', { filter: { supplier: supplier.id }}) } %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#page_nav').append('<li><a href="#purchase-orders" data-toggle="tab">Purchase orders</a></li>');
+    });
+</script>

@@ -1,0 +1,32 @@
+{
+    "name": "businessman/scheduler-bundle",
+    "type": "symfony-bundle",
+    "description": "Scheduler for BusinessMan",
+    "homepage": "http://git.computech-it.co.uk/BusinessMan/SchedulerBundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jack Murdoch",
+            "email": "jack@computech-it.co.uk"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:BusinessMan/CommonBundle.git"
+        },
+        {
+            "type": "git",
+            "url": "git@git.computech-it.co.uk:Scheduler/CommonBundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.5.*",
+        "businessman/businessman-bundle": "dev-master",
+        "scheduler/common-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-4": { "BusinessMan\\Bundle\\SchedulerBundle\\": "" }
+    }
+}

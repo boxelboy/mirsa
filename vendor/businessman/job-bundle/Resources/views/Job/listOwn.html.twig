@@ -1,0 +1,7 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Your jobs</h1>
+
+    {% include '@BusinessManJob/Job/datatable.html.twig' with { url: path('api_jobs_list', { filter: { own: true }}) } %}
+{% endblock %}

@@ -1,0 +1,203 @@
+mirsa_sales_order_line_item_list:
+    path: /lineitem
+    defaults: { _controller: MirsaMirsaBundle:SalesOrderLineItem:list}
+
+api_mirsa_sales_order_line_item_list:
+    path: /api/lineitem.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/SalesOrderLineItem:list, _format: json }
+    requirements: { _format: json }
+
+mirsa_sales_order_list:
+    path: /salesorders
+    defaults: { _controller: MirsaMirsaBundle:SalesOrder:list}
+
+api_mirsa_sales_order_list:
+    path: /api/salesorders.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/SalesOrder:list, _format: json }
+    requirements: { _format: json }
+
+mirsa_sales_order_view:
+    path:     /salesorder/{salesOrder}
+    defaults: { _controller: MirsaMirsaBundle:SalesOrder:view}
+    options: { expose: true }
+
+mirsa_stock_list:
+    path: /stock
+    defaults: { _controller: MirsaMirsaBundle:Stock:list }
+
+api_mirsa_stock_list:
+    path: /api/stock.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/Stock:list, _format: json }
+    requirements: { _format: json }
+    
+mirsa_stock_audit_list:
+    path: /stock/{stock}/audit
+    defaults: { _controller: MirsaMirsaBundle:StockAudit:stock }
+    options: { expose: true }    
+
+api_mirsa_stock_audit_list:
+    path: /api/stock/{stock}/audit.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/StockAudit:stock, _format: json }
+    requirements: { _format: json }
+
+mirsa_delivery_notes_list:
+    path: /deliverynote/{salesOrder}
+    defaults: { _controller: MirsaMirsaBundle:DeliveryNote:deliveryNotesForSalesOrder}
+    options: { expose: true }
+
+api_mirsa_delivery_notes_list:
+    path: /api/deliverynote/{salesOrder}.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/DeliveryNote:deliveryNotesForSalesOrder, _format: json }
+    requirements: { _format: json }
+
+mirsa_delivery_note_download:
+    path: /deliverynote/{deliveryNote}/download
+    defaults: {_controller: MirsaMirsaBundle:DeliveryNote:download }
+    options: { expose: true }
+    
+mirsa_pick_notes_list:
+    path: /picknote/{salesOrder}
+    defaults: { _controller: MirsaMirsaBundle:PickNote:PickNotesForSalesOrder}
+    options: { expose: true }
+
+api_mirsa_pick_notes_list:
+    path: /api/picknote/{salesOrder}.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/PickNote:pickNotesForSalesOrder, _format: json }
+    requirements: { _format: json }
+
+mirsa_pick_note_download:
+    path: /picknote/{pickNote}/download
+    defaults: {_controller: MirsaMirsaBundle:PickNote:download }
+    options: { expose: true }
+    
+mirsa_stock_quantity_list:
+    path: /batch
+    defaults: { _controller: MirsaMirsaBundle:StockQuantity:list }
+
+api_mirsa_stock_quantity_list:
+    path: /api/batch.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/StockQuantity:list, _format: json }
+    requirements: { _format: json }
+    
+mirsa_appointments_list:
+    path: /appointments
+    defaults: { _controller: MirsaMirsaBundle:Appointment:list }
+
+api_mirsa_appointments_list:
+    path: /api/appointments.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/Appointment:list, _format: json }
+    requirements: { _format: json }
+    
+mirsa_appointment_view:
+    path:     /appointment/{appointment}
+    defaults: { _controller: MirsaMirsaBundle:Appointment:view}
+    options: { expose: true }    
+    
+mirsa_appointment_download:
+    path: /appointment/{appointment}/download
+    defaults: {_controller: MirsaMirsaBundle:Appointment:download }
+    options: { expose: true }
+
+mirsa_appointment_line_item_list:
+    path: /appointment/{appointment}/lineitems
+    defaults: { _controller: MirsaMirsaBundle:AppointmentLineItem:lineItemsForAppointment }
+    options: { expose: true }
+
+api_mirsa_appointment_line_item_list:
+    path: /api/appointment/{appointment}/lineitems.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/AppointmentLineItem:lineItemsForAppointment, _format: json }
+    requirements: { _format: json }
+
+mirsa_activity_assembly_list:
+    path: /activityreport/assembly
+    defaults: { _controller: MirsaMirsaBundle:ActivityAssembly:list }
+    options: { expose: true }
+
+api_mirsa_activity_assembly_list:
+    path: /api/activityreport/assembly.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/ActivityAssembly:list, _format: json }
+    requirements: { _format: json }
+
+mirsa_activity_inspection_list:
+    path: /activityreport/inspection
+    defaults: { _controller: MirsaMirsaBundle:ActivityInspection:list }
+    options: { expose: true }
+
+api_mirsa_activity_inspection_list:
+    path: /api/activityreport/inspection.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/ActivityInspection:list, _format: json }
+    requirements: { _format: json }
+
+mirsa_activity_inspection_total:
+    path: /activityreport/totals
+    defaults: { _controller: MirsaMirsaBundle:ActivityInspection:totals }
+    options: { expose: true }
+
+api_mirsa_activity_inspection_total:
+    path: /api/activityreport/totals.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/ActivityInspection:totals, _format: json }
+    requirements: { _format: json }
+
+mirsa_task_list:
+    path: /task
+    defaults: { _controller: MirsaMirsaBundle:Task:list }
+    options: { expose: true }
+
+api_mirsa_task_list:
+    path: /api/task.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/Task:list, _format: json }
+    requirements: { _format: json }
+
+mirsa_work_order_list:
+    path: /workorders
+    defaults: { _controller: MirsaMirsaBundle:WorkOrder:list}
+
+api_mirsa_work_order_list:
+    path: /api/workorders.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/WorkOrder:list, _format: json }
+    requirements: { _format: json }
+
+mirsa_work_order_view:
+    path: /workorder/{workOrder}
+    defaults: { _controller: MirsaMirsaBundle:WorkOrder:view}
+
+mirsa_work_order_inspection_line_items:
+    path: /workorder/{workOrder}/lineitems
+    defaults: { _controller: MirsaMirsaBundle:WorkOrderInspectionLineItem:inspectionLineItemsFromWorkOrder }
+    options: { expose: true }
+
+api_mirsa_work_order_inspection_line_items:
+    path: /api/workorder/{workOrder}/lineitems.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/WorkOrderInspectionLineItem:inspectionLineItemsFromWorkOrder, _format: json }
+    options: { expose: true }
+
+mirsa_work_order_download:
+    path: /workorder/{workOrder}/download
+    defaults: {_controller: MirsaMirsaBundle:WorkOrder:download }
+    options: { expose: true }
+
+mirsa_assembly_view:
+    path: /workorder/{workOrder}/assembly
+    defaults: {_controller: MirsaMirsaBundle:StockQuantityHistory:assemblyFromWorkOrder }
+    options: { expose: true }
+
+api_mirsa_assembly_view:
+    path: /api/workorder/{workOrder}/assembly.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/StockQuantityHistory:assemblyFromWorkOrder, _format: json }
+    options: { expose: true }
+
+mirsa_assembly_export:
+    path: /api/workorder/{workOrder}/assembly.{_format}
+    defaults: { _controller: MirsaMirsaBundle:StockQuantityHistory:exportAssemblyFromWorkOrder, _format: json }
+    options: { expose: true }
+
+mirsa_work_order_timesheet_list:
+    path: /workorder/{workOrder}/timesheet
+    defaults: { _controller: MirsaMirsaBundle:Timesheet:timesheetsFromWorkOrder }
+    options: { expose: true }
+
+api_mirsa_work_order_timesheet_list:
+    path: /api/workorder/{workOrder}/timesheet.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/Timesheet:timesheetsFromWorkOrder, _format: json }
+    options: { expose: true }
+
