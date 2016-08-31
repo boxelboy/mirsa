@@ -1,0 +1,250 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>
+        Contact details
+        <small>{{ contact.forename }} {{ contact.surname }}</small>
+    </h1>
+    <div class="profile">
+        <div class="col-md-3">
+            {% if contact.photo %}
+                
+            {% else %}
+                <img src="{{ asset('bundles/businessmanbusinessman/img/default-avatar.png') }}" />
+            {% endif %}
+            <ul class="fa-ul actions">
+                <li class="header">
+                    Actions
+                </li>
+                {% if contact.email %}
+                    <li>
+                        <i class="fa fa-envelope fa-li"></i>
+                        <a class="btn btn-link" href="mailto:{{ contact.email }}">
+                            Send email
+                        </a>
+                    </li>
+                {% endif %}
+                {% if contact.users|length %}
+                    <li>
+                        <i class="fa fa-refresh fa-li"></i>
+                        <a class="btn btn-link resetWebAccessClick" href="#">
+                            Reset password
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fa fa-ban fa-li"></i>
+                        <a class="btn btn-link" href="{{ path('mirsa_contact_disable_web_access', { contact: contact.id }) }}">
+                            Disable web access
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="disableLink">
+                        <i class="fa fa-plus-circle fa-li"></i>
+                        <a class="btn btn-link enableWebAccessClick" href="#">
+                            Enable web access
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <div class="widget enableWebAccessDetails">
+                <h2>
+                    <i class="fa fa-th-list"></i>
+                    Web Access Details
+                </h2>
+                <div class="details">
+                    <form id="webAccessDetails" role="form" method="POST" action="{{ path('mirsa_contact_enable_web_access', { contact: contact.id }) }}">
+                        <div class="form-group">
+                          <label class="control-label" for="username">Username:</label>
+                          <input class="webAccessform form-control" id="username" placeholder="Enter a valid Username" name="username" required>
+                        </div>                        
+
+                        <div class="form-group">
+                          <label class="control-label" for="password">Password:</label>
+                          <input class="webAccessform form-control" id="password" type="password" placeholder="Enter a valid password" name="password" required>
+                        </div>                                                
+
+                        <div class="form-group">
+                            <button id="submitButton" type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                        <div class="enableWebAccessDetailsError"></div>
+                    </form>                        
+
+                </div>
+            </div>
+                        
+            <div class="widget resetWebAccessDetails">
+                <h2>
+                    <i class="fa fa-th-list"></i>
+                    Reset Web Access Details
+                </h2>
+                <div class="details">
+                    <form id="resetWebAccessDetails" class="form-inline" role="form" method="POST" action="{{ path('mirsa_contact_reset_web_access_password', { contact: contact.id }) }}">
+
+                        <div class="form-group">
+                          <label for="password">Password:</label>
+                          <input class="form-control" id="password" type="password" placeholder="Enter a valid password" name="password" required>
+                        </div>                                                
+
+                        <div class="form-group">
+                            <button id="resetSubmitButton" type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                        <div class="ResetWebAccessDetailsError"></div>
+                    </form>                        
+
+                </div>
+            </div>                                    
+        </div>
+
+        <div class="col-md-9">
+            <div class="widget">
+                <h2>
+                    <i class="fa fa-th-list"></i>
+                    Details
+                </h2>
+                <div class="details">
+                    {% if contact.client %}
+                        <div>
+                            <div>
+                                Client
+                            </div>
+                            <div>
+                                <a href="{{ path('clients_view', { client: contact.client.id }) }}">
+                                    {{ contact.client.name ? contact.client.name : contact.client.id }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <div>
+                            Web access
+                        </div>
+                        <div>
+                            {% if contact.users|length %}
+                                Enabled
+                            {% else %}
+                                Not enabled
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if contact.users|length %}
+                        <div>
+                            <div>
+                                Username
+                            </div>
+                            <div>
+                                {{ contact.users[0].username }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <div>
+                            Email
+                        </div>
+                        <div>
+                            {{ contact.email|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Telephone
+                        </div>
+                        <div>
+                            {{ contact.telephone|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Mobile
+                        </div>
+                        <div>
+                            {{ contact.mobile|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Fax
+                        </div>
+                        <div>
+                            {{ contact.fax|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Other
+                        </div>
+                        <div>
+                            {{ contact.other|default('-') }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            Skype
+                        </div>
+                        <div>
+                            {{ contact.skype|default('-') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ extendable_block('client_contact_view', { contact: contact.id }) }}
+    
+    <script type="text/javascript">
+        $(document).ready( function() {
+            $('.loader').hide();
+
+            $('.enableWebAccessClick').on('click', function (e) {
+                e.preventDefault();
+                $('.enableWebAccessDetails').show();
+            });
+
+            $('.resetWebAccessClick').on('click', function (e) {
+                e.preventDefault();
+                $('.resetWebAccessDetails').show();
+            });
+
+            $('#submitButton').on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url : $('#webAccessDetails').attr('action'),
+                    async: false,
+                    method: 'POST',
+                    data: {
+                        username: $('#username').val(),
+                        password: $('#password').val()
+                    }, 
+                    success: function (data) {
+                        if (data.error == false) {
+                            $('.enableWebAccessDetails').html('Webuser <strong>' + $('#username').val()+ '</strong> successfully created with password <strong>' + $('#password').val()) + '</strong>';
+                            $('.disableLink').hide();
+                        } else {
+                            $('.enableWebAccessDetailsError').html('There was an error creating Webuser ' + $('#username').val() + '. Please try again');
+                        }
+                    }
+                });
+            });
+            
+            $('#resetSubmitButton').on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url : $('#resetWebAccessDetails').attr('action'),
+                    async: false,
+                    method: 'POST',
+                    data: {
+                        password: $('#password').val()
+                    }, 
+                    success: function (data) {
+                        if (data.error == false) {
+                            $('.resetWebAccessDetails').html('Password reset to <strong>' + $('#password').val()) + '</strong>';
+                        } else {
+                            $('.resetWebAccessDetailsError').html('There was an error creating reseting the password. Please try again');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

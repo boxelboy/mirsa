@@ -3,4 +3,19 @@
 {% block body %}
     <h1>Stock Audit</h1>
     {% include '@MirsaMirsa/StockAudit/datatable.html.twig' with { url: path('api_mirsa_stock_audit_list', {'stock': stock.id} )} %}
+
+    <button class="btn clearFilter btn-info"><i class="fa fa-trash"></i> Clear Filter</button> 
+    
+<script>
+    $(document).ready(function () {
+
+        $('.clearFilter').click(function() {
+        	$.each($('input'), function(){
+        		$(this).val('');
+        	})
+            localStorage.clear();
+            location.reload();
+        });    
+    });        
+</script> 
 {% endblock %}

@@ -15,7 +15,7 @@
                         Appointment Number
                     </div>
                     <div>
-                        {{ appointment.id }}
+                        {{ appointment.appointmentNumber }}
                     </div>
                     <div>
                         Status
@@ -30,13 +30,13 @@
                         Date Created
                     </div>
                     <div>
-                        {{ appointment.dateCreated }}
+                        {{ appointment.dateCreated|date("m/d/Y"|trans)  }}
                     </div>
                     <div>
                         Date Scheduled
                     </div>
                     <div>
-                        {{ appointment.dateScheduled }}
+                        {{ appointment.dateScheduled|date("m/d/Y"|trans) }}
                     </div>
                 </div>
                     
@@ -45,7 +45,7 @@
                         Date Received
                     </div>
                     <div>
-                        {{ appointment.dateReceived }}
+                        {{ appointment.dateReceived|date("m/d/Y"|trans) }}
                     </div>
                     <div>
                         Reference

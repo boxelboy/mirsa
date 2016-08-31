@@ -20,8 +20,6 @@ class TimesheetController extends AbstractRestController
  
     /**
      * {@inheritDoc}
-     *
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function timesheetsFromWorkOrderAction(WorkOrder $workOrder, Request $request, $_format)
     {
@@ -51,6 +49,13 @@ class TimesheetController extends AbstractRestController
         $qb->andWhere($alias . '.workOrder = :workorder');
         $qb->setParameter('workorder',$this->workOrder->getId());
 
+        /*if (!is_null($this->getUser()->getContact())) { 
+            if ($this->getUser()->getContact()->getClient()) {
+                $qb->andWhere($alias . '.client = :client');
+                $qb->setParameter('client', $this->getUser()->getContact()->getClient());
+            }
+        }*/
+        
         return $qb;
     }            
 }

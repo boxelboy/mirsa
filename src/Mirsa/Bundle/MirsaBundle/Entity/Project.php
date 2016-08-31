@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Project
+ *
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Project entity
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity
@@ -70,9 +75,8 @@ class Project
     protected $client;
 
     /**
-     * @var array
      *
-     * @ORM\OneToMany(targetEntity="BusinessMan\Bundle\JobBundle\Entity\Job", mappedBy="project")
+     * @ORM\OneToOne(targetEntity="BusinessMan\Bundle\JobBundle\Entity\Job", mappedBy="project")
      */
     protected $jobs;
 

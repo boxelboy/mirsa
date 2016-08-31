@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * StockQuantity
+ *
+ * @author David Hatch <david@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Stock Quantity
  *
- * @author cps
+ * @author David Hatch <david@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity
@@ -99,6 +104,12 @@ class StockQuantity
      * @ORM\Column(name="sSumOfQuantities", type="integer")
      */
     protected $sumOfQuantities;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\JoinColumn(name="`_kf_Customer_Account_No`", referencedColumnName="Account_No")
+     */
+    protected $client;    
 
     public function getId()
     {
@@ -159,4 +170,13 @@ class StockQuantity
     {
         return $this->sumOfQuantities;
     }    
+    
+    function getDescription() {
+        return $this->description;
+    }
+
+    function getClient() {
+        return $this->client;
+    }
+
 }

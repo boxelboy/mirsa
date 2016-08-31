@@ -4,13 +4,13 @@
 
 {% block columns %}
     <th data-source="id" data-template="stock_action" data-width="10px"></th>
-    <th data-source="sku" data-sortable="true" data-width="80px" data-searchable="true"">Sku</th>
-    <th data-source="description" data-sortable="true" data-searchable="true"">Description</th>
-    <th data-source="batchNumber" data-sortable="true" data-width="80px" data-searchable="true"">Batch Number</th>
-    <th data-source="warehouseName" data-sortable="true" data-width="80px" data-searchable="true"">Warehouse Name</th>
-    <th data-source="aisleName" data-sortable="true" data-width="80px" data-searchable="true"">Aisle Name</th>
-    <th data-source="bayName" data-sortable="true" data-width="80px" data-searchable="true"">Bay Name</th>
-    <th data-source="quantity" data-sortable="true" data-width="80px" data-searchable="true"">Quantity</th>
+    <th data-source="sku" class="sku" data-sortable="true" data-width="80px" data-searchable="true" class="batchSku">Sku</th>
+    <th data-source="description" class="description" data-sortable="true" data-searchable="true">Description</th>
+    <th data-source="batchNumber" class="batchNumber" data-sortable="true" data-width="80px" data-searchable="true">Batch Number</th>
+    <th data-source="warehouseName" class="warehouseName" data-sortable="true" data-width="80px" data-searchable="true">Warehouse Name</th>
+    <th data-source="aisleName" class="aisleName" data-sortable="true" data-width="80px" data-searchable="true">Aisle Name</th>
+    <th data-source="bayName" class="bayName" data-sortable="true" data-width="80px" data-searchable="true">Bay Name</th>
+    <th data-source="quantity" data-sortable="true" data-width="80px" data-searchable="true">Quantity</th>
 {% endblock %}
 
 {% block templates %}
@@ -22,3 +22,4 @@
         {% endverbatim %}
     </script>
 {% endblock %}
+

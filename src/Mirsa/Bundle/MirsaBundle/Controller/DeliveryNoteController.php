@@ -12,7 +12,7 @@ use Mirsa\Bundle\MirsaBundle\Entity\SalesOrder;
 /**
  * DeliveryNoteController
  *
- * @author cps
+ * @author Dave Hatch
  * @link   
  */
 class DeliveryNoteController extends Controller
@@ -26,7 +26,6 @@ class DeliveryNoteController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Cache(public=true, smaxage=86400, maxage=86400, vary={"Cookie"})
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function deliveryNotesForSalesOrderAction(SalesOrder $salesOrder)
     {
@@ -58,8 +57,6 @@ class DeliveryNoteController extends Controller
      * @param DeliveryNote $deliveryNote
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Security("has_role('ROLE_USER')")
      */
     public function downloadAction(DeliveryNote $deliveryNote)
     {

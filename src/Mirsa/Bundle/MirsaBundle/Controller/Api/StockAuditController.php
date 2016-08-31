@@ -9,7 +9,7 @@ use Mirsa\Bundle\MirsaBundle\Entity\Stock;
 /**
  * StockAuditController
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://git.computech-it.co.uk/businessmanportal/JobBundle
  */
 class StockAuditController extends AbstractRestController
@@ -18,8 +18,6 @@ class StockAuditController extends AbstractRestController
     
     /**
      * {@inheritDoc}
-     *
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function stockAction(Stock $stock, Request $request, $_format)
     {
@@ -48,10 +46,17 @@ class StockAuditController extends AbstractRestController
         $qb = parent::getQueryBuilder($alias);
         
         $qb->andWhere($alias . '.subject = :sku');
-        $qb->andWhere($alias . '.auditedTable IN (:auditedTable)');
+        //$qb->andWhere($alias . '.auditedTable IN (:auditedTable)');
         
         $qb->setParameter('sku', $this->stock->getSku());
-        $qb->setParameter('auditedTable', array('Stock', 'Stock_Quantity'));
+        //$qb->setParameter('auditedTable', array('Stock', 'Stock_Quantity'));
+       
+       /*if (!is_null($this->getUser()->getContact())) { 
+           if ($this->getUser()->getContact()->getClient()) {
+                $qb->andWhere($alias . '.client = :client');
+                $qb->setParameter('client', $this->getUser()->getContact()->getClient());
+            }
+       }*/
 
         return $qb;
     }

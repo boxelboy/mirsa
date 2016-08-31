@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * StockQuantityHistory
+ *
+ * @author David Hatch <david@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Stock Quantity
  *
- * @author chris saunders
+ * @author David Hatch <david@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity
@@ -32,7 +37,7 @@ class StockQuantityHistory
     /**
      * @var Job
      *
-     * @ORM\ManyToOne(targetEntity="WorkOrder")
+     * @ORM\ManyToOne(targetEntity="WorkOrder",inversedBy="stkQtyHistories")
      * @ORM\JoinColumn(name="_kf_Job_No", referencedColumnName="Job_Number")
      */
     protected $workOrder;

@@ -26,7 +26,6 @@ class TimesheetController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Cache(public=true, smaxage=86400, maxage=86400, vary={"Cookie"})
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function timesheetsFromWorkOrderAction(WorkOrder $workOrder)
     {

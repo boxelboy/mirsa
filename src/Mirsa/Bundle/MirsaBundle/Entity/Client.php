@@ -39,7 +39,7 @@ class Client
     /**
      * Individual or company
      *
-     * @ORM\Column(name="Client Individual_or_Company", type="string")
+     * @ORM\Column(name="`Client Individual_or_Company`", type="string")
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
@@ -181,12 +181,6 @@ class Client
     protected $contracts;
 
     /**
-     * @ORM\OneToMany(targetEntity="Contact", mappedBy="client")
-     * @ORM\OrderBy({"forename" = "ascend", "surname" = "ascend"})
-     */
-    protected $contacts;
-
-    /**
      * @ORM\OneToMany(targetEntity="SupportCall", mappedBy="client")
      */
     protected $supportCalls;
@@ -195,6 +189,35 @@ class Client
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="client")
      */
     protected $stock;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WorkOrder", mappedBy="client")
+     */
+    protected $workOrder;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Mod_Timestamp", type="timestamp")
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
+     */
+    protected $lastModified;
+
+    /**
+     * @var ArrayCollection|Contact
+     *
+     * @ORM\OneToMany(targetEntity="Contact", mappedBy="client", cascade={"remove"})
+     * @ORM\OrderBy({"surname" = "ASC", "forename" = "ASC"})
+     */
+    protected $contacts;
+
+    public function __construct()
+    {
+        $this->contacts = new ArrayCollection();
+    }
+    
 
     /**
      * Get id
@@ -330,6 +353,9 @@ class Client
         return $this->contracts;
     }
 
+    /**
+     * @return \Mirsa\Bundle\MirsaBundle\Entity\Contact|\Doctrine\Common\Collections\ArrayCollection
+     */
     public function getContacts()
     {
         return $this->contacts;
@@ -339,4 +365,10 @@ class Client
     {
         return $this->stock;
     }
+    
+    function getLastModified() {
+        return $this->lastModified;
+    }
+
+
 }

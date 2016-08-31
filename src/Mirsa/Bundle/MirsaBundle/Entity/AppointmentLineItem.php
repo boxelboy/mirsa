@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Appointments
+ *
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,8 +15,8 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Appointment Line Item entity
  *
- * @author cps
- * @link  
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity()
  * @ORM\Table(name="Appointment_LineItems")
@@ -31,7 +36,7 @@ class AppointmentLineItem
     
     /**
      * @var Appointment
-     * @ORM\ManyToOne(targetEntity="Appointment")
+     * @ORM\ManyToOne(targetEntity="Appointment", inversedBy="lineItems")
      * @ORM\JoinColumn(name="_fk_AppointmentID", referencedColumnName="__pk_AppointmentID")
      */
     protected $appointment;

@@ -15,8 +15,6 @@ class ActivityAssemblyController extends AbstractRestController
 {
     /**
      * {@inheritDoc}
-     *
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function listAction(Request $request, $_format)
     {
@@ -38,7 +36,7 @@ class ActivityAssemblyController extends AbstractRestController
         return 'MirsaMirsaBundle:ActivityAssembly';
     }
     
-       /**
+    /**
      * Only fetch Inspection Work Orders records associated with the selected stock record
      *
      * @param string $alias
@@ -48,9 +46,16 @@ class ActivityAssemblyController extends AbstractRestController
     protected function getQueryBuilder($alias)
     {
         $qb = parent::getQueryBuilder($alias);
-        $qb->andWhere($alias . '.type IN (:type)');
-        $qb->setParameter('type', array('Assembly'));
+        $qb->andWhere($alias . '.assemblyID != :null');
+        $qb->setParameter('null', 'N;');
 
+        if (!is_null($this->getUser()->getContact())) { 
+            if ($this->getUser()->getContact()->getClient()) {
+                $qb->andWhere($alias . '.client = :client');
+                $qb->setParameter('client', $this->getUser()->getContact()->getClient());
+            }
+        }
+        
         return $qb;
     }
 }

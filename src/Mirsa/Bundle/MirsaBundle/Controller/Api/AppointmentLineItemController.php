@@ -9,7 +9,7 @@ use Mirsa\Bundle\MirsaBundle\Entity\Appointment;
 /**
  * Appointment Line Item Controller
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://git.computech-it.co.uk/businessmanportal/JobBundle
  */
 class AppointmentLineItemController extends AbstractRestController
@@ -18,8 +18,6 @@ class AppointmentLineItemController extends AbstractRestController
     
     /**
      * {@inheritDoc}
-     *
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function lineItemsForAppointmentAction(Appointment $appointment, Request $request, $_format)
     {
@@ -48,7 +46,6 @@ class AppointmentLineItemController extends AbstractRestController
         $qb = parent::getQueryBuilder($alias);
         $qb->andWhere($alias . '.appointment = :appointment');
         $qb->setParameter('appointment',$this->appointment->getId());
-        
 
         return $qb;
     }    

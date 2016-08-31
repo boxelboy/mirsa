@@ -12,6 +12,7 @@
         padding-left: 45px;
     }
 
+
     #app_header>ul {
         display: none !important;
     }
@@ -59,12 +60,12 @@ html {
 header#app_header h1 {
     margin: 0;
     text-indent: -100%;
-    background: url(../img/bm-logo.png) no-repeat;
+    background: url(../img/mirsa_logo.jpg) no-repeat;
     height: 45px;
     background-size: auto 100%;
 }
 header#app_header {
-    background-color: #438eb9;
+    background-color: #495758;
     background-image: url(../img/bg_square.png);
 }
 header#app_header>ul {
@@ -99,7 +100,7 @@ header#app_header>ul>li.profile span.name {
     display: block;
 }
 header#app_header>ul>li.profile {
-    background-color: #62a8d1;
+    background-color: #617c86;
     width: 150px;
     padding: 3px 6px;
 }
@@ -342,8 +343,8 @@ div.dataTables_processing {
     padding-top: 15px;
 }
 div.dataTables_processing:before {
-    content: "\f110";
-    font-family: fontawesome;
+    /*content: "\f110";
+    font-family: fontawesome;*/
     color: #669fc7;
     font-size: 75px;
     -webkit-animation: spin 2s infinite linear;
@@ -444,13 +445,16 @@ ul.actions li.header {
     vertical-align: middle;
     text-align: left;
 }
-.details>div>div:nth-child(1) {
+.details>div>div:nth-child(1),.details>div>div:nth-child(odd) {
     background-color: #EDF3F4;
     width: 20%;
     color: #336199;
     text-align: right;
     font-size: 10px;
     line-height: 20px;
+}
+details>div>div:nth-child(odd) {
+    width: 25%;
 }
 ul.thumbnails {
     list-style: none;
@@ -1105,4 +1109,29 @@ iframe {
 #quick_timesheet div.notes {
     height: calc(100% - 300px);
     min-height: 100px;
+}
+.hideBtn {
+    display: none;
+}
+
+form#webAccessDetails {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+button#submitButton {
+    margin-top: 10px;
+}
+
+.enableWebAccessDetails {
+    display: none;
+}
+
+.resetWebAccessDetails {
+    display: none;
+}
+
+.form-group {
+    width: 90%;
+    margin: auto;
 }

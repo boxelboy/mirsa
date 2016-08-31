@@ -2,8 +2,8 @@
 /**
  * Appointments
  *
- * @author cps
- * @link 
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Appointment entity
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity()
@@ -65,7 +65,7 @@ class Appointment
      * @var \Date
      * @ORM\Column(name="Date_Created", type="date")
      * @Serializer\Expose
-     * @Serializer\Type("DateTime<'m-d-Y'>")
+     * @Serializer\Type("DateTime<'m/d/Y'>")
      */
     protected $dateCreated;
 
@@ -73,7 +73,7 @@ class Appointment
      * @var \Date
      * @ORM\Column(name="Date_Received", type="date")
      * @Serializer\Expose
-     * @Serializer\Type("DateTime<'m-d-Y'>")
+     * @Serializer\Type("DateTime<'m/d/Y'>")
      */
     protected $dateReceived;
 
@@ -81,14 +81,14 @@ class Appointment
      * @var \Date
      * @ORM\Column(name="Date_Scheduled", type="date")
      * @Serializer\Expose
-     * @Serializer\Type("DateTime<'m-d-Y'>")
+     * @Serializer\Type("DateTime<'m/d/Y'>")
      */
     protected $dateScheduled;    
     
     /**
      * @var \Mirsa\Bundle\MirsaBundle\Entity\Client
      * 
-     * @ORM\ManyToOne(targetEntity="Mirsa\Bundle\MirsaBundle\Entity\Client")
+     * @ORM\ManyToOne(targetEntity="Client")
      * @ORM\JoinColumn(name="Customer_Account_No", referencedColumnName="Account_No")
      */
     protected $client;

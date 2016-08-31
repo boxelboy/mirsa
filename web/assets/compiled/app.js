@@ -4066,6 +4066,10 @@ $(function () {
         search_contains: true
     });
 
+    /*$('button').on('click', function() {
+        $('.loader').show();
+    });*/
+
     setTimeout(function () {
         if (location.hash != '') {
             $('a[href="'+location.hash+'"]').tab('show');
@@ -4113,7 +4117,8 @@ $(function () {
                 url = null,
                 serverSide = false,
                 storage = new PersistentStorage('datatable'),
-                $loader = $(this).parent().find('.dataTables_processing');
+                $loader = $(this).parent().find('.loader');
+                //$loader = $(this).parent().find('.dataTables_processing');
 
             if ($(this).data('url')) {
                 url = $(this).data('url');
@@ -4137,8 +4142,8 @@ $(function () {
                     searchable: false
                 };
 
-                var footerTotalColumn = $('<th id="total_' + $(this).data('source') + '"></th>').appendTo(footerTotal);
-                var footerColumn = $('<th></th>').appendTo(footer);
+                var footerTotalColumn = $('<th class="' + column.className + '" id="total_' + $(this).data('source') + '" data-total="' + $(this).data('total') + '"></th>').appendTo(footerTotal);
+                var footerColumn = $('<th class="' + column.className + '" ></th>').appendTo(footer);
 
                 if ($(this).data('sortable')) {
                     column.orderable = $(this).data('sortable');
@@ -4215,7 +4220,8 @@ $(function () {
 
                     if (cached) {
                         callback(JSON.parse(cached));
-                        $loader.css('display', 'block !important');
+                        //$loader.css('display', 'block !important');
+                        $('.loader').show();
                     }
 
                     apiRequest.offset = request.start;
@@ -4254,14 +4260,24 @@ $(function () {
                             /* Code to add the summary totals to the columns. based on the ID of field */
                             if (data.summaries) {
                                 $.each(data.summaries, function(totalColumn, totalValue) {
-                                    $('tfoot tr.footerTotals th#total_' + totalColumn).html(totalValue);
+                                    mathsType = $('tfoot tr.footerTotals th#total_' + totalColumn).attr('data-total');
+                                    if (mathsType == 'avg%') {
+                                        $('tfoot tr.footerTotals th#total_' + totalColumn).html(((totalValue/data.total)*100).toFixed(2));
+                                    } else if (mathsType == 'avg') {
+                                        $('tfoot tr.footerTotals th#total_' + totalColumn).html((totalValue/data.total).toFixed(2));
+                                    } else {
+                                        $('tfoot tr.footerTotals th#total_' + totalColumn).html(totalValue);
+                                    }
                                 });
                             }
+                            
+
 
                             storage.set(url, JSON.stringify(responseData));
 
                             callback(responseData);
-                            $loader.css('display', 'none');
+                            //$loader.css('display', 'none');
+                            $('.loader').hide();
                         }
                     });
                 }
@@ -4278,6 +4294,16 @@ $(function () {
             }
 
             var filterTimeout;
+
+            if (document.cookie.indexOf("sku") != -1) {
+                $('tfoot tr th.sku input').val(document.cookie.replace(/(?:(?:^|.*;\s*)sku\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+            }
+
+            if (document.cookie.indexOf("description") != -1) {
+                $('tfoot tr th.description input').val(document.cookie.replace(/(?:(?:^|.*;\s*)description\s*\=\s*([^;]*).*$)|^.*$/, "$1"));
+            }
+
+            
 
             $('tfoot tr th select', this).on('change', function () {
                 var value = $(this).val(),

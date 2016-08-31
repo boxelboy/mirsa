@@ -28,6 +28,8 @@ framework:
 twig:
     debug: %kernel.debug%
     strict_variables: %kernel.debug%
+    globals:
+        version: "2.0.2"
 
 assetic:
     debug: %kernel.debug%
@@ -42,6 +44,7 @@ assetic:
                 - @BusinessManBusinessManBundle/Resources/less/bootstrap.less
                 - %kernel.root_dir%/../vendor/datatables/plugins/integration/bootstrap/3/dataTables.bootstrap.css
                 - %kernel.root_dir%/../vendor/datatables/plugins/integration/font-awesome/dataTables.fontAwesome.css
+                - %kernel.root_dir%/../vendor/components/jquery/jquery-ui.css
             filters: [lessphp]
             output: assets/compiled/common.css
         custom_css:
@@ -50,6 +53,7 @@ assetic:
         common_js:
             inputs:
                 - %kernel.root_dir%/../vendor/components/jquery/jquery.js
+                - %kernel.root_dir%/../vendor/components/jquery/jquery-ui.js
                 - %kernel.root_dir%/../vendor/moment/moment/moment.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/dropdown.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/tab.js

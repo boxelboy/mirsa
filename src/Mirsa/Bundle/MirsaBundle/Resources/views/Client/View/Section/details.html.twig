@@ -1,0 +1,101 @@
+<div class="row-fluid">
+    <dl class="dl-horizontal">
+        <div class="span6">
+            <dt>
+                Classification
+            </dt>
+            <dd>
+                {{ client.classification|default('-') }}
+            </dd>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                {% if client.type %}
+                    {{ client.type }}
+                {% else %}
+                    -
+                {% endif %}
+            </dd>
+            <dt>
+                Main phone
+            </dt>
+            <dd>
+                {{ client.phone|default('-') }}
+            </dd>
+            <dt>
+                Skype
+            </dt>
+            <dd class="no-truncate">
+                {% if client.skype %}
+                    {{ client.skype }}
+                    <a href="skype:{{ client.skype }}?call">
+                        Call
+                        <sup>
+                            <i class="icon-external-link"></i>
+                        </sup>
+                    </a>
+                {% else %}
+                    -
+                {% endif %}
+            </dd>
+            <dt>
+                Email
+            </dt>
+            <dd>
+                {% if client.email %}
+                    <a href="{{ path('BusinessManEmailBundle_index', { 'hash': 'compose/to/' ~ client.email }) }}">
+                        {{ client.email }}
+                    </a>
+                {% else %}
+                    -
+                {% endif %}
+            </dd>
+        </div>
+        <div class="span6">
+            <dt>
+                Account #
+            </dt>
+            <dd>
+                {{ client.id }}
+            </dd>
+            <dt>
+                Default contact
+            </dt>
+            <dd>
+                {% if client.defaultContact %}
+                    <a href="{{ path('BusinessManBaseBundle_contact_view', { 'id': client.defaultContact.id }) }}">
+                        {{ client.defaultContact.forename }} {{ client.defaultContact.surname }}
+                    </a>
+                {% else %}
+                    -
+                {% endif %}
+            </dd>
+            <dt>
+                Account manager
+            </dt>
+            <dd>
+                {% if client.manager %}
+                    {{ client.manager.forename }} {{ client.manager.surname }}
+                {% else %}
+                    -
+                {% endif %}
+            </dd>
+            <dt>
+                Website
+            </dt>
+            <dd class="no-truncate">
+                {% if client.website %}
+                    <a href="{{ client.website }}" target="_blank">
+                        {{ client.website }}
+                        <sup>
+                            <i class="icon-external-link"></i>
+                        </sup>
+                    </a>
+                {% else %}
+                    -
+                {% endif %}
+            </dd>
+        </div>
+    </dl>
+</div>

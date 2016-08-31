@@ -3,7 +3,7 @@
 {% block columns %}
     <th data-source="quantity" data-sortable="false" data-width="5%" data-searchable="false">Quantity</th>
     <th data-source="serialNo" data-template="wo_serial" data-sortable="true" data-width="8%" data-searchable="true">Serial No</th>
-    <th data-source="batchNo" data-sortable="false" data-width="10%" data-searchable="true">Batch No</th>
+    <th data-source="batchNo" data-sortable="true" data-width="10%" data-searchable="true">Batch No</th>
     <th data-source="sku" data-sortable="true" data-width="12%" data-searchable="true" >SKU Code</th>
     <th data-source="description" data-sortable="true" data-width="12%" data-searchable="true">Description</th>
     <th data-source="companyName" data-sortable="true" data-width="11%" data-searchable="true">Trading Company</th>
@@ -11,9 +11,8 @@
     <th data-source="aisleName" data-sortable="true" data-width="8%" data-searchable="true">Aisle</th>
     <th data-source="bayName" data-sortable="true" data-width="13%" data-searchable="true">Bay Name</th>
     <th data-source="cost" data-template="wo_cost" data-sortable="true" data-width="5%" data-searchable="true">Cost</th>
-<a href="#">Download</a>
-{% endblock %}
 
+{% endblock %}
 {% block templates %}
 
     <script type="text/template" data-name="wo_serial">

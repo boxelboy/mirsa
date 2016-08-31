@@ -226,6 +226,35 @@ abstract class AbstractRestController extends Controller
             case 'timestamp':
             case 'date':
             case 'time':
+                if (strpos($filter, "...") > -1) {
+                    $dates = explode("...",$filter);
+                    for ($i = 0; $i < sizeOf($dates); $i++)
+                    {
+                        $hash = explode("/", $dates[$i]);
+                        $dates[$i] = $hash[1]."/".$hash[0]."/".$hash[2];
+                    }
+                    $qb->andWhere('e.'.$field.' BETWEEN \''.$dates[0].'\' AND \''.$dates[1].'\'');
+                } elseif (strpos($filter, ">") > -1) {
+                    $hash = explode("/", substr($filter, -7));
+                    $datec = $hash[1]."-".$hash[0]."-01";
+                    $date = date("t/m/Y", strtotime($datec));
+                    $qb->andWhere('e.'.$field.' > \''.$date.'\' ');
+                } elseif (strpos($filter, "==") > -1) {
+                    $hash = explode("/", substr($filter, -7));
+                    $datec = $hash[1]."-".$hash[0]."-01";
+                    $endDate = date("t/m/Y", strtotime($datec));
+                    $startDate = "01/".$hash[0]."/".$hash[1];
+                    $qb->andWhere('e.'.$field.' BETWEEN \''.$startDate.'\' AND \''.$endDate.'\'');
+                } else {
+                    $dateValue = \DateTime::createFromFormat('m/d/Y', $filter);
+
+                    if ($global) {
+                        $qb->orWhere($qb->expr()->eq('e.' . $field, ':' . $field));
+                    } else {
+                        $qb->andWhere($qb->expr()->eq('e.' . $field, ':' . $field));
+                    }
+                    $qb->setParameter($field, $dateValue, $type);
+                }
                 // Dates are too vague to apply global filters
                 break;
 
@@ -351,7 +380,11 @@ abstract class AbstractRestController extends Controller
             foreach ($summaryColumns as $index => $summaryColumn) {
                 
                 $split = explode('.', $summaryColumn);
-                $return[$split[1]] = $results[$index + 1];
+                if (is_null($results[$index + 1])) {
+                    $return[$split[1]] = "0";
+                } else {
+                    $return[$split[1]] = $results[$index + 1];
+                }
             }
             
             return $return;
@@ -359,7 +392,6 @@ abstract class AbstractRestController extends Controller
         
         return array();
     }
-
     /**
      * Name of the entity managed by this controller
      *

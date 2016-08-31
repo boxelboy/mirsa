@@ -9,7 +9,7 @@ use Mirsa\Bundle\MirsaBundle\Entity\Task;
 /**
  * SalesOrderController
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://git.computech-it.co.uk/businessmanportal/JobBundle
  */
 class TaskController extends AbstractRestController

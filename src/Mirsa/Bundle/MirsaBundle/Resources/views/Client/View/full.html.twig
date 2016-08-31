@@ -1,0 +1,79 @@
+{% include '@BusinessManBase/Client/View/Section/details.html.twig' with { 'client': client } %}
+
+<hr class="space-32" />
+
+<div class="row-fluid sticky" id="scrollspy">
+    <ul class="nav nav-pills well well-small">
+        <li {% if client.contacts|length == 0 %}class="disabled"{% endif %}>
+            <a href="#contacts">{{ client.contacts|length }} contacts</a>
+        </li>
+        
+        <li {% if client.jobs|length == 0 %}class="disabled"{% endif %}>
+            <a href="#jobs">{{ totalJobs|default('0') }} active jobs</a>
+        </li>
+
+        <li {% if client.contracts|length == 0 %}class="disabled"{% endif %}>
+            <a href="#contracts">{{ client.contracts|length }} contracts</a>
+        </li>
+
+    </ul>
+</div>
+
+<div>
+{% if client.contacts|length %}
+    <section id="contacts">
+        <div class="space-32"></div>
+        <div class="widget-box transparent">
+            <div class="widget-header">
+                <h2 class="lighter">Contacts</h2>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    {% include '@BusinessManBase/Contact/List/thumbnails.html.twig' with { 'contacts': client.contacts, 'datatable': true, 'search': false } %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% if client.jobs|length %}
+    <section id="jobs">
+        <div class="space-32"></div>
+        <div class="widget-box transparent">
+            <div class="widget-header">
+                <h2 class="lighter">Jobs</h2>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    {% include '@BusinessManBase/Job/List/media.html.twig' with { 
+                        'jobs': client.jobs, 
+                        'client': false,
+                        'paginate': path('BusinessManBaseBundle_client_view_jobs', { 'id': client.id }),
+                        'totalJobs': totalJobs,
+                        'children': true,
+                        'timesheets': false
+                    } %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% if client.contracts|length %}
+    <section id="contracts">
+        <div class="space-32"></div>
+        <div class="widget-box transparent">
+            <div class="widget-header">
+                <h2 class="lighter">Contracts</h2>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main no-padding">
+                    {% include '@BusinessManBase/Contract/List/table.html.twig' with { 'contracts': client.contracts } %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{{ bm_render_extendable_block('client_details', { 'id': client.id }) }}
+</div>

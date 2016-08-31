@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * User entity
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity()
@@ -27,10 +27,13 @@ class User implements AdvancedUserInterface, EquatableInterface
     const TYPE_STAFF = 1;
     const TYPE_CLIENT_CONTACT = 2;
     const TYPE_PROSPECT = 3;
+    const TYPE_CLIENT_CONTACT_INVENTORY = 4;
 
     /**
      * @ORM\Id
      * @ORM\Column(name="User_ID", type="integer")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Synergize\Bundle\DbalBundle\Driver\IdentityGenerator")* 
      * @Serializer\Expose
      * @Serializer\XmlAttribute
      */
@@ -273,7 +276,11 @@ class User implements AdvancedUserInterface, EquatableInterface
         if ($this->getStaff()) {
             return self::TYPE_STAFF;
         } else if ($this->getContact()) {
-            return self::TYPE_CLIENT_CONTACT;
+            if ($this->getInventoryView() == "Yes") {
+                return self::TYPE_CLIENT_CONTACT_INVENTORY;
+            } else {
+                return self::TYPE_CLIENT_CONTACT;
+            }
         } else if ($this->getProspect()) {
             return self::TYPE_PROSPECT;
         }
@@ -298,6 +305,10 @@ class User implements AdvancedUserInterface, EquatableInterface
             $roles[] = 'ROLE_STAFF';
         }
 
+        if ($this->getType() == self::TYPE_CLIENT_CONTACT_INVENTORY) {
+            $roles[] = 'ROLE_CLIENT_CONTACT-INVENTORY';
+        }        
+        
         if ($this->getType() == self::TYPE_CLIENT_CONTACT) {
             $roles[] = 'ROLE_CLIENT_CONTACT';
         }
@@ -376,4 +387,8 @@ class User implements AdvancedUserInterface, EquatableInterface
         $this->inventoryView = $value;
         return $this;
     }    
+    
+    function setId($id) {
+        $this->id = $id;
+    }
 }

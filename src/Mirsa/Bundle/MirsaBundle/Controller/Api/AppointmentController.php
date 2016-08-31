@@ -4,18 +4,21 @@ namespace Mirsa\Bundle\MirsaBundle\Controller\Api;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Computech\Bundle\CommonBundle\Controller\AbstractRestController;
+use Doctrine\ORM\Query\Expr\Join;
+use Mirsa\Bundle\MirsaBundle\Entity\Client;
+
 
 /**
  * Appointment Controller
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://git.computech-it.co.uk/businessmanportal/JobBundle
  */
 class AppointmentController extends AbstractRestController
 {
+    private $client;
     /**
      * {@inheritDoc}
-     *
      */
     public function listAction(Request $request, $_format)
     {
@@ -29,7 +32,7 @@ class AppointmentController extends AbstractRestController
     {
         return 'MirsaMirsaBundle:Appointment';
     }
-    
+
    /**
      * Only records associated with the selected Client record
      *
@@ -40,10 +43,16 @@ class AppointmentController extends AbstractRestController
     protected function getQueryBuilder($alias)
     {
         $qb = parent::getQueryBuilder($alias);
-        $qb->andWhere($alias . '.client = :client');
-        $qb->setParameter('client', $this->getUser()->getClientContact()->getId());
 
+        /* Filter out the broken data that doesn't have a valid client */
+        $qb->innerJoin($alias . '.client', 'c');
         
+        if (!is_null($this->getUser()->getContact())) { 
+            if ($this->getUser()->getContact()->getClient()) {
+                $qb->andWhere($alias . '.client = :client');
+                $qb->setParameter('client', $this->getUser()->getContact()->getClient());
+            }
+        }
         return $qb;
-    }    
+    }
 }

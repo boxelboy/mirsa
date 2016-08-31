@@ -37,7 +37,7 @@
         <ul>
             <li class="profile">
                 <a data-toggle="dropdown">
-                    <img src="{{ asset('bundles/businessmanbusinessman/img/default-avatar.png') }}" />
+                    <img src="{{ asset('bundles/businessmanbusinessman/img/default-avatar.png') }}" title="Mirsa Web Portal {{version}}" />
 
                     Welcome,
                     <span class="name">
@@ -54,7 +54,7 @@
 
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a href="{{ path('businessman_logout') }}">
+                        <a class="clearStorage" href="{{ path('businessman_logout') }}">
                             <i class="fa fa-sign-out fa-fw"></i>
                             Logout
                         </a>
@@ -70,6 +70,8 @@
     </nav>
 
     <div class="container" id="container">
+        <div class="loader"><i class="fa fa-spin fa-spinner" style="position: fixed;margin: 0;top: 40%;left: 48%;color: #669fc7;font-size: 100px;z-index: 99999999;"></i></div>
+
         {% if block('breadcrumb') %}
             <ul id="breadcrumb">
             </ul>
@@ -110,4 +112,29 @@
             {% block body %}{% endblock %}
         </div>
     </div>
+            
+    <script>
+        $(document).ready( function() {
+            $('.clearStorage').click(function() {
+                localStorage.clear();
+                document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                window.location.reload();
+            });
+
+            $('a').click(function() {
+                if ($(this).children('i.fa-cubes').length != 0) {
+                    if ($('.sku input').val() !== undefined && $('.description input').val() !== undefined) {
+                        document.cookie = "sku=" + $('.sku input').val() + ";";
+                        document.cookie = "description=" + $('.description input').val() + ";"; 
+                        localStorage.setItem('sku',$('.sku input').val());
+                        localStorage.setItem('description', $('.description input').val());
+                    }
+                }
+
+            });
+
+        });
+    </script>                
 {% endblock %}
+
+

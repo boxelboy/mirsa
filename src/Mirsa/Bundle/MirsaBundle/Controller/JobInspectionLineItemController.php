@@ -26,7 +26,6 @@ class JobInspectionLineItemController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Cache(public=true, smaxage=86400, maxage=86400, vary={"Cookie"})
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function listAction(WorkOrder $workOrder)
     {
@@ -49,8 +48,6 @@ class JobInspectionLineItemController extends Controller
 
         return $qb;
     }        
-    
-    
 
     /**
      * View a Delivery Note PDF
@@ -58,8 +55,6 @@ class JobInspectionLineItemController extends Controller
      * @param DeliveryNote $deliveryNote
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Security("has_role('ROLE_USER')")
      */
     public function downloadAction(DeliveryNote $deliveryNote)
     {

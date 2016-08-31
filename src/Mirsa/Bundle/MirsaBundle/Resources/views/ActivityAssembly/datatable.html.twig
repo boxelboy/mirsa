@@ -5,28 +5,22 @@
 {% set plannedEndDate = plannedEndDate is defined ? plannedEndDate : false %}
 
 {% block columns %}
-    <th data-source="id" data-sortable="false" data-width="2%" data-searchable="true">#</th>
-    <th data-source="created" data-template="workorderDate" data-sortable="false" data-width="3%" data-searchable="true">Created</th>
-    <th data-source="sku" data-sortable="false" data-width="4%" data-searchable="true">Part No.</th>
-    <!--<th data-source="description" data-sortable="true" class="hidden" data-searchable="true">Description</th>-->
-    <th data-source="type" data-sortable="true" data-width="3%" data-searchable="true">Type</th>
+    <th data-source="id" class="id" data-sortable="true" data-width="2%" data-searchable="true" data-sort="desc">#</th>
+    <th data-source="created" class="created" data-template="workorderDate" data-sortable="true" data-width="3%" data-searchable="true">Created</th>
+    <th data-source="sku" class="sku" data-sortable="true" data-width="5%" data-searchable="true">Part No.</th>
+    <th data-source="type" class="type" data-sortable="true" data-width="3%" data-searchable="true">Type</th>
     <th data-source="assemblyQty" data-sortable="true" data-width="4%" data-searchable="true">Qty</th>
     <th data-source="assemblyQtyCompleted" data-sortable="true" data-width="2%" data-searchable="true">Qty Built</th>
     <th data-source="assemblyQtyQuarantined" data-template="workorderQuar" data-sortable="true" data-width="3%" data-searchable="true">Qty Quar</th>
-    <th data-source="ppmLevel" data-sortable="true" data-template="workorderPPM" data-width="2%" data-searchable="true">PPM</th>
-    <th data-source="ppmEfficiency" data-sortable="false" data-template="workorderPPMEff" data-searchable="true" data-width="2%" >EFF %</th>
-    <th data-source="plannedStartDate" data-template="workorderSDate" data-sortable="false" data-searchable="true" data-width="3%" >Planned Start</th>
-    <th data-source="plannedEndDate" data-template="workorderEDate" data-sortable="false" data-searchable="true" data-width="3%;">Planned End</th>
-    <th data-source="jobProgressPercent" data-sortable="false" data-template="workorderComp" data-searchable="true" data-width="3%;">% Comp</th>
-    <th data-source="assemblyStatus" data-sortable="false" data-searchable="true" data-width="4%;">Status</th>
-    <th data-source="salesOrderNumber" data-sortable="false" data-searchable="true" data-width="4%;">SO No</th>
-    <th data-source="customerName" data-sortable="false" data-searchable="true">Customer Name</th>
-    <th data-source="tradingCompany" data-sortable="false" data-searchable="true">Trading Company</th>
-    <!--<th data-source="totalAssemblyQty" data-sortable="false" data-searchable="true" class="hidden totalAssemblyQty">Total Assembly Qty</th>
-    <th data-source="totalAssemblyCompleted" data-sortable="false" data-searchable="true" class="hidden totalAssemblyCompleted">Total Assembly Completed</th>
-    <th data-source="totalAssemblyQuarantined" data-sortable="false" data-searchable="true" class="hidden totalAssemblyQuarantined">Total Assembly Quarantined</th>
-    <th data-source="totalPPMLevel" data-sortable="false" data-searchable="true" class="hidden totalPPMLevel">Total PPM</th>
-    <th data-source="totalPPMEfficiency" data-sortable="false" data-searchable="true" class="hidden totalPPMEfficiency">Total EFF</th>-->
+    <th data-source="ppmLevel" data-total="avg" data-sortable="true" data-template="workorderPPM" data-width="2%" data-searchable="true">PPM</th>
+    <th data-source="ppmEfficiency" data-total="avg%" data-sortable="true" data-template="workorderPPMEff" data-searchable="true" data-width="2%" >EFF %</th>
+    <th data-source="plannedStartDate" class="plannedStartDate" data-template="workorderSDate" data-sortable="false" data-searchable="true" data-width="2%" >Planned Start</th>
+    <th data-source="plannedEndDate" class="plannedEndDate" data-template="workorderEDate" data-sortable="false" data-searchable="true" data-width="2%;">Planned End</th>
+    <th data-source="jobProgressPercent" data-sortable="true" data-template="workorderComp" data-searchable="true" data-width="2%;">% Comp</th>
+    <th data-source="assemblyStatus" class="assemblyStatus" data-sortable="true" data-searchable="true" data-width="4%;">Status</th>
+    <th data-source="salesOrderNumber" class="salesOrderNumber" data-sortable="true" data-searchable="true" data-width="4%;">SO No</th>
+    <th data-source="customerName" class="customerName" data-sortable="true" data-searchable="true">Customer Name</th>
+    <th data-source="tradingCompany" class="tradingCompany" data-sortable="true" data-searchable="true">Trading Company</th>
 {% endblock %}
 
 {% block templates %}
@@ -84,7 +78,7 @@
     <script type="text/template" data-name="workorderPPMEff">
         {% verbatim %}
             {{?it.ppmEfficiency}}
-                {{=it.ppmEfficiency}}
+                {{=(it.ppmEfficiency * 100).toFixed(2)}}
             {{??}}
                  0
             {{?}}

@@ -46,14 +46,14 @@ class WorkOrder
      *
      * @ORM\Column(name="Date_Start_Actual", type="date")
      * @Serializer\Expose
-     * @Serializer\Type("DateTime<'m-d-Y'>")
+     * @Serializer\Type("DateTime<'m/d/Y'>")
      */
     protected $plannedStartDate;
 
     /**
      * @ORM\Column(name="Date_Finish_Planned", type="date")
      * @Serializer\Expose
-     * @Serializer\Type("DateTime<'m-d-Y'>")
+     * @Serializer\Type("DateTime<'m/d/Y'>")
      */
     protected $plannedEndDate;
 
@@ -86,42 +86,9 @@ class WorkOrder
      */
     protected $timesheets;
 
-    /**
-     * @ORM\OneToMany(targetEntity="JobComment", mappedBy="job")
-     */
-    protected $comments;
+    //protected $comments;          - removed by cps - if needed dont forget the mapping (see line below)
+    // @ORM\OneToMany(targetEntity="JobComment", mappedBy="workOrder")
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Staff")
-     * @ORM\JoinColumn(name="Job_ManagerID", referencedColumnName="Staff_ID")
-     */
-    protected $manager;
-
-    /**
-     * @ORM\OneToMany(targetEntity="BusinessMan\Bundle\JobBundle\Entity\Job", mappedBy="parent")
-     */
-    protected $children;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="BusinessMan\Bundle\JobBundle\Entity\Job", inversedBy="children")
-     * @ORM\JoinColumn(name="Job_No_Parent", referencedColumnName="Job_Number")
-     */
-    protected $parent;
-
-    /**
-     * @ORM\OneToOne(targetEntity="BusinessMan\Bundle\JobBundle\Entity\Job")
-     * @ORM\JoinColumn(name="Job_No_Master", referencedColumnName="Job_Number")
-     */
-    protected $master;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Resource")
-     * @ORM\JoinTable(name="ApiData_Schedule",
-     *      joinColumns={@ORM\JoinColumn(name="Job_Number", referencedColumnName="Job_Number")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="Resource_ID", referencedColumnName="Resource_ID")}
-     *  )
-     */
-    protected $resources;
 
     /**
      * Description of the job
@@ -195,19 +162,14 @@ class WorkOrder
     protected $estimatedTimeTotalRemaining;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="workOrder")
      * @ORM\JoinColumn(name="Account_No", referencedColumnName="Account_No")
      */
     protected $client;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Project", inversedBy="jobs")
-     * @ORM\JoinColumn(name="Project_ID", referencedColumnName="Project_ID")
-     */
-    protected $project;
     
     /**
      * @ORM\Column(name="Job_Type", type="string")
+     * @Serializer\Type("string")
      * @Serializer\Expose
      */
     protected $type;
@@ -260,6 +222,7 @@ class WorkOrder
 
     /**
      * @ORM\Column(name="Total_Qty_Inspected", type="integer")
+     * @Serializer\Expose* 
      */
     protected $qtyInspected;
 
@@ -271,6 +234,7 @@ class WorkOrder
     
     /**
      * @ORM\Column(name="Total_Qty_Rejected", type="integer")
+     * @Serializer\Expose* 
      */
     protected $qtyRejected;
 
@@ -371,7 +335,7 @@ class WorkOrder
     protected $salesOrderNumber;
     
     /**
-     * @ORM\OneToMany(targetEntity="StockQuantityHistory", mappedBy="job")
+     * @ORM\OneToMany(targetEntity="StockQuantityHistory", mappedBy="workOrder")
      */
     protected $stkQtyHistories;
     
@@ -415,6 +379,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field1", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose
      */
     protected $customField1;    
     
@@ -423,6 +388,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field2", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose
      */
     protected $customField2;    
     
@@ -431,6 +397,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field3", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose 
      */
     protected $customField3;    
     
@@ -439,6 +406,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field4", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose 
      */
     protected $customField4;    
     
@@ -447,6 +415,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field5", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose 
      */
     protected $customField5;    
     
@@ -455,6 +424,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field6", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose 
      */
     protected $customField6;    
     
@@ -463,6 +433,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field7", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose
      */
     protected $customField7;        
 
@@ -471,6 +442,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field8", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose 
      */
     protected $customField8;        
 
@@ -479,6 +451,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field9", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose 
      */
     protected $customField9;        
 
@@ -487,6 +460,7 @@ class WorkOrder
      *
      * @ORM\Column(name="Total_Qty_Rejected_Field10", type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Expose 
      */
     protected $customField10;            
     
@@ -616,7 +590,7 @@ class WorkOrder
         return $this;
     }
 
-    public function getComments()
+    /*public function getComments()
     {
         return $this->comments;
     }
@@ -625,7 +599,7 @@ class WorkOrder
     {
         $this->comments = $comments;
         return $this;
-    }
+    }*/
 
     public function getParent()
     {
@@ -763,7 +737,7 @@ class WorkOrder
 
     public function __equals($object)
     {
-        if (!$object instanceof Job) {
+        if (!$object instanceof WorkOrder) {
             return false;
         }
 
@@ -829,9 +803,9 @@ class WorkOrder
         return $this->qtyAccepted;
     }        
     
-    public function getJobs()
+    public function getWorkOrders()
     {
-        return $this->jobs;
+        return $this->workOrders;
     }
     
     public function getSku()

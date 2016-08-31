@@ -1,7 +1,7 @@
 security:
     access_denied_url: /login
     encoders:
-        BusinessMan\Bundle\BusinessManBundle\Entity\User:
+        Mirsa\Bundle\MirsaBundle\Entity\User:
             algorithm: md5
             iterations: 1
             encode_as_base64: false
@@ -12,7 +12,7 @@ security:
     providers:
         user:
             entity:
-                class: BusinessManBusinessManBundle:User
+                class: MirsaMirsaBundle:User
                 property: username
         bridge_token:
             id: security.user.bridge_token_provider
@@ -43,3 +43,4 @@ security:
             logout:
                 path: businessman_logout
                 target: /
+                invalidate_session: true

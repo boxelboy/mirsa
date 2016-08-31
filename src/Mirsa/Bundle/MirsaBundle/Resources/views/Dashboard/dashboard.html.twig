@@ -1,0 +1,9 @@
+{% extends bridge ? '@BusinessManBusinessMan/Layout/bridge.html.twig' : '::app.html.twig' %}
+
+{% block body %}
+    <script type="text/javascript">
+        $(document).ready( function() {
+            $('.loader').hide();
+        });
+    </script>
+{% endblock %}

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * SalesOrderLineItem
+ *
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * SalesOrderLineItem entity
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity()
@@ -124,7 +129,7 @@ class SalesOrderLineItem
 
     /**
      * @var SalesOrder
-     * @ORM\ManyToOne(targetEntity="SalesOrder")
+     * @ORM\ManyToOne(targetEntity="SalesOrder", inversedBy="lineItems")
      * @ORM\JoinColumn(name="Order_Number", referencedColumnName="Order_Number")
      */
     protected $order;
@@ -139,11 +144,10 @@ class SalesOrderLineItem
     protected $customer;
     
     /**
-     * @var string
      * @ORM\Column(name="Order_Date", type="date")
      *
      * @Serializer\Expose
-     * @Serializer\Type("DateTime<'m-d-Y H:i:s'>")
+     * @Serializer\Type("DateTime<'m/d/Y'>")
      */
     protected $orderDate;
     

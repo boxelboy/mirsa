@@ -7,4 +7,21 @@
     {% include '@MirsaMirsa/WorkOrder/assembly.view.html.twig' with { workOrder: workOrder} %}
     
     {% include '@MirsaMirsa/WorkOrderAssembly/datatable.html.twig' with { url: path('api_mirsa_assembly_view', {'workOrder': workOrder.id} )} %}
+
+    <button class="btn clearFilter btn-info"><i class="fa fa-trash"></i> Clear Filter</button> <a href="{{ path('mirsa_assembly_download', { 'workOrder': workOrder.id }) }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i> Download All</a>
+    
+<script>
+    $(document).ready(function () {
+
+        $('.clearFilter').click(function() {
+        	$.each($('input'), function(){
+        		$(this).val('');
+        	})
+            localStorage.clear();
+            location.reload();
+        });    
+    });        
+</script> 
+    
+
 {% endblock %}

@@ -2,5 +2,47 @@
 
 {% block body %}
     <h1>Batch</h1>
-    {% include '@MirsaMirsa/StockQuantity/datatable.html.twig' with { url: path('api_mirsa_stock_quantity_list') } %}
+
+    {% include '@MirsaMirsa/StockQuantity/datatable.html.twig' with { url: path('api_mirsa_stock_quantity_list', { filter: { sku : app.request.cookies.get('sku'), description : app.request.cookies.get('description') } } ) } %}
+
+
+    <button class="btn clearFilter btn-info"><i class="fa fa-trash"></i> Clear Filter</button>
+    <a class="exportButton" href="{{ path('mirsa_stock_quantity_export') }}"><button class="btn btn-primary"><i class="fa fa-file-pdf-o"></i> Generate Excel CSV</button></a>
+    
+<script>
+    $(document).ready(function () {
+    
+        
+        $('.sku input').val(getCookie("sku"));
+        $('.description input').val(getCookie("description"));
+        
+        $('.clearFilter').click(function() {
+        	$.each($('input'), function(){
+        		$(this).val('');
+        	});
+            localStorage.clear();
+            document.cookie = 'sku' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.cookie = 'description' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            location.reload();
+        });
+        
+        $('.exportButton').on('click', function(e) {
+            e.preventDefault();
+            window.location.href = $('.exportButton').attr('href') + '?sku=' + $('.sku input').val() + '&description=' + $('.description input').val() + '&batchNumber=' + $('.batchNumber input').val() + '&warehouseName=' + $('.warehouseName input').val() + '&aisleName=' + $('.aisleName input').val() + '&bayName=' + $('.bayName input').val();
+        });
+        
+    });
+    
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+    
+</script>
 {% endblock %}

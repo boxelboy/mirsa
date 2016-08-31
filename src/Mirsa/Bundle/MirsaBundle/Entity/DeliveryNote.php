@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Delivery Note 
+ *
+ * @author David Hatch <david@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Delivery Note
  *
- * @author cps
+ * @author David Hatch <david@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity
@@ -31,7 +36,7 @@ class DeliveryNote
 
    /**
      * @var SalesOrder
-     * @ORM\ManyToOne(targetEntity="SalesOrder")
+     * @ORM\ManyToOne(targetEntity="SalesOrder", inversedBy="deliveryNotes")
      * @ORM\JoinColumn(name="Order_Number", referencedColumnName="Order_Number")
      */
     protected $salesOrder;

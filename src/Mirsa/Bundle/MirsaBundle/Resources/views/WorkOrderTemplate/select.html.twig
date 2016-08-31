@@ -1,0 +1,108 @@
+{% extends '::app.html.twig' %}
+
+{% block body %}
+    <h1>Work Order Defect Cross Tab Report</h1>
+    
+    <form id="crossTabDefect" class="form-horizontal" role="form" method="POST" action="{{ path('mirsa_work_order_defect_cross_tab_report_list') }}">
+        <div class="form-group">
+            <label for="selectTemplate">Select Work Order Template:</label>
+            <select class="form-control" id="workOrderTemplate" name="workOrderTemplate">
+                <option value="" selected="selected">Please Select a Template</option>
+                {% set counter = 0 %}
+                {% for item in workOrderTemplates %}                
+                    {% set counter = counter + 1 %}
+                    <option value="{{item.id}}_{{item.customerAccountNumber}}">{{ item.templateName}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+          <label for="dateFrom">Date From:</label>
+          <input class="datepicker dp form-control" data-provide="datepicker" id="dateFrom" placeholder="Select from date" name="fromDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dateTo">Date To:</label>
+          <input class="datepicker dp form-control" data-provide="datepicker" id="dateTo" placeholder="Select to date" name="toDate" required>
+        </div>
+
+        <div class="form-group" id="hideSku" style="display:none;" >
+            <label for="sku">Part Number:</label>
+            <select class="form-control" id="sku" name="sku">
+                 <option value="all" selected>All</option>
+            </select>
+        </div>
+        <div class="form-group" style="clear:both">
+            <button id="submitButton" type="submit" class="btn btn-default">Submit</button>
+        </div>           
+    </form>
+
+    <form id="partsForm" method="POST" action="{{ path('mirsa_work_order_defect_cross_tab_report_get_part_number') }}">
+    </form>
+
+    <i id="crossTabLoader" class="icon-spinner icon-spin icon-4x"></i>
+
+    <script>
+      $(function() {
+        $( "#dateFrom" ).datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+        $( "#dateTo" ).datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+      });
+
+        $(document).ready( function() {
+            $('.loader').hide();
+            /*$('.datepicker').datepicker({
+                format: 'mm/dd/yyyy',
+                startDate: '-3d',
+                autoClose: true
+            });
+            
+            $('.dp').on('change', function(){
+                $('.datepicker').hide();
+            });*/
+            
+            /*var today = moment().format('MM/DD/YYYY');
+            $('.datepicker').val(today);*/
+            
+            $('#workOrderTemplate').change(function() {
+                $('.loader').show();
+                if ($('#workOrderTemplate').val() != "") {
+                    $('#crossTabLoader').show('fast', function() {
+                        $.ajax({
+                            url : $('#partsForm').attr('action'),
+                            async: false,
+                            method: 'POST',
+                            data: {
+                                workOrderTemplate: $('#workOrderTemplate').val()
+                            }, 
+                            success: function (data) {
+                                var htmlContent = '<option value="all" selected>All</option>';
+                                $.each( data.stock, function (key, item) {
+                                    htmlContent = htmlContent + '<option value="' + item.sku + '">' + item.sku + '</option>';
+                                });
+                                $('#sku').html(htmlContent);
+                                $('#hideSku').show();
+                                $('#crossTabLoader').hide();
+                                $('#submitButton').show();
+                                $('.loader').hide();
+                            }
+                        });
+                    });
+                };
+            });
+            
+            
+            $('#crossTabDefect').submit(function(e) {
+                $('#crossTabLoader').show('fast', function() {
+                    document.getElementById("crossTabDefect").reset();
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Stock
+ *
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ * Added stockQantities as a link to the StockQuantity
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -9,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Stock entity
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity
@@ -119,7 +125,7 @@ class Stock
     protected $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BusinessMan\Bundle\ClientBundle\Entity\Client")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="stock")
      * @ORM\JoinColumn(name="Customer_Account_No", referencedColumnName="Account_No")
      */
     protected $client;
@@ -226,10 +232,10 @@ class Stock
      */
     protected $managedStock;       
     
-     /**
-     * @ORM\OneToMany(targetEntity="AppointmentLineItem", mappedBy="stock")
-     */
-    protected $appointmentLineItems;    
+
+    //protected $appointmentLineItems;      - removed by cps - if needed dont forget the mapping (see line below)
+    //* @ORM\OneToMany(targetEntity="AppointmentLineItem", mappedBy="stock")
+
     
     public function getId()
     {
@@ -412,9 +418,9 @@ class Stock
     function getManagedStock() {
         return $this->managedStock;
     }
-    function getAppointmentLineItems() {
+    /*function getAppointmentLineItems() {
         return $this->appointmentLineItems;
-    }
+    }*/
 
 
 }

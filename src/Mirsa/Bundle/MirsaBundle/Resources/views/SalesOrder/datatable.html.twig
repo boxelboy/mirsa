@@ -6,12 +6,12 @@
 {% block columns %}
     <th data-source="id" data-template="salesOrderDeliveryNoteAction" data-sortable="false" data-width="15px" data-searchable="false">Dn</th>
     <th data-source="pickNotes" data-template="salesOrderPickNoteAction" data-sortable="false" data-width="15px" data-searchable="false">Pn</th>
-    <th data-source="id" data-sortable="false" data-width="50px" data-searchable="true" data-sort="desc">#</th>
-    <th data-source="created" data-template="so_created" data-sortable="true" data-width="60px" data-searchable="true">Date</th>
-    <th data-source="status" data-sortable="true" data-width="60px" data-searchable="true" data-search-options="Cancelled,Complete,In Progress,Open">Status</th>
-    <th data-source="orderType" data-sortable="true" data-width="150px" data-searchable="true">Order Type</th>
-    <th data-source="deliveryCompany" data-sortable="true" data-width="180px" data-searchable="true">Ship To</th>
-    <th data-source="description" data-sortable="true" data-searchable="true">Description</th>
+    <th data-source="id" class="id" data-sortable="true" data-width="50px" data-searchable="true" data-sort="desc">#</th>
+    <th data-source="created" class="created" data-template="so_created" data-sortable="true" data-width="60px" data-searchable="true">Date</th>
+    <th data-source="status" class="status" data-sortable="true" data-width="60px" data-searchable="true" data-search-options="Cancelled,Complete,In Progress,Open">Status</th>
+    <th data-source="orderType" class="orderType" data-sortable="true" data-width="150px" data-searchable="true">Order Type</th>
+    <th data-source="deliveryCompany" class="deliveryCompany" data-sortable="true" data-width="180px" data-searchable="true">Ship To</th>
+    <th data-source="description" class="description" data-sortable="true" data-searchable="true">Description</th>
     <th data-source="total" data-template="so_value" data-sortable="true" data-width="60px" data-searchable="true">Net Value</th>
 {% endblock %}
 

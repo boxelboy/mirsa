@@ -1,5 +1,5 @@
 parameters:
-    businessman.host: 192.168.100.9
+    businessman.host: 127.0.0.1
     businessman.port: 9191
     businessman.name: BusinessMan
     businessman.user: WebAccess

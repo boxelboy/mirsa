@@ -3,20 +3,25 @@
 {% block body %}
     <h1>Work Order : Assembly Activity Report </h1>
     {% include '@MirsaMirsa/ActivityAssembly/datatable.html.twig' with { url: path('api_mirsa_activity_assembly_list') } %}
-    <button class="btn clearFilter btn-info">Clear Filter</button>
+    
+    <button class="btn clearFilter btn-info"><i class="fa fa-trash"></i> Clear Filter</button> <a href="{{ path('mirsa_activity_assembly_export') }}"><button class="hideBtn btn btn-primary"><i class="fa fa-file-pdf-o"></i> Generate CSV</button></a>
+    <a class="exportButton" href="{{ path('mirsa_activity_assembly_export') }}"><button class="btn btn-primary"><i class="fa fa-file-pdf-o"></i> Generate Excel CSV</button></a>
     
 <script>
     $(document).ready(function () {
 
         $('.clearFilter').click(function() {
         	$.each($('input'), function(){
-        		console.log(this,$(this).val());
-        		$(this).val('').keyup();
-        		//var e = $.Event('keyup', { keyCode: 13 });
-				//$(this).trigger(e);
-        		console.log(this,$(this).val());
-        	})
+        		$(this).val('');
+        	});
+            localStorage.clear();
+            location.reload();
         });    
-    });        
-</script>  
+
+        $('.exportButton').on('click', function(e) {
+            e.preventDefault();
+            window.location.href = $('.exportButton').attr('href') + '?id=' + $('.id input').val() + '&created=' + $('.created input').val() + '&sku=' + $('.sku input').val()+ '&type=' + $('.type input').val() + '&plannedStartDate=' + $('.plannedStartDate input').val() + '&plannedEndDate=' + $('.plannedEndDate input').val() + '&assemblyStatus=' + $('.assemblyStatus input').val() + '&salesOrderNumber=' + $('.salesOrderNumber input').val() + '&customerName=' + $('.customerName input').val() + '&tradingCompany=' + $('.tradingCompany input').val();
+        });
+    }); 
+</script>
 {% endblock %}

@@ -155,7 +155,7 @@ class Job
     /**
      * @var \BusinessMan\Bundle\ClientBundle\Entity\Client
      *
-     * @ORM\ManyToOne(targetEntity="BusinessMan\Bundle\ClientBundle\Entity\Client")
+     * @ORM\ManyToOne(targetEntity="Mirsa\Bundle\MirsaBundle\Entity\Client", inversedBy="jobs")
      * @ORM\JoinColumn(name="Account_No", referencedColumnName="Account_No")
      *
      * @Serializer\Expose
@@ -207,6 +207,17 @@ class Job
      * @ORM\OneToMany(targetEntity="Assignment", mappedBy="job", cascade={"remove"})
      */
     protected $assignments;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Mirsa\Bundle\MirsaBundle\Entity\Project", inversedBy="jobs")
+     * @ORM\JoinColumn(name="Project_ID", referencedColumnName="Project_ID")
+     */
+    protected $project;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Mirsa\Bundle\MirsaBundle\Entity\JobComment", mappedBy="job")
+     */
+    protected $comments;
 
     public function __construct()
     {
@@ -407,6 +418,11 @@ class Job
     public function getType()
     {
         return $this->type;
+    }
+
+    public function getProject()
+    {
+        return $this->project;
     }
 
     /**

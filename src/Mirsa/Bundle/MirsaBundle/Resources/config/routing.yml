@@ -17,7 +17,7 @@ api_mirsa_sales_order_list:
     requirements: { _format: json }
 
 mirsa_sales_order_view:
-    path:     /salesorder/{salesOrder}
+    path: /salesorder/{salesOrder}
     defaults: { _controller: MirsaMirsaBundle:SalesOrder:view}
     options: { expose: true }
 
@@ -29,7 +29,7 @@ api_mirsa_stock_list:
     path: /api/stock.{_format}
     defaults: { _controller: MirsaMirsaBundle:Api/Stock:list, _format: json }
     requirements: { _format: json }
-    
+       
 mirsa_stock_audit_list:
     path: /stock/{stock}/audit
     defaults: { _controller: MirsaMirsaBundle:StockAudit:stock }
@@ -109,33 +109,28 @@ api_mirsa_appointment_line_item_list:
     requirements: { _format: json }
 
 mirsa_activity_assembly_list:
-    path: /activityreport/assembly
+    path: /activityassembly
     defaults: { _controller: MirsaMirsaBundle:ActivityAssembly:list }
     options: { expose: true }
 
 api_mirsa_activity_assembly_list:
-    path: /api/activityreport/assembly.{_format}
+    path: /api/activityassembly.{_format}
     defaults: { _controller: MirsaMirsaBundle:Api/ActivityAssembly:list, _format: json }
     requirements: { _format: json }
 
+mirsa_activity_assembly_export:
+    path: /activityreport/assembly/export
+    defaults: { _controller: MirsaMirsaBundle:ActivityAssembly:export }
+    options: { expose: true }
+
 mirsa_activity_inspection_list:
-    path: /activityreport/inspection
+    path: /activityinspection
     defaults: { _controller: MirsaMirsaBundle:ActivityInspection:list }
     options: { expose: true }
 
 api_mirsa_activity_inspection_list:
-    path: /api/activityreport/inspection.{_format}
+    path: /api/activityinspection.{_format}
     defaults: { _controller: MirsaMirsaBundle:Api/ActivityInspection:list, _format: json }
-    requirements: { _format: json }
-
-mirsa_activity_inspection_total:
-    path: /activityreport/totals
-    defaults: { _controller: MirsaMirsaBundle:ActivityInspection:totals }
-    options: { expose: true }
-
-api_mirsa_activity_inspection_total:
-    path: /api/activityreport/totals.{_format}
-    defaults: { _controller: MirsaMirsaBundle:Api/ActivityInspection:totals, _format: json }
     requirements: { _format: json }
 
 mirsa_task_list:
@@ -186,11 +181,6 @@ api_mirsa_assembly_view:
     defaults: { _controller: MirsaMirsaBundle:Api/StockQuantityHistory:assemblyFromWorkOrder, _format: json }
     options: { expose: true }
 
-mirsa_assembly_export:
-    path: /api/workorder/{workOrder}/assembly.{_format}
-    defaults: { _controller: MirsaMirsaBundle:StockQuantityHistory:exportAssemblyFromWorkOrder, _format: json }
-    options: { expose: true }
-
 mirsa_work_order_timesheet_list:
     path: /workorder/{workOrder}/timesheet
     defaults: { _controller: MirsaMirsaBundle:Timesheet:timesheetsFromWorkOrder }
@@ -201,3 +191,155 @@ api_mirsa_work_order_timesheet_list:
     defaults: { _controller: MirsaMirsaBundle:Api/Timesheet:timesheetsFromWorkOrder, _format: json }
     options: { expose: true }
 
+mirsa_client_contacts_list:
+    path: /clients/contacts
+    defaults: { _controller: MirsaMirsaBundle:Contact:list }
+
+mirsa_client_contacts_view:
+    path: /clients/contacts/{contact}
+    defaults: { _controller: MirsaMirsaBundle:Contact:view }
+    options: { expose: true }
+
+mirsa_clients_list:
+    path: /clients
+    defaults: { _controller: MirsaMirsaBundle:Client:list }
+
+mirsa_clients_view:
+    path: /clients/{client}
+    defaults: { _controller: MirsaMirsaBundle:Client:view }
+    options: { expose: true }
+
+api_mirsa_clients_list:
+    path: /api/clients.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/Client:list, _format: json }
+    requirements: { _format: json }
+
+api_mirsa_client_contacts_list:
+    path: /api/clients/contacts.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/Contact:list, _format: json }
+    requirements: { _format: json }
+    
+# Cross Tab Defect Report (Work Order template)
+# Used to get the list of Work Order Templates
+mirsa_work_order_defect_cross_tab_report_by_template:
+    pattern: /crosstabreport
+    defaults: { _controller: MirsaMirsaBundle:WorkOrderTemplate:selectWorkOrderTemplate }
+    requirements:
+        _method: GET
+
+# Used to get the Stock based on the Work Order Templates
+# mirsa_work_order_defect_cross_tab_report_stock_list:
+#   pattern: /customerstock/
+#   defaults: { _controller: MirsaMirsaBundle:WorkOrderTemplate:inspectionReportCustomerStock }
+#   requirements:
+#   _method: POST
+        
+# Used to get the Part Numbers after a Work Order Template is selected
+mirsa_work_order_defect_cross_tab_report_get_part_number:
+    pattern: /crosstabreport/part
+    defaults: { _controller: MirsaMirsaBundle:WorkOrderTemplate:getPartNumbers }
+    requirements:
+        _method: POST
+
+mirsa_work_order_defect_cross_tab_report:
+    pattern: /crosstabreport/list
+    defaults: { _controller: MirsaMirsaBundle:WorkOrderTemplate:workOrdersFromTemplate }        
+    requirements:
+        _method: POST
+        
+mirsa_work_order_defect_cross_tab_report_list:
+    pattern: /crosstabreport
+    defaults: { _controller: MirsaMirsaBundle:WorkOrderTemplate:buildFilter }        
+    requirements:
+        _method: POST
+
+# pattern: /api/crosstabreport/list_datatable{jobTemplate}/{fromDate}/{toDate}/{sku}.{_format}
+api_mirsa_work_order_defect_cross_tab_report:
+    pattern: /api/crosstabreport/list.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/WorkOrderTemplate:workOrdersFromTemplate, _format: json }        
+    requirements: { _format: json }
+
+mirsa_assembly_download:
+    path: /workorder/{workOrder}/assembly/export
+    defaults: {_controller: MirsaMirsaBundle:StockQuantityHistory:assemblyDownload }
+    options: { expose: true }
+
+api_mirsa_assembly_download:
+    path: /api/workorder/{workOrder}/assembly/export.{_format}
+    defaults: { _controller: MirsaMirsaBundle:Api/StockQuantityHistory:assemblyDownload, _format: json }
+    options: { expose: true }
+
+mirsa_work_order_inspection_download:
+    path: /workorder/{workOrder}/lineitems/export
+    defaults: { _controller: MirsaMirsaBundle:WorkOrderInspectionLineItem:downloadCSV}
+
+mirsa_contact_reset_web_access_password:
+    pattern: /contacts/{contact}/web/reset
+    defaults: { _controller: MirsaMirsaBundle:Contact:resetWebAccessPassword }
+    requirements:
+        _method: POST
+        
+mirsa_contact_enable_web_access:
+    pattern: /contacts/{contact}/web/enable
+    defaults: { _controller: MirsaMirsaBundle:Contact:addWebAccess }
+    requirements:
+        _method: POST        
+
+mirsa_contact_disable_web_access:
+    pattern: /contacts/{contact}/web/disable
+    defaults: { _controller: MirsaMirsaBundle:Contact:removeWebAccess }
+
+# exports
+mirsa_stock_export:
+    path: /stock/export
+    defaults: {_controller: MirsaMirsaBundle:Stock:export }
+    requirements:  
+        _method: GET
+        
+mirsa_stock_quantity_export:
+    path: /batch/export
+    defaults: {_controller: MirsaMirsaBundle:StockQuantity:export }
+    requirements:  
+        _method: GET
+
+mirsa_sales_order_export:
+    path: /salesorders/export
+    defaults: { _controller: MirsaMirsaBundle:SalesOrder:export}
+    requirements:  
+        _method: GET
+    
+mirsa_appointment_export:
+    path: /appointments/export
+    defaults: { _controller: MirsaMirsaBundle:Appointment:export}    
+    requirements:  
+        _method: GET
+
+mirsa_work_order_export:
+    path: /workorders/export
+    defaults: { _controller: MirsaMirsaBundle:WorkOrder:export}    
+    requirements:  
+        _method: GET
+        
+mirsa_sales_order_line_item_export:
+    path: /lineitem/export
+    defaults: { _controller: MirsaMirsaBundle:SalesOrderLineItem:export}
+    requirements:  
+        _method: GET
+        
+mirsa_activity_assembly_export:
+    path: /activityassembly/export
+    defaults: { _controller: MirsaMirsaBundle:ActivityAssembly:export}
+    requirements:
+        _method: GET
+
+mirsa_activity_inspection_export:
+    path: /activityinspection/export
+    defaults: { _controller: MirsaMirsaBundle:ActivityInspection:export}
+    requirements:
+        _method: GET
+
+mirsa_cross_tab_defect_export:
+    path: /crosstabreport/export
+    defaults: { _controller: MirsaMirsaBundle:WorkOrderTemplate:export}
+    requirements:
+        _method: GET

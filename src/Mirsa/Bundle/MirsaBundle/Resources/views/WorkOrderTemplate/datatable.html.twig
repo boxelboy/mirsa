@@ -1,0 +1,64 @@
+{% extends '@BusinessManBusinessMan/List/datatable.html.twig' %}
+
+{% block columns %}
+    <th data-source="id" class="id" data-sortable="true" data-width="5%" data-searchable="true" data-sort="desc">#</th>
+    <th data-source="description" class="description" data-sortable="true" data-searchable="true" >Description</th>
+    <th data-source="sku" class="sku" data-sortable="true" data-searchable="true" >Sku</th>
+    <th data-source="plannedStartDate" class="plannedStartDate" data-sortable="true" data-searchable="true" >Date</th>
+    <th data-source="qtyInspected" data-sortable="true" data-searchable="true" >Qty Inspect</th>
+    <th data-source="qtyAccepted" data-sortable="true" data-searchable="true" >Qty Acpt</th>
+    <th data-source="qtyRejected" data-sortable="true" data-searchable="true" >Qty Rjt</th>
+    <th data-source="customField1" data-sortable="true" class="column1" data-searchable="true" >{{inspectionTemplate.customLabel1}}</th>
+    <th data-source="customField2" data-sortable="true" class="column2" data-searchable="true" >{{inspectionTemplate.customLabel2}}</th>
+    <th data-source="customField3" data-sortable="true" class="column3" data-searchable="true" >{{inspectionTemplate.customLabel3}}</th>
+    <th data-source="customField4" data-sortable="true" class="column4" data-searchable="true" >{{inspectionTemplate.customLabel4}}</th>
+    <th data-source="customField5" data-sortable="true" class="column5" data-searchable="true" >{{inspectionTemplate.customLabel5}}</th>
+    <th data-source="customField6" data-sortable="true" class="column6" data-searchable="true" >{{inspectionTemplate.customLabel6}}</th>
+    <th data-source="customField7" data-sortable="true" class="column7" data-searchable="true" >{{inspectionTemplate.customLabel7}}</th>
+    <th data-source="customField8" data-sortable="true" class="column8" data-searchable="true" >{{inspectionTemplate.customLabel8}}</th>
+    <th data-source="customField9" data-sortable="true" class="column9" data-searchable="true" >{{inspectionTemplate.customLabel9}}</th>
+    <th data-source="customField10" data-sortable="true" class="column10" data-searchable="true" >{{inspectionTemplate.customLabel10}}</th>
+
+
+{% if inspectionTemplate.customLabel1 == "" %}
+    <script>$('.column1').addClass('hide');</script>
+{% endif %}
+
+{% if inspectionTemplate.customLabel2 == "" %}
+    <script>$('.column2').addClass('hide');</script>
+{% endif %}
+
+{% if inspectionTemplate.customLabel3 == "" %}
+    <script>$('.column3').addClass('hide');</script>
+{% endif %}
+
+{% if inspectionTemplate.customLabel4 == "" %}
+    <script>$('.column4').addClass('hide');</script>
+{% endif %}
+
+{% if inspectionTemplate.customLabel5 == "" %}
+    <script>$('.column5').addClass('hide');</script>
+{% endif %}
+
+{% if inspectionTemplate.customLabel6 == "" %}
+    <script>$('.column6').addClass('hide');</script>
+{% endif %}
+
+{% if inspectionTemplate.customLabel7 == "" %}
+    <script>$('.column7').addClass('hide');</script>
+{% endif %}
+
+{% if inspectionTemplate.customLabel8 == "" %}
+    <script>$('.column8').addClass('hide');</script>
+{% endif %}
+            
+{% if inspectionTemplate.customLabel9 == "" %}
+    <script>$('.column9').addClass('hide');</script>
+{% endif %}
+
+{% if inspectionTemplate.customLabel10 == "" %}
+    <script>$('.column10').addClass('hide');</script>
+{% endif %}
+
+
+{% endblock %}

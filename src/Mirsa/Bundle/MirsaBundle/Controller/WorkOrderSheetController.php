@@ -27,7 +27,6 @@ class WorkOrderSheetController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Cache(public=true, smaxage=86400, maxage=86400, vary={"Cookie"})
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function sheetForWorkOrderAction(WorkOrder $workOrder)
     {
@@ -73,8 +72,6 @@ class WorkOrderSheetController extends Controller
      * @param WorkOrder $workOrder
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Security("has_role('ROLE_USER')")
      */
     public function downloadAction(WorkOrder $workOrder)
     {

@@ -4,13 +4,13 @@
 {% set orderDate = orderDate is defined ? orderDate : false %}
 
 {% block columns %}
-    <th data-source="customer" data-sortable="true" data-width="100px" data-searchable="true">Customer</th>
-    <th data-source="orderDate" data-template="so_orderdate" data-sortable="true" data-width="80px" data-searchable="true">Order Date</th>
-    <th data-source="orderNumber" data-sortable="true" data-width="60px" data-searchable="true">Order No</th>
-    <th data-source="stockCode" data-sortable="true" data-width="80px" data-searchable="true">Stk Code</th>
-    <th data-source="description" data-sortable="true" data-searchable="true">Description</th>
-    <th data-source="orderType" data-sortable="true" data-width="80px" data-searchable="true">Order Type</th>
-    <th data-source="quantity" data-sortable="true" data-width="80px" data-searchable="true">Quantity</th>
+    <th data-source="customer" class="customer" data-sortable="true" data-searchable="true">Customer</th>
+    <th data-source="orderDate" class="orderDate" data-template="so_orderdate" data-sortable="true" data-width="70px" data-searchable="true">Order Date</th>
+    <th data-source="orderNumber" class="orderNumber" data-sort="desc" data-sortable="true" data-width="50px" data-searchable="true">Order No</th>
+    <th data-source="stockCode" class="stockCode" data-sortable="true" data-width="80px" data-searchable="true">Stk Code</th>
+    <th data-source="description" class="description" data-sortable="true" data-searchable="true">Description</th>
+    <th data-source="orderType" class="orderType" data-sortable="true" data-width="160px" data-searchable="true">Order Type</th>
+    <th data-source="quantity" data-sortable="true" data-width="40px" data-searchable="true">Quantity</th>
 {% endblock %}
 
 {% block templates %}

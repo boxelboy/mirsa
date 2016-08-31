@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Resource
+ *
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -9,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Resource entity
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity()
@@ -87,7 +92,7 @@ class Resource
      *      inverseJoinColumns={@ORM\JoinColumn(name="Group_ID", referencedColumnName="Group_ID")}
      *  )
      */
-    protected $jobs;
+    //protected $jobs;                      - removed by cps
 
     /**
      * @ORM\OneToMany(targetEntity="Schedule", mappedBy="resource")
@@ -114,7 +119,7 @@ class Resource
         return $this->category;
     }
 
-    public function getJobs()
+    /*public function getJobs()
     {
         return $this->jobs;
     }
@@ -123,7 +128,7 @@ class Resource
     {
         $this->jobs = $jobs;
         return $this;
-    }
+    }*/
 
     public function getType()
     {

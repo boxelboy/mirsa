@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * AppointmentLineItemController
  *
- * @author chris saunders
+ * @author Dave Hatch
  * @link
  */
 class AppointmentLineItemController extends Controller
@@ -24,7 +24,6 @@ class AppointmentLineItemController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Cache(public=true, smaxage=86400, maxage=86400, vary={"Cookie"})
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function lineItemsForAppointmentAction(Appointment $appointment)
     {

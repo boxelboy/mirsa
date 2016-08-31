@@ -2,8 +2,8 @@
 /**
  * Job
  *
- * @author cps
- * @link  
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
@@ -167,12 +167,12 @@ class ActivityAssembly
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
-    protected $status;
+    protected $job_status;
 
     /**
      * Date the job was created
      *
-     * @ORM\Column(name="Creation_Timestamp", type="timestamp")
+     * @ORM\Column(name="Creation_Date", type="date")
      * @Serializer\Expose
      * @Serializer\Type("DateTime")
      */
@@ -219,6 +219,12 @@ class ActivityAssembly
      */
     protected $type;
     
+    /**
+     * @ORM\Column(name="Assembly_ID", type="integer")
+     * @Serializer\Expose
+     */
+    protected $assemblyID;
+
     /**
      * @ORM\Column(name="Site_Name", type="string")
      */
@@ -280,9 +286,9 @@ class ActivityAssembly
     protected $qtyAccepted;
     
     /**
-     * @ORM\OneToMany(targetEntity="JobInspectionLineItem", mappedBy="job")
+     * @ORM\OneToMany(targetEntity="WorkOrderInspectionLineItem", mappedBy="workOrder")
      */
-    protected $jobs;
+    protected $workOrders;
 
     /**
      * @ORM\Column(name="Stk_Code", type="string")
@@ -356,13 +362,14 @@ class ActivityAssembly
     protected $ppmEfficiency;             
 
     /**
-     * @ORM\Column(name="Summary_Total_PPMEfficiency", type="decimal")
-       * @Serializer\Expose
+    * @ORM\Column(name="Summary_Total_PPMEfficiency", type="decimal")
+    * @Serializer\Expose
     */
     protected $totalPPMEfficiency;       
     
     /**
      * @ORM\Column(name="Job_Progress_Percent", type="integer")
+     * @Serializer\Expose
      */
     protected $jobProgressPercent;    
     
@@ -844,9 +851,9 @@ class ActivityAssembly
         return $this->qtyAccepted;
     }        
     
-    public function getJobs()
+    public function getWorkOrders()
     {
-        return $this->jobs;
+        return $this->workOrders;
     }
     
     public function getSku()

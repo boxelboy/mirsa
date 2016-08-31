@@ -5,7 +5,9 @@ use Symfony\Component\Debug\Debug;
 
 // Default PHP configuration (for Synergize on OSX)
 date_default_timezone_set('UTC');
-
+ini_set('memory_limit', '-1');
+ini_set('set_time_limit', '0');
+ini_set('max_execution_time', '0');
 ini_set('display_errors', 1);
             error_reporting(-1);
 

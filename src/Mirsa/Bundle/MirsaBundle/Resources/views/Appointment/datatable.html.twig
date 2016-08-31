@@ -5,13 +5,13 @@
 {% block columns %}
     <th data-source="id" data-template="appointmentLineItemAction" data-width="10px">#</th>
     <th data-source="id" data-template="selectPdfAction" data-sortable="false" data-width="15px" data-searchable="false">Dn</th>
-    <th data-source="appointmentNumber" data-sortable="true" data-width="80px" data-searchable="true"">Appointment Number</th>
-    <th data-source="dateCreated" data-sortable="true" data-width="80px" data-searchable="true"">Date Created</th>
-    <th data-source="dateScheduled" data-sortable="true" data-width="80px" data-searchable="true"">Scheduled Date</th>
-    <th data-source="dateReceived" data-sortable="true" data-width="80px" data-searchable="true"">Received Date</th>
-    <th data-source="reference" data-sortable="true" data-searchable="true"">Reference</th>
-    <th data-source="tradingCompanyName" data-sortable="true" data-searchable="true"">Trading Company</th>
-    <th data-source="status" data-sortable="true" data-width="80px" data-searchable="true"">Status</th>
+    <th data-source="appointmentNumber" class="appointment" data-sort="desc" data-sortable="true" data-width="100px" data-searchable="true">Appointment No</th>
+    <th data-source="dateCreated" class="dateCreated" data-sortable="true" data-width="80px" data-searchable="true" data-sort="desc">Date Created</th>
+    <th data-source="dateScheduled" class="dateScheduled" data-sortable="true" data-width="100px" data-searchable="true">Scheduled Date</th>
+    <th data-source="dateReceived" class="dateReceived" data-sortable="true" data-width="80px" data-searchable="true">Received Date</th>
+    <th data-source="reference" class="reference" data-sortable="true" data-searchable="true">Reference</th>
+    <th data-source="tradingCompanyName" class="tradingCompanyName" data-sortable="true" data-searchable="true">Trading Company</th>
+    <th data-source="status" class="status" data-sortable="true" data-width="80px" data-searchable="true">Status</th>
 {% endblock %}
 
 {% block templates %}

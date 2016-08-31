@@ -24,7 +24,7 @@ class EmailAccount
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Staff")
+     * @ORM\ManyToOne(targetEntity="Staff", inversedBy="emailAccounts")
      * @ORM\JoinColumn(name="Staff_ID", referencedColumnName="Staff_ID")
      */
     protected $staff;

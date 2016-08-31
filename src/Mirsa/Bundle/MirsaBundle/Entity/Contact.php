@@ -59,28 +59,28 @@ class Contact
     protected $telephone;
 
     /**
-     * @ORM\Column(name="Telephone Ext", type="string")
+     * @ORM\Column(name="`Telephone Ext`", type="string")
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
     protected $extension;
 
     /**
-     * @ORM\Column(name="Telephone Fax", type="string")
+     * @ORM\Column(name="`Telephone Fax`", type="string")
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
     protected $fax;
 
     /**
-     * @ORM\Column(name="Telephone Mobile", type="string")
+     * @ORM\Column(name="`Telephone Mobile`", type="string")
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
     protected $mobile;
 
     /**
-     * @ORM\Column(name="Telephone Other", type="string")
+     * @ORM\Column(name="`Telephone Other`", type="string")
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
@@ -94,6 +94,8 @@ class Contact
     protected $skype;
 
     /**
+     * @var Client
+     * 
      * @ORM\ManyToOne(targetEntity="Client", inversedBy="contacts")
      * @ORM\JoinColumn(name="Account_Number", referencedColumnName="Account_No")
      */
@@ -103,7 +105,44 @@ class Contact
      * @ORM\OneToMany(targetEntity="User", mappedBy="contact")
      */
     protected $users;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Mod_Timestamp", type="timestamp")
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
+     */
+    protected $lastModified;    
 
+
+    /**
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        $displayName = '';
+
+        if ($this->getSurname()) {
+            $displayName .= $this->getSurname();
+
+            if ($this->getForename()) {
+                $displayName .= ', ';
+            }
+        }
+
+        if ($this->getForename()) {
+            $displayName .= $this->getForename();
+        }
+
+        if (!$displayName) {
+            $displayName = 'Unknown contact';
+        }
+
+        return $displayName;
+    }    
+    
     /**
      * Get id
      *
@@ -164,7 +203,7 @@ class Contact
      * Set forename
      *
      * @param string $forename
-     * @return ClientContact
+     * @return Contact
      */
     public function setForename($forename)
     {
@@ -187,7 +226,7 @@ class Contact
      * Set surname
      *
      * @param string $surname
-     * @return ClientContact
+     * @return Contact
      */
     public function setSurname($surname)
     {
@@ -210,7 +249,7 @@ class Contact
      * Set telephone
      *
      * @param string $telephone
-     * @return ClientContact
+     * @return Contact
      */
     public function setTelephone($telephone)
     {
@@ -233,7 +272,7 @@ class Contact
      * Set extension
      *
      * @param string $extension
-     * @return ClientContact
+     * @return Contact
      */
     public function setExtension($extension)
     {
@@ -256,7 +295,7 @@ class Contact
      * Set fax
      *
      * @param string $fax
-     * @return ClientContact
+     * @return Contact
      */
     public function setFax($fax)
     {
@@ -279,7 +318,7 @@ class Contact
      * Set mobile
      *
      * @param string $mobile
-     * @return ClientContact
+     * @return Contact
      */
     public function setMobile($mobile)
     {
@@ -302,7 +341,7 @@ class Contact
      * Set other
      *
      * @param string $other
-     * @return ClientContact
+     * @return Contact
      */
     public function setOther($other)
     {
@@ -325,7 +364,7 @@ class Contact
      * Set skype
      *
      * @param string $skype
-     * @return ClientContact
+     * @return Contact
      */
     public function setSkype($skype)
     {
@@ -359,9 +398,18 @@ class Contact
         $users = $this->getUsers();
 
         if (count($users) > 0) {
-            return array_shift($users);
+            return $users->last();
         }
 
         return null;
     }
+    
+    function getLastModified() {
+        return $this->lastModified;
+    }
+
+    function setLastModified(\DateTime $lastModified) {
+        $this->lastModified = $lastModified;
+    }
+
 }

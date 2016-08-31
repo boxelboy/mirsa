@@ -8,19 +8,16 @@ use Computech\Bundle\CommonBundle\Controller\AbstractRestController;
 /**
  * SalesOrderController
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://git.computech-it.co.uk/businessmanportal/JobBundle
  */
 class StockController extends AbstractRestController
 {
     /**
      * {@inheritDoc}
-     *
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function listAction(Request $request, $_format)
     {
-        //var_dump($request, $_format);exit;
         return parent::listAction($request, $_format);
     }
 
@@ -31,4 +28,25 @@ class StockController extends AbstractRestController
     {
         return 'MirsaMirsaBundle:Stock';
     }
+
+       /**
+     * Only records associated with the selected Client record
+     *
+     * @param string $alias
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getQueryBuilder($alias)
+    {
+        $qb = parent::getQueryBuilder($alias);
+        
+        if (!is_null($this->getUser()->getContact())) { 
+            if ($this->getUser()->getContact()->getClient()) {
+                $qb->andWhere($alias . '.client = :client');
+                $qb->setParameter('client', $this->getUser()->getContact()->getClient());
+            }
+        }
+        
+        return $qb;
+    }    
 }

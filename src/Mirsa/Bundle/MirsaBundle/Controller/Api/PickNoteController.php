@@ -10,7 +10,7 @@ use Mirsa\Bundle\MirsaBundle\Entity\SalesOrder;
 /**
  * PickNoteController
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://git.computech-it.co.uk/businessmanportal/JobBundle
  */
 class PickNoteController extends AbstractRestController
@@ -19,8 +19,6 @@ class PickNoteController extends AbstractRestController
     
     /**
      * {@inheritDoc}
-     *
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function pickNotesForSalesOrderAction(SalesOrder $salesOrder, Request $request, $_format)
     {

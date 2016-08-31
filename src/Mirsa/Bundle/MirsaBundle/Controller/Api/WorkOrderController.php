@@ -4,7 +4,7 @@ namespace Mirsa\Bundle\MirsaBundle\Controller\Api;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Computech\Bundle\CommonBundle\Controller\AbstractRestController;
-use Mirsa\Bundle\MirsaBundle\Entity\WorkOrder;
+use Mirsa\Bundle\MirsaBundle\Entity\WorkOrderTemplate;
 
 /**
  * WorkOrderController
@@ -16,8 +16,6 @@ class WorkOrderController extends AbstractRestController
 {
     /**
      * {@inheritDoc}
-     *
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function listAction(Request $request, $_format)
     {
@@ -46,5 +44,25 @@ class WorkOrderController extends AbstractRestController
     {
         return 'MirsaMirsaBundle:WorkOrder';
     }
+    
+    /**
+     * Only records associated with the selected Client record
+     *
+     * @param string $alias
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getQueryBuilder($alias)
+    {
+        $qb = parent::getQueryBuilder($alias);
 
+        if (!is_null($this->getUser()->getContact())) {         
+            if ($this->getUser()->getContact()->getClient()) {
+                $qb->andWhere($alias . '.client = :client');
+                $qb->setParameter('client', $this->getUser()->getContact()->getClient());
+            }
+        }
+        
+        return $qb;
+    }    
 }

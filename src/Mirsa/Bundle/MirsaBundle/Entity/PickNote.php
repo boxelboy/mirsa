@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Pick Note 
+ *
+ * @author David Hatch <david@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Pick Note
  *
- * @author cps
+ * @author David Hatch <david@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity
@@ -31,7 +36,7 @@ class PickNote
 
     /**
      * @var SalesOrder
-     * @ORM\ManyToOne(targetEntity="SalesOrder")
+     * @ORM\ManyToOne(targetEntity="SalesOrder", inversedBy="pickNotes")
      * @ORM\JoinColumn(name="Sales_Order_No", referencedColumnName="Order_Number")
      */
     protected $salesOrder;

@@ -21,7 +21,7 @@ businessman_container:
 
 businessman_dashboard:
     pattern: /
-    defaults: { _controller: BusinessManBusinessManBundle:Dashboard:dashboard, bridge: false }
+    defaults: { _controller: MirsaMirsaBundle:Dashboard:dashboard, bridge: false }
     methods: GET|POST
     options: { expose: true }
 

@@ -10,7 +10,7 @@ use Mirsa\Bundle\MirsaBundle\Entity\Stock;
 /**
  * StockAuditController
  *
- * @author cps
+ * @author Dave Hatch
  * @link   
  */
 class StockAuditController extends Controller
@@ -23,7 +23,6 @@ class StockAuditController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Cache(public=true, smaxage=86400, maxage=86400, vary={"Cookie"})
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function stockAction(Stock $stock)
     {
@@ -42,10 +41,10 @@ class StockAuditController extends Controller
         $qb = parent::getQueryBuilder($alias);
         
         $qb->andWhere($alias . '.subject = :sku');
-        $qb->andWhere($alias . '.auditedTable IN (:auditedTable)');
+        //$qb->andWhere($alias . '.auditedTable IN (:auditedTable)');
         
         $qb->setParameter('sku', $this->stock->getSku());
-        $qb->setParameter('auditedTable', array('Stock', 'Stock_Quantity'));
+        //$qb->setParameter('auditedTable', array('Stock', 'Stock_Quantity'));
 
         return $qb;
     }    

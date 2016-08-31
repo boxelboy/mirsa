@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Audit
+ *
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Audit entity
  *
- * @author chris saunders
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity()
@@ -38,7 +43,7 @@ class Audit
     /**
      * @ORM\Column(name="Date_Time_Stamp", type="timestamp")
      * @Serializer\Expose
-     * @Serializer\Type("DateTime<'m-d-Y'>")
+     * @Serializer\Type("DateTime<'m/d/Y'>")
      */
     protected $created;
 

@@ -20,7 +20,6 @@ class StockQuantityHistoryController extends Controller
 {
     
     protected $workOrder;
-    protected $id;
     
     /**
      * List all Timesheet records for the selected WorkOrder
@@ -28,7 +27,6 @@ class StockQuantityHistoryController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Cache(public=true, smaxage=86400, maxage=86400, vary={"Cookie"})
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function assemblyFromWorkOrderAction(WorkOrder $workOrder)
     {

@@ -33,6 +33,10 @@ class NumberType extends Type
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
+        if (is_null($value)) {
+            return 0;
+        }
+        
         return $value;
     }
 }

@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Mirsa\Bundle\MirsaBundle\Entity\WorkOrder;
 use Mirsa\Bundle\MirsaBundle\Entity\WorkOrderInspectionLineItem;
 
@@ -26,7 +27,6 @@ class WorkOrderInspectionLineItemController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Cache(public=true, smaxage=86400, maxage=86400, vary={"Cookie"})
-     * @Security("has_role('ROLE_STAFF')")
      */
     public function inspectionLineItemsFromWorkOrderAction(WorkOrder $workOrder)
     {
@@ -58,8 +58,6 @@ class WorkOrderInspectionLineItemController extends Controller
      * @param DeliveryNote $deliveryNote
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @Security("has_role('ROLE_USER')")
      */
     public function downloadAction(DeliveryNote $deliveryNote)
     {
@@ -78,6 +76,54 @@ class WorkOrderInspectionLineItemController extends Controller
         } catch (\Exception $e) {
             throw $this->createNotFoundException();
         }
+    }
+
+    public function downloadCSVAction(WorkOrder $workOrder)
+    {
+        $response = new StreamedResponse();
+        $response->setCallback(function() use (&$workOrder) {
+            $fc = fopen('php://output', 'w+');
+            fputcsv($fc, array('Date Inspected', 'Batch No', 'Serial No', 'Mfg Date', 'Qty Inspected', 'Qty Rejected', 'Qty Reworked', 'Qty Accepted', 'Description'),',');
+            $qb = $this->getDoctrine()->getRepository('MirsaMirsaBundle:WorkOrderInspectionLineItem')
+                ->createQueryBuilder('woili')
+                ->select('woili.dateInspected,woili.batchNo,woili.serialNo,woili.manufacturedDate,woili.qtyInspected,woili.qtyRejected,woili.qtyReworked,woili.qtyAccepted,woili.description')
+                ->where('woili.workOrder = :wo')
+                ->setParameter('wo', $workOrder->getId())
+                ->getQuery();
+            $me = $qb->getResult();
+            foreach ($me as $item)
+            {
+                foreach ($item as $k => $v)
+                {
+                    if ($k != 'dateInspected') {if (is_null($v)) {$item[$k] = "";}}
+                }
+                if ($item['dateInspected'] == null)
+                {
+                    $newDate = "";
+                }
+                else
+                {
+                    $newDate = date_format($item['dateInspected'], "m-d-Y");
+                }
+
+                fputcsv($fc, array($newDate,
+                                   $item['batchNo'],
+                                   $item['serialNo'],
+                                   $item['manufacturedDate'],
+                                   $item['qtyInspected'],
+                                   $item['qtyRejected'],
+                                   $item['qtyReworked'],
+                                   $item['qtyAccepted'],
+                                   $item['description']),
+                        ',');
+            }
+            fclose($fc);
+        });
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition','attachment; filename="export.csv"');
+    
+        return $response;
     }
     
 

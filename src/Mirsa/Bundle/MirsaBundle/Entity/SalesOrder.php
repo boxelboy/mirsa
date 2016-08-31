@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * SalesOrder
+ *
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
+ */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
@@ -10,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * SalesOrder entity
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity()
@@ -31,7 +36,7 @@ class SalesOrder
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="Creation_Date_Time", type="timestamp")
+     * @ORM\Column(name="Creation_Date", type="date")
      * @Serializer\Expose
      * @Serializer\Type("DateTime<'m-d-Y'>")* 
      
@@ -118,9 +123,9 @@ class SalesOrder
     protected $staff;
 
     /**
-     * @var \BusinessMan\Bundle\ClientBundle\Entity\ClientContact
+     * @var Contact
      * 
-     * @ORM\ManyToOne(targetEntity="BusinessMan\Bundle\ClientBundle\Entity\ClientContact")
+     * @ORM\ManyToOne(targetEntity="Contact")
      * @ORM\JoinColumn(name="Client_ContactID", referencedColumnName="Record_ID")
      */
     protected $contact;
@@ -204,7 +209,7 @@ class SalesOrder
     }
 
     /**
-     * @param \BusinessMan\Bundle\ClientBundle\Entity\ClientContact $contact
+     * @param Contact $contact
      */
     public function setContact($contact)
     {
@@ -212,7 +217,7 @@ class SalesOrder
     }
 
     /**
-     * @return \BusinessMan\Bundle\ClientBundle\Entity\ClientContact
+     * @return Contact
      */
     public function getContact()
     {

@@ -1,0 +1,105 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+    Work Order Defect Cross Tab Report
+{% endblock %}
+
+{% block breadcrumb %}
+    <li>Work Order Defect Cross Tab Report</li>
+{% endblock %}
+
+{% block header %}
+    Work Order Defect Cross Tab Report
+{% endblock %}
+
+{% block body %}
+    <form id="crossTabDefect" class="form-inline" role="form" method="post" action="{{ path('BusinessManMirsaBundle_jobs_defect_cross_tab_report_by_template') }}">
+        <div class="form-group">
+            <label for="selectTemplate">Select Work Order Template:</label>
+            <select class="form-control" id="jobTemplate" name="jobTemplate">
+                <option value="" selected="selected">Please Select a Template</option>
+                  {% set counter = 0 %}
+                {% for item in jobInspectionTemplates %}                
+                    {% set counter = counter + 1 %}
+                    <option value="{{item.id}}">{{ item.templateName}}</option>
+                {% endfor %}
+            </select>
+        </div>        
+        
+        <div class="form-group">
+          <label for="dateFrom">Date From:</label>
+          <input class="datepicker dp form-control" data-provide="datepicker" id="dateFrom" placeholder="Select from date" name="fromDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dateTo">Date To:</label>
+          <input class="datepicker dp form-control" data-provide="datepicker" id="dateTo" placeholder="Select to date" name="toDate" required>
+        </div>
+            
+        <div class="form-group" id="hideSku" style="display:none;" >
+            <label for="sku">Part Number:</label>
+            <select class="form-control" id="sku" name="sku">
+                 <option value="all" selected>All</option>
+            </select>
+        </div>            
+        <button id="submitButton" type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+    {% if counter == 0  %}
+        <br />
+        <em>No Job Inspection Templates available</em>
+    {% endif %}
+
+    <form id="partsForm" method="POST" action="{{ path('BusinessManMirsaBundle_jobs_defect_cross_tab_report_get_part_number') }}">
+    </form>
+
+    <i id="crossTabLoader" class="icon-spinner icon-spin icon-4x"></i>
+
+    <script>
+        $(document).ready( function() {
+            $('.datepicker').datepicker({
+                format: 'mm/dd/yyyy',
+                startDate: '-3d',
+                autoClose: true
+            });
+            
+            $('.dp').on('change', function(){
+                $('.datepicker').hide();
+            });
+            
+            var today = moment().format('MM/DD/YYYY');
+            $('.datepicker').val(today);
+            
+            $('#jobTemplate').change(function() {
+                if ($('#jobTemplate').val() != "") {
+                    $('#crossTabLoader').show('fast', function() {
+                        $.ajax({
+                            url : $('#partsForm').attr('action'),
+                            async: false,
+                            method: 'POST',
+                            data: {
+                                jobTemplate: $('#jobTemplate').val()
+                            }, 
+                            success: function (data) {
+                                var htmlContent = '<option value="all" selected>All</option>';
+                                $.each( data.stock, function (key, item) {
+                                    htmlContent = htmlContent + '<option value="' + item.sku + '">' + item.sku + '</option>';
+                                });
+                                $('#sku').html(htmlContent);
+                                $('#hideSku').show();
+                                $('#crossTabLoader').hide();
+                                $('#submitButton').show();
+                            }
+                        });
+                    });
+                };
+            });
+            
+            $('#crossTabDefect').submit(function(e) {
+                $('#crossTabLoader').show('fast', function() {
+                    document.getElementById("crossTabDefect").reset();
+                });
+            });            
+        });
+    </script>            
+{% endblock %}

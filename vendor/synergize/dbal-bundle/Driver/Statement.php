@@ -58,47 +58,47 @@ class Statement implements \IteratorAggregate, StatementInterface
                     $this->_columnNames[] = $column['alias']['no_quotes'];
                 }
             }
-        }
-        
-        foreach ($parser->parsed as &$section) {
-            foreach ($section as &$part) {
-                if (isset($part['expr_type']) && $part['expr_type'] == 'colref') {
-                    $columnReference = explode('.', $part['base_expr']);
-                    
-                    if (count($columnReference) == 2 && $columnReference[1][0] == '_') {
-                        $columnReference[1] = '"' . $columnReference[1] . '"';
-                        
-                        $part['base_expr'] = implode('.', $columnReference);
-                        $part['no_quotes'] = implode('.', $columnReference);
+            
+            foreach ($parser->parsed as &$section) {
+                foreach ($section as &$part) {
+                    if (isset($part['expr_type']) && $part['expr_type'] == 'colref') {
+                        $columnReference = explode('.', $part['base_expr']);
+
+                        if (count($columnReference) == 2 && $columnReference[1][0] == '_') {
+                            $columnReference[1] = '"' . $columnReference[1] . '"';
+
+                            $part['base_expr'] = implode('.', $columnReference);
+                            $part['no_quotes'] = implode('.', $columnReference);
+                        }
                     }
                 }
             }
-        }
-        
-        if (isset($parser->parsed['FETCH'])) {
-            $fetchPart = $parser->parsed['FETCH'];
-            
-            unset($parser->parsed['FETCH']);
-        }
-        
-        if (isset($parser->parsed['OFFSET'])) {
-            $offsetPart = $parser->parsed['OFFSET'];
-            
-            unset($parser->parsed['OFFSET']);
-        }
-        
-        $creator = new \PHPSQLCreator();
-        
-        $creator->create($parser->parsed);
-        
-        $this->_query = $creator->created;
-        
-        if (isset($offsetPart)) {
-            $this->_query .= ' OFFSET' . implode('', $offsetPart);
-        }
-        
-        if (isset($fetchPart)) {
-            $this->_query .= ' FETCH' . implode('', $fetchPart);
+
+            if (isset($parser->parsed['FETCH'])) {
+                $fetchPart = $parser->parsed['FETCH'];
+
+                unset($parser->parsed['FETCH']);
+            }
+
+            if (isset($parser->parsed['OFFSET'])) {
+                $offsetPart = $parser->parsed['OFFSET'];
+
+                unset($parser->parsed['OFFSET']);
+            }
+
+            $creator = new \PHPSQLCreator();
+
+            $creator->create($parser->parsed);
+
+            $this->_query = $creator->created;
+
+            if (isset($offsetPart)) {
+                $this->_query .= ' OFFSET' . implode('', $offsetPart);
+            }
+
+            if (isset($fetchPart)) {
+                $this->_query .= ' FETCH' . implode('', $fetchPart);
+            }
         }
     }
 

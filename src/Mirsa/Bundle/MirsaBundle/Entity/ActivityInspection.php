@@ -2,8 +2,8 @@
 /**
  * Job
  *
- * @author cps
- * @link 
+ * @author Jack Murdoch <jack@computech-it.co.uk>
+ * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  */
 namespace Mirsa\Bundle\MirsaBundle\Entity;
 
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM,
 /**
  * Job entity
  *
- * @author cps
+ * @author Jack Murdoch <jack@computech-it.co.uk>
  * @link   http://webserver:8090/display/BMAN/Portal+Documentation
  *
  * @ORM\Entity()
@@ -172,7 +172,7 @@ class ActivityInspection
     /**
      * Date the job was created
      *
-     * @ORM\Column(name="Creation_Timestamp", type="timestamp")
+     * @ORM\Column(name="Creation_Date", type="date")
      * @Serializer\Expose
      * @Serializer\Type("DateTime")
      */
@@ -215,6 +215,7 @@ class ActivityInspection
     
     /**
      * @ORM\Column(name="Job_Type", type="string")
+     * @Serializer\Type("string")
      * @Serializer\Expose
      */
     protected $type;
@@ -282,9 +283,9 @@ class ActivityInspection
     protected $qtyAccepted;
     
     /**
-     * @ORM\OneToMany(targetEntity="JobInspectionLineItem", mappedBy="job")
+     * @ORM\OneToMany(targetEntity="WorkOrderInspectionLineItem", mappedBy="job")
      */
-    protected $jobs;
+    protected $workOrders;
 
     /**
      * @ORM\Column(name="Stk_Code", type="string")
@@ -846,9 +847,9 @@ class ActivityInspection
         return $this->qtyAccepted;
     }        
     
-    public function getJobs()
+    public function getWorkOrders()
     {
-        return $this->jobs;
+        return $this->workOrderss;
     }
     
     public function getSku()
